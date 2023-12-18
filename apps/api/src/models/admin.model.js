@@ -13,8 +13,15 @@ export default class Admin extends Model {
 }
 export const init = (sequelize) => {
   Admin.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    first_name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+
+  },
+    last_name: {
+      type:DataTypes.STRING,
+      allowNull:true,
+    },
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,

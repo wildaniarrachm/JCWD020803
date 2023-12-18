@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '/vite.svg';
 import { Button, Input } from '@material-tailwind/react';
-// import './Home.css';
-
+import  logo  from '../../assets/long-logo.png';
 
 function Home() {
-const [sampleData, setSampleData] = useState([]);
+  const [sampleData, setSampleData] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -20,19 +17,22 @@ const [sampleData, setSampleData] = useState([]);
 
   return (
     <>
-     
+      <img src={logo} />
       <h1 className="font-poppins text-4xl text-main-red">
         Purwadhika Final Project Template using Vite + React
       </h1>
-      <h1 className='font-poppins text-4xl text-main-blue'> INI MATERIAL TAILWIND KENAPA </h1>
+      <h1 className="font-poppins text-4xl text-main-blue">
+        {' '}
+        INI MATERIAL TAILWIND KENAPA{' '}
+      </h1>
       <div>
-        <h1> Gatau lagi ini ajir knp </h1>
+        <h1> Gatau lagi ini ajir knp </h1> 
       </div>
       <Button> Button </Button>
       <h3> Test Data </h3>
       {sampleData.map((data, idx) => (
-        <div key={idx.toString()}>{data.name}</div>
-      ))}
+      <div key={idx.toString()}>{data.name}</div>
+    ))};
     </>
   );
 }

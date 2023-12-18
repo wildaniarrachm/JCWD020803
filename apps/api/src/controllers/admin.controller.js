@@ -1,8 +1,8 @@
 import Admin from '../models/admin.model';
 
-export const registerAdmin = async (req) => {
+export const registerAdmin = async (req, res) => {
     try {
-        const { first_name, last_name, username, email, password } = req.body;
+        const { first_name, last_name, username, email, password } = req
         const result = await Admin.create({
             first_name: first_name,
             last_name: last_name,
@@ -12,11 +12,18 @@ export const registerAdmin = async (req) => {
             isVerified: false,
             isSuperAdmin: false,
           });
-          return {result}
+          return res.status(200).send('admin registered')
     } catch (err) {
-        return {
-            error: err
-        }
+        return res.status(400).send({err: err.message})
+    }
+}
+
+export const adminLogin = async (req, res) => {
+    try {
+        let adminLogin;
+        const {password} = req.query;
+    } catch {
+
     }
 }
 
