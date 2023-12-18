@@ -8,29 +8,60 @@ export default class Customer extends Model {
    */
   static associate(models) {
     // define association here
-    Customer.hasMany(models.Transaction)
-    Customer.hasMany(models.Address)
-    Customer.hasOne(models.Cart)
-    Customer.hasOne(models.Favourite)
-    Customer.hasMany(models.User_voucher)
+    Customer.hasMany(models.Transaction);
+    Customer.hasMany(models.Address);
+    Customer.hasOne(models.Cart);
+    Customer.hasOne(models.Favourite);
+    Customer.hasMany(models.User_voucher);
+
   }
 }
 
 export const init = (sequelize) => {
-  Customer.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    phone_number: DataTypes.STRING,
-    images: DataTypes.STRING,
-    referral_code: DataTypes.STRING,
-    point: DataTypes.INTEGER,
-    isVerified: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Customer',
-  });
+  Customer.init(
+    {
+      first_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      last_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      phone_number: {
+        type: DataTypes.STRING,
+      },
+      images: {
+        type: DataTypes.STRING,
+      },
+      referral_code: {
+        type: DataTypes.STRING,
+      },
+      points: {
+        type: DataTypes.INTEGER,
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Customer',
+    },
+  );
   return Customer;
 };
+
