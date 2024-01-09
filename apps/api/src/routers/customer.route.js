@@ -1,41 +1,43 @@
 import { Router } from 'express';
 import {
   createCustomer,
-  getCustomer,
+  createPasswordCustomer,
+  getCustomerByToken,
+  getReferral,
+  keepLogin,
   loginCustomer,
+  addedPhoneCustomer,
+  uploadImageCustomer,
+  verifyAccount,
+  sendVerificationCode,
+  verifyCodePhone,
+  forgotPassword,
+  newPassword,
+  verifiedPhoneNumber,
+  getById,
 } from '../controllers/customer.controller';
-import jwt from 'jsonwebtoken';
-import Customer from '../models/customer.model';
 import { verifyToken } from '../middleware/customer.auth.middleware';
+import { customerProfileUpload } from '../middleware/multer.middleware';
 
 const customerRouter = Router();
 
-customerRouter.get('/', async (req, res) => {
-  const result = await getCustomer();
-  res.send(result);
-});
-
-customerRouter.get('/login', async (req, res) => {
-  const result = await loginCustomer(req?.query, res);
-  res.send(result);
-});
-
-customerRouter.get('/verify/:token', async (req, res) => {
-  const token = req?.params?.token;
-  try {
-    const decoded = jwt.verify(token, process.env.KEY_CUSTOMER_JWT);
-    const customerId = decoded?.id;
-    await Customer.update({ isVerified: true }, { where: { id: customerId } });
-    res.send('Verification successful. Your account is now verified.');
-  } catch (error) {
-    console.error(error);
-    res.status(401).send('Invalid or expired token. Please try again.');
-  }
-});
-
-customerRouter.post('/register-customer', async (req, res) => {
-  const result = await createCustomer(req?.body, res);
-  res.status(result?.statusCode);
-});
-
+customerRouter.get('/get-referral', getReferral);
+customerRouter.post('/register-customer', createCustomer);
+customerRouter.post('/login', loginCustomer);
+// customerRouter.post('/send-code', sendVerificationCode);
+// customerRouter.post('/verify-code', verifyCodePhone);
+customerRouter.post('/reset-password', forgotPassword);
+customerRouter.patch(
+  '/upload-image',
+  customerProfileUpload().single('file'),
+  uploadImageCustomer,
+);
+customerRouter.patch('/added-phone-number', verifyToken, addedPhoneCustomer);
+customerRouter.patch('/verify-phone-number', verifyToken, verifiedPhoneNumber);
+customerRouter.get('/keep-login', verifyToken, keepLogin);
+customerRouter.post('/create-password', verifyToken, createPasswordCustomer);
+customerRouter.get('/verify/:token', verifyAccount);
+customerRouter.patch('/new-password', verifyToken, newPassword);
+customerRouter.get('/create-password/:token', getCustomerByToken);
+customerRouter.get('/get-customer-by-id/:id', getById);
 export { customerRouter };
