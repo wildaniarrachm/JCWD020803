@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import handlebars from 'handlebars';
 import path from 'path';
-import { transporter } from '../middleware/transporter.middlewar';
+import { transporter } from '../middleware/transporter.middleware';
 export const getCustomer = async () => {
   return await Customer.findAll();
 };
@@ -16,7 +16,7 @@ export const getSampleDataById = async () => {
 };
 
 export const createCustomer = async (req, res) => {
-  const { first_name, last_name, username, email, referral_code } = req;
+  const { first_name, last_name, username, email, referral_code } = req.body;
   const generateReferralCode = () => {
     const randomString = Math.random().toString(36).substr(2, 8).toUpperCase();
     return `EZ${randomString}`;
@@ -111,26 +111,26 @@ export const createCustomer = async (req, res) => {
 
 export const loginCustomer = async (req, res) => {
   try {
-    const { email, password } = req;
+    const { email, password } = req.body;
     const emailExist = await Customer.findOne({
       where: {
         email,
       },
     });
     if (!emailExist) {
-      return res.status(500).send('Email doesnt matches');
+       return res.status(500).send('Email doesnt matches');
     }
 
-    const compPassword = await bcrypt.compare(password, emailExist?.password);
-    if (!compPassword) {
-      return res.status(500).send('Wrong password');
-    }
+    // const compPassword = await bcrypt.compare(password, emailExist?.password);
+    // if (!compPassword) {
+    //   return res.status(500).send('Wrong password');
+    // }
     if (emailExist.isVerified === false) {
       return res.status(500).send('Your account is not verified yet');
     }
-    return res.status(200).send('Login success');
+    res.status(200).send('Login success');
   } catch (error) {
     console.log(error);
-    return error;
+    return res.send(error);
   }
 };

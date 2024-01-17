@@ -15,10 +15,7 @@ customerRouter.get('/', async (req, res) => {
   res.send(result);
 });
 
-customerRouter.get('/login', async (req, res) => {
-  const result = await loginCustomer(req?.query, res);
-  res.send(result);
-});
+customerRouter.post('/login', loginCustomer);
 
 customerRouter.get('/verify/:token', async (req, res) => {
   const token = req?.params?.token;
@@ -33,9 +30,6 @@ customerRouter.get('/verify/:token', async (req, res) => {
   }
 });
 
-customerRouter.post('/register-customer', async (req, res) => {
-  const result = await createCustomer(req?.body, res);
-  res.status(result?.statusCode);
-});
+customerRouter.post('/register-customer', createCustomer);
 
 export { customerRouter };

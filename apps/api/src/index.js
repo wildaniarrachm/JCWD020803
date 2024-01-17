@@ -49,7 +49,6 @@ const globalAPIErrorHandler = (app) => {
 /**
  * Main function of API project
  */
-
  const main = async () => {
   try {
     await DB.initialize();

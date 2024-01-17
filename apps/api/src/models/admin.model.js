@@ -13,14 +13,36 @@ export default class Admin extends Model {
 }
 export const init = (sequelize) => {
   Admin.init({
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    isVerified: DataTypes.BOOLEAN,
-    image: DataTypes.STRING,
-    isSuperAdmin: DataTypes.BOOLEAN
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    username: {
+      type: DataTypes.STRING,
+    allowNull: false
+  },
+    password: {
+      type: DataTypes.STRING,
+    },
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    isSuperAdmin: {
+      type: DataTypes.BOOLEAN,
+    },
+    isEnabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   }, {
     sequelize,
     modelName: 'Admin',

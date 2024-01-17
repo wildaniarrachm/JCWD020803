@@ -8,7 +8,7 @@ import {
   ListItem,
 } from '@material-tailwind/react';
 import { HiOutlineChevronRight, HiOutlineMenuAlt1 } from 'react-icons/hi';
-import LogoFull from '../../../../assets/ez-mart-high-resolution-logo-transparent.png';
+import LogoFull from '../../../../assets/ez-mart-logo.png';
 import LogoIcon from '../../../../assets/ez-mart logo store aja.png';
 import { useNavigate } from 'react-router-dom';
 
