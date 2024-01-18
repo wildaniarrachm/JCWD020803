@@ -9,6 +9,7 @@ export const handleSubmit = async (data, navigate, dispatch) => {
       data.email = data.input_data;
       delete data.input_data;
       const response = await api.post(`admins/admin/login`, data);
+      console.log(response);
       dispatch(setAdminData(response.data.admin));
       localStorage.setItem('tokenAdmin', response.data.token);
       navigate('/admin-management')
@@ -17,6 +18,7 @@ export const handleSubmit = async (data, navigate, dispatch) => {
       data.username = data.input_data;
       delete data.input_data;
       const response = await api.post(`admins/admin/login`, data);
+      console.log(response);
       dispatch(setAdminData(response.data.admin));
       localStorage.setItem('tokenAdmin', response.data.token);
       navigate('/admin-management');

@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 router.use('/sample', sampleRouter);
 router.use('/admins', adminRouter)
 router.use('/customer', customerRouter)
-router.use('/products', productRouter)
+router.use('/product', productRouter)
 
 // add another router here ...
 

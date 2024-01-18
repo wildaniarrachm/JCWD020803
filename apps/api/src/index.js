@@ -49,6 +49,7 @@ const globalAPIErrorHandler = (app) => {
 /**
  * Main function of API project
  */
+
  const main = async () => {
   try {
     await DB.initialize();
@@ -57,11 +58,14 @@ const globalAPIErrorHandler = (app) => {
     app.use(cors());
     app.use(json());
     app.use('/api', router);
+    app.use('/public', express.static('./public'));
+
 
     globalAPIErrorHandler(app);
     serveWebProjectBuildResult(app);
 
-    // await DB.sequelize.sync({ alter: true });
+    await DB.sequelize.sync({ alter: true });
+    //await DB.sequelize.sync({ force: true});
 
     app.listen(PORT, (err) => {
       if (err) {

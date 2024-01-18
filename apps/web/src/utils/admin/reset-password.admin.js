@@ -11,19 +11,17 @@ export const resetPassSchema = Yup.object({
       .required("This field can't be empty"),
 });
 
-export const getAdminByToken = async (tokenAdmin) => {
-  try{
-    console.log(tokenAdmin);
-    const response = await api.get(`admins/admin/create-password/${tokenAdmin}`)
-    return response;
-  } catch (error){
-    console.log(error);
-  }
+export const sendEmailVerification = async (data) => {
+    try{
+        const response = api.post(`admins/forgot-password`, data)
+    } catch (error){
+        console.log(error);
+    }
 }
 
-export const createPasswordAdmin = async (data, tokenAdmin) => {
+export const resetPasswordAdmin = async (data, tokenAdmin) => {
   try{
-    const response = await api.post(`admins/admin/create-password`, data,{
+    const response = await api.patch(`admins/reset-password`, data,{
       headers: {
         Authorization: `Bearer ${tokenAdmin}`
       }

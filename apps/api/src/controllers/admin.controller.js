@@ -6,6 +6,7 @@ import path from 'path';
 import handlebars from 'handlebars';
 import fs from 'fs'
 import { transporter } from '../middleware/transporter.middleware';
+import { log } from 'util';
 
 export const addSuperAdmin = async (req, res) => {
     try {
@@ -58,8 +59,6 @@ export const registerAdmin = async (req, res) => {
             }
         })
         if (findUser == null) {
-            // const salt = await bcrypt.genSalt(10)
-            // const hashPassword = await bcrypt.hash(password, salt)
             const result = await Admin.create({
                 name: name,
                 username: username,
@@ -79,13 +78,55 @@ export const registerAdmin = async (req, res) => {
     }
 }
 
+export const forgotPasswordAdmin = async (req, res) => {
+    const { email } = req.body;
+    try{
+        const findEmail = await Admin.findOne({
+            where: {email: email}
+        });
+        if (findEmail==null){
+            return res.status(404).send('Invalid Email')
+        };
+        if (findEmail.isVerified === false){
+            return res
+            .status(400)
+            .send('Email is not verified');
+        };
+        let payload = { id: findEmail?.id };
+        const token = jwt.sign(payload, process.env.KEY_ADMIN_JWT, {expiresIn: '24h'});
+        const send = fs.readFileSync(
+            path.join(__dirname, '../template_reset_password.html')
+            ,'utf-8',
+        );
+        const tempCompile = await handlebars.compile(send);
+        const tempResult = tempCompile({
+            id: findEmail?.id,
+            create: `${process.env.BASE_URL}admin/reset-password/${token}`
+        });
+        await transporter.sendMail({
+            from: process.env.NODEMAILER_USER,
+            to: findEmail?.email,
+            subject: 'EZ Mart - Reset Password Admin',
+            html: tempResult,
+          });
+          res
+            .status(200)
+            .send(
+              "Check your email to reset your password",
+            );
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send(error.message)
+    }
+}
+
 export const resetPassword = async (req, res) => {
     try{
      const { password } = req.body;
      const salt = await bcrypt.genSalt(10);
      const hashPassword = await bcrypt.hash(password, salt);
  
-     await Admin.create({
+     await Admin.update({
          password: hashPassword,
      },
      {
@@ -93,27 +134,32 @@ export const resetPassword = async (req, res) => {
              id: req.admin.id
          }
      })
-    } catch {
- 
+    } catch (error) {
+        console.log(error);
+        return error
     }
  };
 
 export const loginAdmin = async (req, res) => {
     try {
-        let admin;
+        let admin
         const { username, email, password, rememberme} = req.body;
-        if(username){
+
+        if (username) {
             admin = await Admin.findOne({
-                where: {
-                    username: username
-                }
-            });
-        }
-        else if (email){
+               where: {
+                   username: username
+               }
+           })
+       }
+       else if (email) {
             admin = await Admin.findOne({
-                email: email
-            })
-        }
+               where: {
+                   email: email
+               }
+           })
+       }
+
         if (!admin) {
             return res.status(404).send({
                 message: "Admin is not registered"
@@ -129,14 +175,14 @@ export const loginAdmin = async (req, res) => {
         if (admin.isVerified === true){
             if(admin.isEnabled === true){
                 if(rememberme === true){
-                    const token = jwt.sign(payload, process.env.KEY_ADMIN_JWT);
+                    const token = jwt.sign(payload, process.env.KEY_ADMIN_JWT, {expiresIn: '24h'});
                     return res.status(200).send({
                         message: "Login success",
                         admin,
                         token
                     });
                 } else {
-                    const token = jwt.sign(payload, process.env.KEY_ADMIN_JWT, {expiresIn: '4h'});
+                    const token = jwt.sign(payload, process.env.KEY_ADMIN_JWT, {expiresIn: '50s'});
                     return res.status(200).send({
                         message: "Login Success",
                         admin,
@@ -175,8 +221,6 @@ export const keepLogin = async (req, res) => {
     }
 };
 
-
-
 export const inputPassword = async (req, res) => {
     try {
         const { password } = req.body;
@@ -193,7 +237,7 @@ export const inputPassword = async (req, res) => {
                 { where: {id: findAdmin.id}}
             );
 
-            return res.status(200).send('Password updated')
+            return res.status(200).send('Password Registered')
         } else{
             return res.status(404).send("Admin is not found");
         }
@@ -255,7 +299,6 @@ export const getAdminbyToken = async (req, res) => {
         if (!token){
             return res.status(400).send('Invalid token');
         }
-        
         const adminToken = jwt.verify(token, process.env.KEY_ADMIN_JWT);
         console.log(adminToken);
         const adminID = adminToken?.id;
@@ -266,6 +309,14 @@ export const getAdminbyToken = async (req, res) => {
     } catch (error){
         console.log('ini eror', error);
         return res.status(500).send(error)
+    }
+}
+
+export const uploadPicture = async () => {
+    try{
+
+    } catch (error){
+        console.log(error);
     }
 }
 

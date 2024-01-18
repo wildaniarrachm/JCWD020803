@@ -15,7 +15,10 @@ export default class Category extends Model {
 
 export const init = (sequelize) =>{
   Category.init({
-    category: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Category',

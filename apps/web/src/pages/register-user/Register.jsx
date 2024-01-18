@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { MobilePage } from '../../components/landing-page/mobile-view/Index';
-import { RegisterPage } from '../../components/landing-page/mobile-view/register/Index';
-import { useLocation,} from 'react-router-dom';
+import { Layout } from '../../components/customers/Index';
+import { RegisterPage } from '../../components/customers/register/Index';
+import { useLocation } from 'react-router-dom';
 
 function RegisterUser() {
   const [view, setView] = useState(true);
   const location = useLocation();
   return (
     <div>
-      <MobilePage>
+      <Layout>
         <RegisterPage />
-      </MobilePage>
+      </Layout>
     </div>
   );
 }

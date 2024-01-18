@@ -13,7 +13,6 @@ export default class Customer extends Model {
     Customer.hasOne(models.Cart);
     Customer.hasOne(models.Favourite);
     Customer.hasMany(models.User_voucher);
-
   }
 }
 
@@ -56,6 +55,11 @@ export const init = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      phoneVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+
     },
     {
       sequelize,
@@ -64,4 +68,3 @@ export const init = (sequelize) => {
   );
   return Customer;
 };
-

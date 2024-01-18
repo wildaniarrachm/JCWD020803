@@ -1,16 +1,32 @@
-import axios from 'axios';
 import * as Yup from 'yup';
+import { api } from '../../libs/server.api';
 
 export const addCustomer = async (data) => {
   try {
-    const add = await axios.post(
-      `${import.meta.env.VITE_API_URL}customer/register-customer`,
-      data,
-    );
-    alert(add?.data);
+    const response = await api.post(`customer/register-customer`, data);
+    alert(response?.data);
   } catch (error) {
-    console.log(error);
     alert(error?.response?.data);
+  }
+};
+
+export const validateReferral = async (referral_code) => {
+  try {
+    const response = await api.get(
+      `customer/get-referral?referral_code=${referral_code}`,
+    );
+    if (response?.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    if (error?.response && error?.response?.status === 400) {
+      return false;
+    } else {
+      console.log(error);
+      return false;
+    }
   }
 };
 
@@ -25,5 +41,15 @@ export const registSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email address')
     .required('Email address is required'),
-  referral: Yup.string(),
+  referral_code: Yup.string().test(
+    'referral-match',
+    'Referral doesnt match',
+    async function (value) {
+      if (value) {
+        const isValid = await validateReferral(value);
+        return isValid;
+      }
+      return true;
+    },
+  ),
 });

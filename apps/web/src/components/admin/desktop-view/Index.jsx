@@ -13,7 +13,6 @@ import { ForgotPassword } from './Forgot-Password';
 import { handleSubmit, validationSchema } from '../../../utils/admin/login.admin';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { api } from '../../../libs/server.api';
 
 
 export default function LoginAdmin() {

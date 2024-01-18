@@ -2,12 +2,13 @@ import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
   try {
-    let token = req.headers.authorization;
-    if (!token) {
+    let token = req?.headers?.authorization;
+    if (!token || token == null) {
       return res.status(500).send('token empty');
     }
     token = token.split(' ')[1];
     let verified = jwt.verify(token, process.env.KEY_CUSTOMER_JWT);
+    console.log(verified);
     req.customer = verified;
     next();
   } catch (error) {

@@ -1,13 +1,13 @@
-import { MobilePage } from '../../components/landing-page/mobile-view/Index';
-import { LoginPage } from '../../components/landing-page/mobile-view/login/Index';
+import { Layout } from "../../components/customers/Index";
+import { LoginPage } from "../../components/customers/login/Index";
 
 function LoginUser() {
 
   return (
     <div>
-      <MobilePage>
+      <Layout>
         <LoginPage />
-      </MobilePage>
+      </Layout>
     </div>
   );
 }

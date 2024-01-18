@@ -6,7 +6,9 @@ import {
     addSuperAdmin,
     keepLogin,
     getAdmin,
-    inputPassword
+    inputPassword,
+    forgotPasswordAdmin,
+    resetPassword
 } from '../controllers/admin.controller'
 import { verifyAdminToken } from '../middleware/admin.auth.middleware'
 import { checkRegister } from '../middleware/admin.validator.middleware';
@@ -21,6 +23,8 @@ adminRouter.get('/admin/keep-login', verifyAdminToken, keepLogin)
 adminRouter.get('/admin/get-admin', verifyAdminToken, getAdmin)
 adminRouter.post('/admin/create-password', verifyAdminToken, inputPassword)
 adminRouter.get('/admin/create-password/:token', getAdminbyToken)
+adminRouter.post('/forgot-password', forgotPasswordAdmin)
+adminRouter.patch('/reset-password', verifyAdminToken, resetPassword)
 
 export {adminRouter};
 

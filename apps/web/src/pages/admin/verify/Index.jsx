@@ -17,10 +17,11 @@ import {
 } from '../../../utils/admin/input-password.admin';
 
 
+
 export function VerifyAdmin() {
   const { tokenAdmin } = useParams();
   const [dataAdmin, setDataAdmin] = useState();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const getAdmin = async () => {
     try {
@@ -45,7 +46,7 @@ export function VerifyAdmin() {
       createPasswordAdmin(values, tokenAdmin);
       action.resetForm();
       localStorage.clear();
-      navigate('/');
+      // navigate('/');
     },
   });
 

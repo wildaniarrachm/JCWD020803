@@ -24,13 +24,15 @@ export const init = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false},
     descriptions: {
-      type: DataTypes.STRING,
-    allowNull: false},
+      type: DataTypes.TEXT,
+    allowNull: true},
     price: {
       type: DataTypes.INTEGER,
       allowNull: false},
-    isDisabled: DataTypes.BOOLEAN,
-    isDeleted: DataTypes.BOOLEAN
+    isDisabled: {
+      type: DataTypes.BOOLEAN},
+    isDeleted: {
+      type: DataTypes.BOOLEAN}
   }, {
     sequelize,
     modelName: 'Product',

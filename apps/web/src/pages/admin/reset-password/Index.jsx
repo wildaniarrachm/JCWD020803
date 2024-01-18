@@ -5,34 +5,20 @@ import {
   Typography,
   Input,
   Button,
-} from '@material-tailwind/react';
+} from '@material-tailwind/react'
+
 import resetpassword from '../../../assets/reset-pass.png';
 import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {
-  createPasswordAdmin,
-  getAdminByToken,
-  registPassSchema,
+    registPassSchema,
 } from '../../../utils/admin/input-password.admin';
+import { resetPasswordAdmin } from '../../../utils/admin/reset-password.admin';
 
 export function ResetPassword() {
-  // const { tokenAdmin } = useParams();
-  // const [dataAdmin, setDataAdmin] = useState();
-  // const navigate = useNavigate();
-
-  // const getAdmin = async () => {
-  //   try {
-  //     const admin = await getAdminByToken(tokenAdmin);
-  //     console.log(admin);
-  //     setDataAdmin(admin.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   getAdmin();
-  // }, []);
+  const { tokenAdmin } = useParams()
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -41,10 +27,10 @@ export function ResetPassword() {
     },
     validationSchema: registPassSchema,
     onSubmit: (values, action) => {
-      // createPasswordAdmin(values, tokenAdmin);
+      resetPasswordAdmin(values, tokenAdmin);
       action.resetForm();
       localStorage.clear();
-      navigate('/');
+      navigate('/login-admin');
     },
   });
 
@@ -77,7 +63,7 @@ export function ResetPassword() {
               onChange={formik.handleChange}
             />
             {formik.touched.password || formik.errors.password ? (
-              <div className=" mt-[-10px] text-red-300 font-poppins">
+              <div className=" mt-[-10px] text-red-200 font-poppins">
                 {formik.errors.password}
               </div>
             ) : null}
@@ -95,13 +81,14 @@ export function ResetPassword() {
               }
             />
             {formik.touched.confirmation || formik.errors.confirmation ? (
-              <div className=" mt-[-10px] text-red-300 font-poppins">
+              <div className=" mt-[-10px] text-red-200 font-poppins">
                 {formik.errors.confirmation}
               </div>
             ) : null}
           </CardBody>
           <CardFooter className="tablet: pt-2 mb-6">
             <Button
+            type='submit'
               className="font-poppins bg-main-blue tablet:text-xl laptop:text-lg"
               fullWidth
             >

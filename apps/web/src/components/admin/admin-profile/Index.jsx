@@ -2,9 +2,7 @@ import { Avatar, Badge, Input } from '@material-tailwind/react';
 import { FaUserEdit } from 'react-icons/fa';
 
 export const AdminProfile = () => {
-    const apa = import.meta.env.test
-
-    console.log(apa);
+  console.log(apa);
   return (
     <>
       <div className="grid grid-row-3 gap-3 h-96 justify-center pl-5 w-80 shadow-lg">
@@ -26,17 +24,18 @@ export const AdminProfile = () => {
           </Badge>
         </div>
         <div className="ml-48 w-60 h-48 gap-8 grid grid-rows-4">
-            <Input
-            type='text'
-            label='Name'
-            placeholder='Admin'
-            variant='static'/>
-            <Input
-            type='text'
-            label='Email'
-            placeholder='email'
-            variant='static'
-            />
+          <Input
+            type="text"
+            label="Name"
+            placeholder="Admin"
+            variant="static"
+          />
+          <Input
+            type="text"
+            label="Email"
+            placeholder="email"
+            variant="static"
+          />
         </div>
       </div>
     </>

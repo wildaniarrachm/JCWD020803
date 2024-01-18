@@ -10,35 +10,22 @@ import {
   Checkbox,
 } from '@material-tailwind/react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
+import email from '../../../assets/email.png'
+import { sendEmailVerification } from '../../../utils/admin/reset-password.admin';
 
 export function ForgotPassword({ open, handleOpen }) {
-  const ValidationSchema = Yup.object({
-    email: Yup.string()
-      .email('Invalid email format')
-      .required('email is required'),
-  });
-  const handleSubmit = async (data) => {
-    try {
-      console.log(data);
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/sample`,
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const formik = useFormik({
     initialValues: {
       email: '',
     },
-    validationSchema: ValidationSchema,
     onSubmit: (values, action) => {
-      handleSubmit(values);
-      action.resetForm();
-    },
+      sendEmailVerification(values);
+      console.log(values);
+      action.resetForm
+    }
   });
+
+
 
   return (
     <>
@@ -52,11 +39,13 @@ export function ForgotPassword({ open, handleOpen }) {
           <form onSubmit={formik.handleSubmit}>
             <CardBody className="flex flex-col gap-4">
                 <div>
-              <Typography variant="h4" className='font-poppins text-main-red'>
-                Reset Password
+              <Typography variant="h4" className='font-poppins text-center text-main-red'>
+                Forgot Password?
               </Typography>
                 </div>
-              <Typography className="-mb-2" variant="h6">
+              
+                <img src={email} className='h-[12rem] w-[15rem] mx-7'/>
+              <Typography className="-mb-2 font-poppins" variant="h6">
                 Input your email here
               </Typography>
               <Input

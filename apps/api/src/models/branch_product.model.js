@@ -16,7 +16,10 @@ export default class Branch_product extends Model {
 
 export const init = (sequelize) => {
   Branch_product.init({
-    quantity: DataTypes.INTEGER
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Branch_product',
