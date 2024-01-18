@@ -1,5 +1,6 @@
 import category_snack from '../../assets/category_snack.jpg';
 import 'aos/dist/aos.css';
+
 export const CardHome = () => {
   const items = [
     { title: 'Snack and Foods', image: category_snack, alt: 'Snack' },

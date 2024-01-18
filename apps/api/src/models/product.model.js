@@ -20,11 +20,19 @@ export default class Product extends Model {
 
 export const init = (sequelize) => {
   Product.init({
-    product_name: DataTypes.STRING,
-    descriptions: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    isDisabled: DataTypes.BOOLEAN,
-    isDeleted: DataTypes.BOOLEAN
+    product_name: {
+      type: DataTypes.STRING,
+      allowNull: false},
+    descriptions: {
+      type: DataTypes.TEXT,
+    allowNull: true},
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false},
+    isDisabled: {
+      type: DataTypes.BOOLEAN},
+    isDeleted: {
+      type: DataTypes.BOOLEAN}
   }, {
     sequelize,
     modelName: 'Product',

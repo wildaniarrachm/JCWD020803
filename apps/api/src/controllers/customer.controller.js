@@ -51,7 +51,7 @@ export const getReferral = async (req, res) => {
 };
 
 export const createCustomer = async (req, res) => {
-  const { first_name, last_name, username, email, referral_code } = req;
+  const { first_name, last_name, username, email, referral_code } = req.body;
   const generateReferralCode = () => {
     const randomString = Math.random().toString(36).substr(2, 8).toUpperCase();
     return `EZ${randomString}`;
@@ -136,53 +136,6 @@ export const createCustomer = async (req, res) => {
         .status(200)
         .send('Register success, check your email for verification');
     }
-      return res.status(500).send('User already exist');
-    }
-    if (referralCode?.length) {
-      const referralMatches = await Customer.findOne({
-        where: { referral_code: referralCode },
-      });
-      if (!referralMatches) {
-        return res.status(500).send('Referral doesnt match');
-      } else {
-        try {
-          const result = await Customer.create({
-            first_name,
-            last_name,
-            username,
-            email,
-            referral_code: referral,
-          });
-          await User_voucher.create({
-            CustomerId: referralMatches.id,
-            VoucherId: 2,
-          });
-          await User_voucher.create({
-            CustomerId: result.id,
-            VoucherId: 1,
-          });
-          verifyCustomer(result);
-        } catch (error) {
-          console.log(error);
-          return error;
-        }
-        return res
-          .status(200)
-          .send('Referral matches, check your email for verification');
-      }
-    }
-
-    const add = await Customer.create({
-      first_name,
-      last_name,
-      username,
-      email,
-      referral_code: referral,
-    });
-    verifyCustomer(add);
-    return res
-      .status(200)
-      .send('Register success, check your email for verification');
   } catch (error) {
     console.log(error);
     return error;
@@ -480,20 +433,5 @@ export const verifiedPhoneNumber = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
-    if (!emailExist) {
-      return res.status(500).send('Email doesnt matches');
-    }
+  }}
 
-    const compPassword = await bcrypt.compare(password, emailExist?.password);
-    if (!compPassword) {
-      return res.status(500).send('Wrong password');
-    }
-    if (emailExist.isVerified === false) {
-      return res.status(500).send('Your account is not verified yet');
-    }
-    return res.status(200).send('Login success');
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
