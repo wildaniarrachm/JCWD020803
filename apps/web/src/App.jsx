@@ -47,6 +47,7 @@ const router = createBrowserRouter([
     path: '/forgot-password/new-password/:token',
     element: <NewPasswordPage />,
   },
+   //admin
   { path: '/manage-product', element: <ManageProduct></ManageProduct>},
   { path: '/product-catalogue', element: <ProductCatalogue></ProductCatalogue>},
   { path: '/admin/reset-password/:tokenAdmin', element: <ResetPassword></ResetPassword> },

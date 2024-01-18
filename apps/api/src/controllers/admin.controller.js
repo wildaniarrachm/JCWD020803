@@ -317,6 +317,7 @@ export const uploadPicture = async () => {
 
     } catch (error){
         console.log(error);
+
     }
 }
 

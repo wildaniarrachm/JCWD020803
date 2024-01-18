@@ -1,8 +1,5 @@
 import category_snack from '../../assets/category_snack.jpg';
 import 'aos/dist/aos.css';
-import {
-  Button,
-} from '@material-tailwind/react';
 
 export const CardHome = () => {
   const items = [

@@ -1,4 +1,3 @@
-import { error } from 'console';
 import multer from 'multer';
 import path from 'path';
 const customerProfileUpload = () => {
@@ -32,7 +31,6 @@ const customerProfileUpload = () => {
   return multer({ storage, fileFilter });
 };
 export { customerProfileUpload };
-
 export const adminProfileUpload = () => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -98,3 +96,4 @@ export const productImage = () => {
   };
   return multer({ storage, fileFilter})
 };
+

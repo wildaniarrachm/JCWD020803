@@ -26,5 +26,6 @@ adminRouter.get('/admin/create-password/:token', getAdminbyToken)
 adminRouter.post('/forgot-password', forgotPasswordAdmin)
 adminRouter.patch('/reset-password', verifyAdminToken, resetPassword)
 
+
 export {adminRouter};
 

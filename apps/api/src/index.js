@@ -67,6 +67,7 @@ const globalAPIErrorHandler = (app) => {
     await DB.sequelize.sync({ alter: true });
     //await DB.sequelize.sync({ force: true});
 
+
     app.listen(PORT, (err) => {
       if (err) {
         console.log(`ERROR: ${err}`);
