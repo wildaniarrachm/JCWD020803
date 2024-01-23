@@ -15,8 +15,13 @@ export default class Sub_category extends Model {
 }
 
 export const init = (sequelize) => {
-  Sub_category.init({
-    sub_category: DataTypes.STRING
+  Sub_category.init(
+    {
+    sub_category: DataTypes.STRING,
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    }
   }, {
     sequelize,
     modelName: 'Sub_category',

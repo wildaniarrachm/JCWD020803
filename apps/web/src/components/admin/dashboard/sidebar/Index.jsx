@@ -5,6 +5,7 @@ import { LuListPlus } from 'react-icons/lu';
 import { AiOutlineStock } from 'react-icons/ai';
 import { SideBar } from '../sidebar/sub-components/SidebarDesktop';
 import { IoStorefrontOutline } from 'react-icons/io5';
+import { FaUsers } from "react-icons/fa";
 
 export const Sidebar = () => {
   const items = [
@@ -36,6 +37,11 @@ export const Sidebar = () => {
       route: '/admin-management',
     },
     {
+      name: 'Customer',
+      icon: <FaUsers size={'30px'}/>,
+      route: '/customer-management'
+    },
+    {
       name: 'Branch',
       icon: <IoStorefrontOutline size={'30px'} />,
       route: 'branch',
@@ -43,7 +49,7 @@ export const Sidebar = () => {
     {
       name: 'Category',
       icon: <TbCategoryPlus size={'30px'} />,
-      route: '/category',
+      route: '/category-management',
     },
     {
       name: 'Subcategory',

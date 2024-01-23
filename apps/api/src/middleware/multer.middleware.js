@@ -1,4 +1,3 @@
-import { error } from 'console';
 import multer from 'multer';
 import path from 'path';
 const customerProfileUpload = () => {

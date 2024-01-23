@@ -3,7 +3,7 @@ import Category from '../models/category.model';
 
 export const addProduct = async (req, res) => {
     try {
-      const { product_name, price, descriptions } = req.body;
+      const { product_name, price, descriptions, CategoryId, SubCategoryId } = req.body;
       console.log(req.body);
 
       //check if product already exist
@@ -13,17 +13,18 @@ export const addProduct = async (req, res) => {
         },
       });
 
-      //if product isn't already exist
+      
       if (findProduct == null) { 
         await Product.create({
             product_name: product_name,
             price: price,
             descriptions: descriptions,
-        })
+            CategoryId: CategoryId,
+            SubCategoryId: SubCategoryId
+        });
+       return res.status(200).send({ message: "Product added" });
       } else {
-        return res.status(400).send({ message: "Product already exist" });
-      }
-      res.status(200).send({ message: "Product added" });
+        return res.status(400).send({ message: "Product already exist" });      }
     } catch (error) {
       console.log("This is the error", error);
        return error;

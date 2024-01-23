@@ -1,4 +1,4 @@
-import { AddProduct } from "./add-product"
+import { AddProduct } from "./Add-product"
 import { ProductTable } from "./table-product"
 
 

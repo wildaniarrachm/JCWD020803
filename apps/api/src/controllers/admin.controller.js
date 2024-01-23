@@ -6,7 +6,7 @@ import path from 'path';
 import handlebars from 'handlebars';
 import fs from 'fs'
 import { transporter } from '../middleware/transporter.middleware';
-import { log } from 'util';
+
 
 export const addSuperAdmin = async (req, res) => {
     try {
@@ -314,7 +314,15 @@ export const getAdminbyToken = async (req, res) => {
 
 export const uploadPicture = async () => {
     try{
-
+        await Admin.update(
+            {
+                image: req.file?.path,
+            },
+            {
+                where: { id: req.admin.id }
+            }
+        );
+        return res.status(200).send("Avatar is updated successfully")
     } catch (error){
         console.log(error);
     }

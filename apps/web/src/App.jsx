@@ -23,6 +23,9 @@ import { ResetPassword } from './pages/admin/reset-password/Index';
 import { ProductCatalogue } from './components/admin/dashboard/product/product-catalogue/Index';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { CategoryPage } from './pages/admin/CategoryManagement';
+import { SubCategoryPage } from './pages/admin/SubcategoryManagement';
+
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -61,7 +64,13 @@ const router = createBrowserRouter([
     element: <AdminRequired/>,
     children: [{
       path: '/admin-management', element: <AdminManagement/>
-    }  
+    },
+    {
+      path: '/category-management', element: <CategoryPage/>
+    },
+    {
+      path: '/subcategory', element: <SubCategoryPage/>
+    }
     ]
     
   }

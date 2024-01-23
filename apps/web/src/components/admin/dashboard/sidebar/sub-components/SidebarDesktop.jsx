@@ -4,6 +4,7 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
+  Tooltip,
 } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
@@ -31,6 +32,9 @@ export const SideBar = ({ items }) => {
             }`}
           >
             <Link to={item.route}>
+              {/* <Tooltip>
+
+              </Tooltip> */}
               <div className="flex justify-center"> {item.icon} </div>
               <div className="flex justify-center"> {item.name} </div>
             </Link>

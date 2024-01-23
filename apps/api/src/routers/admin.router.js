@@ -8,10 +8,12 @@ import {
     getAdmin,
     inputPassword,
     forgotPasswordAdmin,
-    resetPassword
+    resetPassword,
+    uploadPicture
 } from '../controllers/admin.controller'
 import { verifyAdminToken } from '../middleware/admin.auth.middleware'
 import { checkRegister } from '../middleware/admin.validator.middleware';
+import { adminProfileUpload } from '../middleware/multer.middleware';
 
 
 const adminRouter = Router ();
@@ -25,6 +27,7 @@ adminRouter.post('/admin/create-password', verifyAdminToken, inputPassword)
 adminRouter.get('/admin/create-password/:token', getAdminbyToken)
 adminRouter.post('/forgot-password', forgotPasswordAdmin)
 adminRouter.patch('/reset-password', verifyAdminToken, resetPassword)
+adminRouter.patch('/avatar-update', adminProfileUpload, uploadPicture)
 
 export {adminRouter};
 

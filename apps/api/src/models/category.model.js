@@ -18,6 +18,10 @@ export const init = (sequelize) =>{
     name: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     sequelize,

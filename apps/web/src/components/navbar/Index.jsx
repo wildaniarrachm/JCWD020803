@@ -3,6 +3,7 @@ import { HamburgerMenu } from './HamburgerMenu';
 import { Link } from 'react-router-dom';
 import { NavbarRight } from './NavbarRight';
 import { NavbarNav } from './NavbarNav';
+import { NavSearch } from './NavSearch';
 export const Navbar = () => {
   return (
     <div className="flex justify-between align-middle bg-gradient-to-b from-main-red to-main-pink text-main-light h-[70px] p-[3%] sticky top-0 z-20 laptop:pl-[5%] latpop:pr-[10%]">
@@ -20,6 +21,9 @@ export const Navbar = () => {
       {/* <div className="laptop:block laptop:absolute laptop:left-[40%] laptop:top-6 mobile:hidden">
         <NavbarNav />
       </div> */}
+      <div className='flex items-center justify-start'>
+        <NavSearch/>
+      </div>
       <NavbarRight />
     </div>
   );

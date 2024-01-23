@@ -19,20 +19,6 @@ import {
 import { useState } from "react";
 import { RegisterAdmin } from "./registeradminmodal";
  
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Monitored",
-    value: "monitored",
-  },
-  {
-    label: "Unmonitored",
-    value: "unmonitored",
-  },
-];
  
 const TABLE_HEAD = ["Admin", "Branch", "Status", "Employed", ""];
  

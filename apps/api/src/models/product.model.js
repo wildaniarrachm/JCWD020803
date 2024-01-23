@@ -30,9 +30,11 @@ export const init = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false},
     isDisabled: {
-      type: DataTypes.BOOLEAN},
+      type: DataTypes.BOOLEAN,
+      defaultValue: false },
     isDeleted: {
-      type: DataTypes.BOOLEAN}
+      type: DataTypes.BOOLEAN,
+    defaultValue: false }
   }, {
     sequelize,
     modelName: 'Product',
