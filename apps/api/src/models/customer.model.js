@@ -59,7 +59,13 @@ export const init = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-
+      socialRegister: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      firebase_uid: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,

@@ -1,5 +1,5 @@
 import { Typography } from '@material-tailwind/react';
-import LogoFull from '../../assets/ez-mart-high-resolution-logo-transparent.png';
+import LogoFull from '../../assets/ez-mart-nav-logo.png';
 import LogoIcon from '../../assets/ez-mart logo store aja.png';
 import { ButtonScrollTop } from '../button-scroll-top/Index';
 
@@ -22,7 +22,7 @@ const currentYear = new Date().getFullYear();
 
 export const Footer = () => {
   return (
-    <footer className="static top-0 w-full">
+    <footer className="static top-0 w-full  bg-main-red pt-8">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
           <img src={LogoFull} alt={LogoIcon} className="w-[120px] h-[45px]" />
@@ -32,36 +32,34 @@ export const Footer = () => {
               <ul key={title}>
                 <Typography
                   variant="small"
-                  className="mb-3 font-medium text-main-blue"
+                  className="mb-3 text-main-light font-poppins font-bold"
                 >
                   {title}
                 </Typography>
                 {items.map((link) => (
                   <li key={link}>
-                    <Typography
-                      as="a"
+                    <a
                       href="#"
-                      color="gray"
-                      className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
+                      className="text-white inline-block my-1.5 font-normal transition-colors hover:text-blue-gray-900 font-poppins"
                     >
                       {link}
-                    </Typography>
+                    </a>
                   </li>
                 ))}
               </ul>
             ))}
           </div>
         </div>
-        <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
+        <div className="mt-12 flex w-full flex-col items-center justify-center border-t border-blue-gray-200 py-4 md:flex-row md:justify-between">
           <Typography
             variant="small"
-            className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
+            className="mb-4 text-center text-white font-bold md:mb-0"
           >
             &copy; {currentYear}{' '}
             <a href="https://material-tailwind.com/">Ez Mart</a>. All Rights
             Reserved.
           </Typography>
-          <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
+          <div className="flex gap-4 text-white sm:justify-center">
             <Typography
               as="a"
               href="#"

@@ -1,12 +1,118 @@
-import { HiOutlineHome } from 'react-icons/hi2';
-export const CustomerAddressBody = () => {
+import { AddAddress } from './AddAddress';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { Button, Input } from '@material-tailwind/react';
+import { switchPrimaryAddress } from '../../../../utils/address/switch.primary';
+import { deleteAddress } from '../../../../utils/address/delete.address';
+import { DetailAddress } from './DetailAddress';
+import { switchDeliveriedAddress } from '../../../../utils/address/switch.delivery';
+import { recoverAddress } from '../../../../utils/address/recover.address';
+import swal from 'sweetalert';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+export const CustomerAddressBody = ({ getAddress, token }) => {
+  const navigation = [
+    { id: 1, name: 'All Address', key: false },
+    { id: 2, name: 'Recently Deleted', key: true },
+  ];
+  const [filter, setFilter] = useState({
+    filter: false,
+    active: 1,
+  });
+  const address = useSelector((state) => state.customerAddress.value);
+  const handlePrimary = async (checked, id) => {
+    await switchPrimaryAddress(checked, id, token);
+    getAddress();
+  };
+  const handleRecover = async (id) => {
+    const response = await recoverAddress(id);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        autoClose: 5000,
+      });
+    }
+    getAddress();
+  };
+  const handleDeleted = async (id) => {
+    const wilDeleted = await swal({
+      title: 'Are you sure?',
+      text: 'Dont worry, once deleted, you will be able to recover this address.',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    });
+
+    if (wilDeleted) {
+      try {
+        const response = await deleteAddress(id);
+        swal(response?.data, {
+          icon: 'success',
+        });
+      } catch (error) {
+        swal(error?.message, {
+          icon: 'error',
+        });
+      }
+    } else {
+      swal('Your address is safe!');
+    }
+    getAddress();
+  };
+
+  const filteredAddress = address?.filter(
+    (address) => address?.isDeleted === filter?.filter,
+  );
+  const handleDeliveried = async (data) => {
+    await switchDeliveriedAddress(data, token);
+    getAddress();
+  };
   return (
-    <section className="h-[300px] bg-gray-200 py-6">
-      <div className="h-[100%] bg-white mx-2 rounded-lg shadow-lg">
-        <div className="flex flex-col p-5">
-          <div className='flex flex-col justify-center'>
-            <HiOutlineHome size={'60px'} className="text-main-red/80" />
-            <h1 className='font-poppins font-bold text-[24px]'>Home Address</h1>
+    <section className="bg-gray-200 p-2">
+      <h2 className="font-bold text-[20px] font-poppins text-center mb-2">
+        Address List
+      </h2>
+      <div className=" h-full py-2 px-3 rounded-lg bg-white flex flex-col gap-5">
+        <div className="w-full">
+          <div className="flex justify-between w-full p-1 laptop:p-5">
+            <div className="w-[30%] flex flex-col gap-4 laptop:w-[40%]">
+              <div className="flex flex-col laptop:flex-row gap-2">
+                <Input
+                  label="Search recived name or address"
+                  className="w-[220px] laptop:w-[100%]"
+                />
+                <Button size="sm">Search</Button>
+              </div>
+              <div className="flex gap-2">
+                {navigation?.map((nav) => (
+                  <button
+                    className={`border text-[10px] laptop:text-[14px] border-gray-400 text-gray-600 px-10 py-1 laptop:px-6 laptop:py-5 rounded-lg ${
+                      filter?.active === nav?.id
+                        ? 'bg-main-pink/50 border-main-red text-main-red'
+                        : null
+                    }`}
+                    key={nav?.id}
+                    onClick={() =>
+                      setFilter({ filter: nav?.key, active: nav?.id })
+                    }
+                  >
+                    {nav?.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="w-[30%] laptop:w-[20%]">
+              <AddAddress getAddress={getAddress} />
+            </div>
+          </div>
+          <div className="flex flex-col gap-4 mt-2">
+            <DetailAddress
+              filteredAddress={filteredAddress}
+              handleDeleted={handleDeleted}
+              handlePrimary={handlePrimary}
+              handleDeliveried={handleDeliveried}
+              handleRecover={handleRecover}
+              getAddress={getAddress}
+            />
           </div>
         </div>
       </div>

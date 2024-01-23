@@ -16,8 +16,8 @@ export const NavbarRight = () => {
   const token = localStorage.getItem('token');
   return (
     <div className="flex justify-between items-center gap-[15px] tablet:gap-[40px]">
-      <div className="relative top-0 flex justify-center align-middle bg-main-pink rounded-[70%] p-[20px]  tablet:relative tablet:p-[20px] laptop:p-[20px] laptop:top-0 laptop:relative">
-        <Menu open={open} handler={setOpen} allowHover placement="bottom-start">
+      <div className="relative top-0 flex justify-center align-middle bg-main-red rounded-[70%] p-[20px]  tablet:relative tablet:p-[20px] laptop:p-[20px] laptop:top-0 laptop:relative">
+        <Menu open={open} handler={setOpen} allowHover placement="bottom">
           <MenuHandler className="cursor-pointer absolute top-2 tablet:absolute tablet:top-2 laptop:absolute laptop:top-2">
             <div>
               <Badge content={'0'} withBorder>
@@ -25,7 +25,7 @@ export const NavbarRight = () => {
               </Badge>
             </div>
           </MenuHandler>
-          <MenuList className=" flex flex-col gap-2 w-[100px] max-h-[250px] tablet:max-w-[30%] laptop:max-w-[25%]">
+          <MenuList className=" flex flex-col gap-2 w-[100px] max-h-[250px] tablet:max-w-[30%] laptop:max-w-full">
             <MenuItem className="flex justify-around items-center gap-4 py-2 pl-2 pr-8">
               <Avatar
                 variant="rounded"

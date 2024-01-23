@@ -33,7 +33,7 @@ export const FormRegist = () => {
 
   return (
     <form
-      className="w-[80%] flex flex-col gap-5 static tablet:w-[60%] laptop:w-[40%]"
+      className="w-[100%] flex flex-col gap-5 static tablet:w-[60%] laptop:w-[40%]"
       onSubmit={formik.handleSubmit}
       data-aos="fade-left"
     >
@@ -61,14 +61,8 @@ export const FormRegist = () => {
           value={formik.values.last_name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.last_name && formik.errors.last_name}
-          required
         />
-        {formik.touched.last_name && formik.errors.last_name && (
-          <div className="text-red-500 text-[12px] font-poppins">
-            {formik.errors.last_name}
-          </div>
-        )}
+
         <Input
           label="Username"
           id="username"

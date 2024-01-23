@@ -11,16 +11,12 @@ import { useEffect, useState } from 'react';
 import { MdOutlineCameraAlt } from 'react-icons/md';
 import { FormUpImage } from './FormUpImage';
 import { useSelector } from 'react-redux';
-import { useFormik } from 'formik';
 import { uploadImage } from '../../../../utils/customer/upload.image.customer';
+import { toast } from 'react-toastify';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 export const ModalUploadImage = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!open);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const user = useSelector((state) => state.customer.value);
   useEffect(() => {
     AOS.init({
       disable: false,
@@ -29,23 +25,27 @@ export const ModalUploadImage = () => {
     });
   });
 
-  const formik = useFormik({
-    initialValues: {
-      id: user?.id,
-      images: '',
-    },
-    onSubmit: (values, action) => {
-      uploadImage(values);
-      action.resetForm();
-    },
-  });
+  const user = useSelector((state) => state.customer.value);
+  const [open, setOpen] = useState(false);
+  const token = localStorage.getItem('token');
+  const handleOpen = () => setOpen(!open);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const handleSubmit = async () => {
+    let formData = new FormData();
+    formData.append('file', image);
+    const response = await uploadImage(formData, token);
+    console.log(response);
+    handleOpen();
+  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setImage(file);
     if (file) {
       const reader = new FileReader();
       reader.onload = function (event) {
         setSelectedImage(event.target.result);
-        formik.setFieldValue('images', event.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -57,21 +57,22 @@ export const ModalUploadImage = () => {
         withBorder
         placement="bottom-end"
         content={<MdOutlineCameraAlt />}
-        className="bg-main-blue p-2"
+        className="bg-main-blue p-2 cursor-pointer"
         onClick={handleOpen}
       >
         <Avatar
-          src="https://docs.material-tailwind.com/img/face-2.jpg"
-          alt="avatar"
+          src={user?.images}
+          alt={`${user?.first_name} Images`}
           size="xl"
           withBorder="true"
-          className="p-0.5"
+          className="p-0.5 text-[12px]"
           color="red"
+          
         />
       </Badge>
       <Dialog open={open} handler={handleOpen} size="xs">
         <DialogHeader>Upload Images</DialogHeader>
-        <form onSubmit={formik.handleSubmit}>
+        <form>
           <DialogBody>
             <FormUpImage
               selectedImage={selectedImage}
@@ -87,12 +88,7 @@ export const ModalUploadImage = () => {
             >
               <span>Cancel</span>
             </Button>
-            <Button
-              variant="gradient"
-              color="pink"
-              onClick={handleOpen}
-              type="submit"
-            >
+            <Button variant="gradient" color="pink" onClick={handleSubmit}>
               <span>Upload</span>
             </Button>
           </DialogFooter>

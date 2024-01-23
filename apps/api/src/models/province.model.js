@@ -8,15 +8,25 @@ export default class Province extends Model {
    */
   static associate(models) {
     // define association here
-    Province.hasMany(models.City)
+    Province.hasMany(models.City);
   }
 }
 export const init = (sequelize) => {
-  Province.init({
-    province: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Province',
-  });
+  Province.init(
+    {
+      province: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      province_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Province',
+    },
+  );
   return Province;
 };

@@ -12,8 +12,8 @@ import { FaRegEdit } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import { addPhoneNumber } from '../../../../utils/customer/add.phone.number';
 import { useSelector } from 'react-redux';
-import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 export const ModalPhone = () => {
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export const ModalPhone = () => {
       <IconButton
         onClick={handleOpen}
         variant="outlined"
-        className="rounded-lg"
+        className="rounded-full"
         size="md"
       >
         <FaRegEdit size={16} />

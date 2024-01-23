@@ -1,30 +1,14 @@
-import { setData } from '../../redux/customer.slice';
 import { api } from '../../libs/server.api';
 import * as Yup from 'yup';
 
-export const loginCustomer = async (
-  data,
-  handleReaload,
-  navigate,
-  setLoading,
-  dispatch,
-) => {
-  try {
-    const response = await api.post(`customer/login`, data);
-    console.log(response);
-    if (response?.data?.token) {
-      localStorage.setItem('token', response?.data?.token);
-      dispatch(setData(response?.data?.result));
-      navigate('/');
-      handleReaload();
+  export const loginCustomer = async (data) => {
+    try {
+      const response = await api.post(`customer/login`, data);
+      return response;
+    } catch (error) {
+      return error;
     }
-    setLoading(true);
-    alert(response?.data?.message);
-  } catch (error) {
-    console.log(error);
-    alert(error?.response?.data);
-  }
-};
+  };
 
 export const validateLogin = Yup.object({
   email: Yup.string()

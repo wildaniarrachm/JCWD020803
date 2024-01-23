@@ -30,14 +30,14 @@ export function HamburgerMenu() {
     <>
       <button
         onClick={openDrawer}
-        className="bg-main-pink rounded-[25%] p-[3px]"
+        className="bg-main-red rounded-[25%] p-[3px]"
       >
         <HiOutlineMenuAlt1 size={35} className="text-white" />
       </button>
       <Drawer
         open={open}
         onClose={closeDrawer}
-        className="p-4 fixed"
+        className="p-4 bg-white"
         size={300}
         transition={{ type: 'tween', duration: 0.5 }}
       >
