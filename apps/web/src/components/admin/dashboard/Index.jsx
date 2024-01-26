@@ -1,10 +1,7 @@
-import { DesktopNav } from "./nav/Index";
-import { Sidebar } from "./sidebar/Index";
+import { DesktopNav } from './nav/Index';
+import { Sidebar } from './sidebar/Index';
 
-
-
-
-export const Layout = ({children}) => {
+export const Layout = ({ children }) => {
   return (
     <>
       <div className=" grid gap-6 grid-rows-[75px_minmax(900px,_1fr)] grid-cols-[150px_minmax(900px,_1fr)]">
@@ -15,9 +12,7 @@ export const Layout = ({children}) => {
           {' '}
           <DesktopNav />{' '}
         </div>
-        <div className="">
-          {children}
-        </div>
+        <div>{children}</div>
       </div>
     </>
   );

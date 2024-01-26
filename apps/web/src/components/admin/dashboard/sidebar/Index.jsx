@@ -17,11 +17,11 @@ export const Sidebar = () => {
           route: '/product-catalogue',
         },
         {
-          name: 'Product Category', 
-          route: '/product-category'
+          name: 'Product Category',
+          route: '/product-category',
         },
-        { name: 'Add Product'},
-        { route: '/add-product'}
+        { name: 'Add Product' },
+        { route: '/add-product' },
       ],
     },
     { name: 'Sales Report', icon: <AiOutlineStock size={'25px'} /> },
@@ -38,7 +38,7 @@ export const Sidebar = () => {
     {
       name: 'Branch',
       icon: <IoStorefrontOutline size={'30px'} />,
-      route: 'branch',
+      route: '/dashboard/branch',
     },
     {
       name: 'Category',

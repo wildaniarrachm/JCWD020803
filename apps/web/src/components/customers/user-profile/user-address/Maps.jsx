@@ -1,42 +1,35 @@
-import { Typography } from '@material-tailwind/react';
-import Geocoder from './Geocoder';
 import { useEffect, useRef } from 'react';
-import ReactMapGl, {
-  Marker,
-  NavigationControl,
-} from 'react-map-gl';
+import ReactMapGl, { Marker, NavigationControl } from 'react-map-gl';
 
-export const OpenMaps = ({
-  loading,
-  setGeo,
-  geo,
-  detailAddress,
-  handleDrag,
-}) => {
+export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
   const mapRef = useRef();
+  console.log(direct);
   const getCurrentLocation = async () => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        mapRef.current.flyTo({
-          center: [position?.coords?.longitude, position?.coords?.latitude],
+    if (!geo?.lat && !geo?.lng) {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          mapRef.current.flyTo({
+            center: [position?.coords?.longitude, position?.coords?.latitude],
+          });
+          setGeo({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
         });
-        setGeo({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      });
+      }
     } else {
-      const response = await fetch(`https://ipapi.co/json/`);
+      mapRef.current.flyTo({
+        center: [geo?.lng, geo?.lat],
+      });
+      console.log('test');
     }
   };
   useEffect(() => {
-    if (!geo?.lat && !geo?.lng) {
-      getCurrentLocation();
-    }
-  }, []);
+    getCurrentLocation();
+  }, [direct === true]);
   return (
-    <div className=" -top-5 mx-auto w-[100%] h-[200px] tablet:h-[300px] laptop:h-[300px] pb-5 ">
-      <div className='h-[80%] laptop:h-[100%] w-full'>
+    <div className=" mx-auto w-[100%] h-[300px] tablet:h-[300px] laptop:h-[300px] py-5 ">
+      <div className="h-[100%] laptop:h-[100%] w-full">
         <ReactMapGl
           ref={mapRef}
           style={{
@@ -64,26 +57,6 @@ export const OpenMaps = ({
           <NavigationControl position="bottom-right" />
         </ReactMapGl>
       </div>
-
-      {loading ? (
-        <div className="h-full w-full mt-4 font-poppins animate-pulse">
-          <Typography
-            as="div"
-            variant="h1"
-            className="mb-4 h-3 rounded-full bg-gray-300 w-full"
-          >
-            &nbsp;
-          </Typography>
-        </div>
-      ) : (
-        <div className="h-full mt-3 font-poppins">
-          {detailAddress?.map((detail) => (
-            <h2 key={detail} className="text-black text-[11px] tablet:text-[14px] laptop:text-sm">
-              Result: {detail?.formatted}
-            </h2>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

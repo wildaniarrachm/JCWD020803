@@ -5,7 +5,7 @@ import {
   MenuItem,
   MenuList,
 } from '@material-tailwind/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigation, useParams } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import { useState } from 'react';
 import { MdProductionQuantityLimits } from 'react-icons/md';
@@ -15,10 +15,11 @@ export const SideBar = ({ items }) => {
   const handleItemClick = (item) => {
     setActiveItem(item);
   };
-  const [activeSideBar, setActiveSideBar] = useState()
+  const [activeSideBar, setActiveSideBar] = useState();
   const handleSideBar = () => {
-    setActiveSideBar()
-  }
+    setActiveSideBar();
+  };
+
   return (
     <div className="grid grid-col justify-center w-[150px] text-lg text-main-blue p-3">
       <ul className="py-3">

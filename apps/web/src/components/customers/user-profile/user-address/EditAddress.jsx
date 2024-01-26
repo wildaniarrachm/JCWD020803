@@ -4,7 +4,8 @@ import ReactMapGl, { Marker, NavigationControl } from 'react-map-gl';
 import { getAddressById } from '../../../../utils/address/get.byid';
 import { fetchOpenCage } from '../../../../utils/address/fetch.opencage';
 import { Typography } from '@material-tailwind/react';
-import { FormEditAddress } from './FormEditAddress';
+import { FormEditAddress } from './formEditAddress';
+
 export const EditAddress = () => {
   const mapRef = useRef();
   const { id } = useParams();
@@ -50,15 +51,6 @@ export const EditAddress = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // const handleMaps = () => {
-  //   if (geo) {
-  //     mapRef.current.flyTo({
-  //       center: [geo?.lng, geo?.lat],
-  //     });
-  //   } else {
-  //     return;
-  //   }
-  // };
 
   const handleDetailAddress = async () => {
     setLoading(true);
@@ -96,7 +88,6 @@ export const EditAddress = () => {
 
   useEffect(() => {
     handleDetailAddress();
-    // handleMaps();
   }, [geo]);
   return (
     <>

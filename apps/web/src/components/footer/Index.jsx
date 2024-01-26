@@ -1,7 +1,7 @@
 import { Typography } from '@material-tailwind/react';
 import LogoFull from '../../assets/ez-mart-nav-logo.png';
 import LogoIcon from '../../assets/ez-mart logo store aja.png';
-import { ButtonScrollTop } from '../button-scroll-top/Index';
+import { ButtonScrollTop } from '../button-scroll-top';
 
 const LINKS = [
   {

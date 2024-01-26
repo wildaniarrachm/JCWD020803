@@ -1,4 +1,4 @@
-import { Footer } from '../footer/Index';
+import { Footer } from '../footer';
 import { Navbar } from '../navbar/Index';
 
 export const Layout = ({ children }) => {

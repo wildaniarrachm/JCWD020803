@@ -7,7 +7,7 @@ import {
   MenuList,
   Typography,
 } from '@material-tailwind/react';
-import { CustomerProfile } from './CustomerProfile';
+import { CustomerProfile } from './customerProfile';
 import { useState } from 'react';
 import { PiBag } from 'react-icons/pi';
 

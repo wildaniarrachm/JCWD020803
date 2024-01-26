@@ -4,11 +4,12 @@ import { MdOutlineContentCopy } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ModalUploadImage } from './ModalImages';
-import { ModalEmail } from './ModalEmail';
-import { ModalPhone } from './ModalPhone';
+import { ModalUploadImage } from './modalImages';
+import { ModalEmail } from './modalEmail';
+import { ModalPhone } from './modalPhone';
+import { ButtonVerifyPhone } from './buttonVerifyPhone';
 import { useNavigate } from 'react-router-dom';
-import { ButtonVerifyPhone } from './ButtonVerifyPhone';
+
 import { requestVerifyEmail } from '../../../../utils/customer/change.email';
 import { MdVerified } from 'react-icons/md';
 
@@ -31,7 +32,6 @@ export const ProfileBody = () => {
   const token = localStorage.getItem('token');
   const handleVerifyEmail = async () => {
     const response = await requestVerifyEmail(token);
-    console.log(response);
   };
 
   return (

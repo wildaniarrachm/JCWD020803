@@ -2,14 +2,17 @@ import {
   Accordion,
   AccordionBody,
   AccordionHeader,
+  Button,
+  Input,
+  Spinner,
 } from '@material-tailwind/react';
 import mapIcon from '../../../../assets/map.png';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { FormNewAddress } from './Form';
-import { fetchOpenCage } from '../../../../utils/address/fetch.opencage';
-import { OpenMaps } from './Maps';
+import { FormNewAddress } from './form';
+import { OpenMaps } from './maps';
+import { fetchMapboxGeocode } from '../../../../utils/address/fetch.mapbox.geocode';
 
 export const OpenAccordion = ({
   province,
@@ -27,35 +30,31 @@ export const OpenAccordion = ({
   handleDrag,
 }) => {
   const [open, setOpen] = useState(2);
+  const [direct, setDirect] = useState(true);
   const [detailAddress, setDetailAddress] = useState();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState();
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const [benchmark, setBenchmark] = useState('');
+  const handleBenchmark = (e) => setBenchmark(e);
 
+  const handleOpen = (value) => setOpen(open === value ? 0 : value);
   const handleDetailAddress = async () => {
     setLoading(true);
     try {
-      if (geo?.lat && geo?.lng) {
-        const response = await fetchOpenCage(geo);
-        if (response?.data?.results) {
-          setDetailAddress(response?.data?.results);
-          setData(response?.data?.results);
-        }
-        if (response?.message === 'Network Error') {
-          alert(response?.message);
-          return setLoading(true);
-        }
-      }
+      const response = await fetchMapboxGeocode(benchmark);
+      console.log(response?.features);
+      setDetailAddress(response?.features);
       setLoading(false);
+      setDirect(false);
     } catch (error) {
-      setLoading(true);
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    handleDetailAddress();
-  }, [geo]);
+  const handleClick = (event) => {
+    setGeo({ lng: event?.center[0], lat: event?.center[1] });
+    setBenchmark(event?.place_name);
+    setDirect(true);
+    console.log(event);
+  };
 
   return (
     <>
@@ -70,11 +69,42 @@ export const OpenAccordion = ({
           </div>
         </AccordionHeader>
         <AccordionBody>
+          <div className="relative justify-between flex gap-12 mb-2">
+            <Input
+              label="Search benchmark"
+              variant='standard'
+              value={benchmark}
+              onChange={(e) => handleBenchmark(e?.target?.value)}
+            />
+            {loading === true ? (
+              <Button disabled>
+                <Spinner className="mx-auto" />
+              </Button>
+            ) : (
+              <button onClick={handleDetailAddress}>Search</button>
+            )}
+            <div
+              className={`${
+                direct === false > 0 ? 'absolute' : 'hidden'
+              } left-0 top-10 overflow-y-scroll h-[200px] w-[80%] rounded-lg z-10 bg-white px-2`}
+            >
+              {detailAddress?.map((detail) => (
+                <div
+                  key={detail?.id}
+                  onClick={() => handleClick(detail)}
+                  className="py-2 cursor-pointer hover:bg-gray-200 "
+                >
+                  <small className="font-poppins">{detail?.place_name}</small>
+                </div>
+              ))}
+            </div>
+          </div>
           <OpenMaps
             setGeo={setGeo}
             geo={geo}
             loading={loading}
-            detailAddress={detailAddress}
+            direct={direct}
+            setDirect={setDirect}
             handleDrag={handleDrag}
           />
         </AccordionBody>
@@ -105,7 +135,6 @@ export const OpenAccordion = ({
             value={value}
             handlePhoneChange={handlePhoneChange}
             idProvince={idProvince}
-            data={data}
             error={error}
           />
         </AccordionBody>

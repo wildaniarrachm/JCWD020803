@@ -32,7 +32,6 @@ export const FormLogin = () => {
     };
   }, []);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +43,6 @@ export const FormLogin = () => {
         autoClose: 5000,
       });
       localStorage.setItem('token', response?.data?.token);
-      dispatch(setData(response?.data?.result));
       setLoading(false);
       navigate('/');
       window.location.reload();

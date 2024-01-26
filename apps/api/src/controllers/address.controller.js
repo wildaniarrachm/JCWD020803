@@ -18,7 +18,8 @@ export const getAllProvince = async (req, res) => {
     const response = await rajaOngkir.get('province');
     res.status(200).send(response?.data);
   } catch (error) {
-    res.status(500).send(error.message);
+    const response = await Province.findAll();
+    return res.status(200).send(response);
   }
 };
 
@@ -28,7 +29,15 @@ export const getCityByProvince = async (req, res) => {
     const response = await rajaOngkir.get(`city?province=${province}`);
     res.status(200).send(response?.data);
   } catch (error) {
-    res.status(500).send(error.message);
+    const provinceExist = await Province.findOne({
+      where: { province_id: province },
+      include: [
+        {
+          model: City,
+        },
+      ],
+    });
+    res.status(200).send(provinceExist);
   }
 };
 

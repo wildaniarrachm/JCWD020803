@@ -8,8 +8,9 @@ import {
 } from 'react-icons/ci';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ProfileNavigation } from '../Navigation';
+import { ProfileNavigation } from '../navigation';
 import { useEffect } from 'react';
+
 export const ProfileHeader = ({ title, link, textLink }) => {
   useEffect(() => {
     AOS.init({

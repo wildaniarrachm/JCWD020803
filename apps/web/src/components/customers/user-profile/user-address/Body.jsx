@@ -1,10 +1,12 @@
-import { AddAddress } from './AddAddress';
+
+import { AddAddress } from './addAddress';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Button, Input } from '@material-tailwind/react';
 import { switchPrimaryAddress } from '../../../../utils/address/switch.primary';
 import { deleteAddress } from '../../../../utils/address/delete.address';
-import { DetailAddress } from './DetailAddress';
+import { DetailAddress } from './detailAddress';
+
 import { switchDeliveriedAddress } from '../../../../utils/address/switch.delivery';
 import { recoverAddress } from '../../../../utils/address/recover.address';
 import swal from 'sweetalert';

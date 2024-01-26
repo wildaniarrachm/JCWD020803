@@ -32,9 +32,11 @@ export const FormEditAddress = ({ addressData, handleChange }) => {
       if (response?.data?.rajaongkir?.results) {
         setCities(response?.data?.rajaongkir?.results);
         setLoad(false);
+      } else {
+        setCities(response?.data?.Cities);
+        setLoad(false);
       }
     }
-    // setLoad(false);
   };
   const handleEditAddress = async () => {
     const willEdited = await swal({
@@ -53,6 +55,7 @@ export const FormEditAddress = ({ addressData, handleChange }) => {
           city_id: add?.data?.result?.city_id,
         };
         const response = await editAddress(newData, token);
+        console.log(response);
         if (response?.status === 200) {
           swal(response?.data, {
             icon: 'success',
@@ -114,7 +117,7 @@ export const FormEditAddress = ({ addressData, handleChange }) => {
           >
             {cities?.map((city) => (
               <Option key={city?.city_id} value={city?.city_id}>
-                {city?.type} {city?.city_name}
+                {city?.type} {city?.city_name ? city?.city_name : city?.city}
               </Option>
             ))}
           </Select>

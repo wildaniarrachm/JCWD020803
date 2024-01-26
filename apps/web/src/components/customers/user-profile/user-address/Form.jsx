@@ -15,11 +15,9 @@ export const FormNewAddress = ({
   value,
   handlePhoneChange,
   idProvince,
-  data,
   error,
 }) => {
   const [disabled, setDisabled] = useState(true);
-  const [newProvinces, setNewProvinces] = useState('');
   const handleDisabled = () => {
     if (idProvince === '' || idProvince === undefined) {
       setDisabled(true);
@@ -28,22 +26,9 @@ export const FormNewAddress = ({
     }
   };
 
-  const handleNewData = () => {
-    if (data) {
-      let arr = data?.values();
-      for (const value of arr) {
-        setNewProvinces(value?.components?.state);
-      }
-    }
-  };
-  const filteredProvinces = newProvinces
-    ? province?.filter((province) => province?.province === newProvinces)
-    : province;
-
   useEffect(() => {
     handleDisabled();
-    handleNewData();
-  }, [idProvince][data]);
+  }, [idProvince]);
   return (
     <div className="relative -top-3 grid grid-cols-1 w-full h-[300px] laptop:w-full laptop:flex laptop:flex-col laptop:gap-5">
       <Select
@@ -55,7 +40,7 @@ export const FormNewAddress = ({
         }}
         onChange={(e) => setIdProvince(e)}
       >
-        {filteredProvinces?.map((provinces) => (
+        {province?.map((provinces) => (
           <Option key={provinces?.province_id} value={provinces?.province_id}>
             {provinces?.province}
           </Option>
@@ -148,6 +133,5 @@ FormNewAddress.propTypes = {
   value: PropTypes.func,
   handlePhoneChange: PropTypes.func,
   idProvince: PropTypes.func,
-  data: PropTypes.array,
-  error:PropTypes.func
+  error: PropTypes.func,
 };

@@ -14,7 +14,7 @@ import {
   addressSchema,
   postAddress,
 } from '../../../../utils/address/add.address.customer';
-import { OpenAccordion } from './OpenAccordion';
+import { OpenAccordion } from './openAccordion';
 import { useSelector } from 'react-redux';
 export const AddAddress = ({ getAddress }) => {
   const [open, setOpen] = useState(false);
@@ -24,14 +24,16 @@ export const AddAddress = ({ getAddress }) => {
   const [idProvince, setIdProvince] = useState('');
   const [idCities, setIdCities] = useState('');
   const province = useSelector((state) => state.provinces.value);
-
   const getCities = async () => {
     try {
-      const response = await getCityByProvince(idProvince);
-      if (response?.status === 500 || response?.status === 400) {
-        return alert('Network error');
-      } else {
-        setCities(response?.data?.rajaongkir?.results);
+      if (idProvince) {
+        const response = await getCityByProvince(idProvince);
+        console.log(response);
+        if (response?.data?.rajaongkir?.results) {
+          return setCities(response?.data?.rajaongkir?.results);
+        } else {
+          return setCities(response?.data?.Cities);
+        }
       }
     } catch (error) {
       console.log(error);

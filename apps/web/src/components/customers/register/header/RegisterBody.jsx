@@ -1,5 +1,5 @@
 import { FcGoogle } from 'react-icons/fc';
-import { FormRegist } from '../form/FormRegist';
+import { FormRegist } from '../form/formRegist';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormLogin } from '../../login/Form';
 import { auth, provider } from '../../../../utils/customer/firebase';

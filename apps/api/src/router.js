@@ -5,6 +5,7 @@ import { customerRouter } from './routers/customer.route';
 import { addressRouter } from './routers/address.router';
 import { cityRouter } from './routers/city.router';
 import { productRouter } from './routers/product.router';
+import { branchRouter } from './routers/branch.router';
 
 const router = Router();
 
@@ -18,9 +19,10 @@ router.use('/customer', customerRouter);
 router.use('/address', addressRouter);
 router.use('/cities', cityRouter);
 
-router.use('/admins', adminRouter)
-router.use('/customer', customerRouter)
-router.use('/product', productRouter)
+router.use('/admins', adminRouter);
+router.use('/customer', customerRouter);
+router.use('/product', productRouter);
+router.use('/branch', branchRouter);
 
 // add another router here ...
 

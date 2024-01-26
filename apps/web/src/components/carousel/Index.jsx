@@ -34,14 +34,14 @@ export const MainCarousel = () => {
         "Great News! Enjoy a 50% discount on all products. Don't miss out on these incredible savings. Shop now and indulge in the best deals!",
       button: 'Shop Now',
     },
-    {
-      img: imageCarousel_3,
-      alt: 'Image 2',
-      title: 'Discount 20%',
-      subTitle:
-        'Enjoy a 20% discount on all pet foods! Treat your furry friends to quality meals at a great price.',
-      button: 'Shop Now',
-    },
+    // {
+    //   img: imageCarousel_3,
+    //   alt: 'Image 2',
+    //   title: 'Discount 20%',
+    //   subTitle:
+    //     'Enjoy a 20% discount on all pet foods! Treat your furry friends to quality meals at a great price.',
+    //   button: 'Shop Now',
+    // },
     {
       img: imageCarousel_4,
       alt: 'Image 4',

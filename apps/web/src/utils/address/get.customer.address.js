@@ -2,10 +2,13 @@ import { api } from '../../libs/server.api';
 
 export const getCustomerAddress = async (token) => {
   try {
-    const response = await api.get(`address/customer`, {
-      headers: { Authorization: `Bearer ${token}` },
+    if(token){
+
+      const response = await api.get(`address/customer`, {
+        headers: { Authorization: `Bearer ${token}` },
     });
     return response;
+  }
   } catch (error) {
     console.log(error);
   }

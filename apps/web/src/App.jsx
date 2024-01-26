@@ -30,6 +30,12 @@ import EditAddressPage from './pages/user-dashboard/address/edit-address/Index';
 import { getAllProvince } from './utils/address/get.province';
 import { setProvinces } from './redux/province.slice';
 import { ToastContainer } from 'react-toastify';
+import { setData } from './redux/customer.slice';
+import { AdminTable } from './components/admin/dashboard/admin-management/admintable';
+import BranchPage from './pages/admin/branch-page/Index';
+import NewBranchPage from './pages/admin/branch-page/new-branch/Index';
+import EditBranchPage from './pages/admin/branch-page/edit-branch/Index';
+import SuperAdminRequired from './components/required/super.admin.required';
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
   { path: '/register-user', element: <RegisterUser /> },
@@ -89,28 +95,56 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    element: <SuperAdminRequired />,
+    children: [
+      {
+        path: '/dashboard/branch',
+        element: <BranchPage />,
+      },
+      {
+        path: '/branch/new-branch',
+        element: <NewBranchPage />,
+      },
+      {
+        path: '/branch/edit/:id',
+        element: <EditBranchPage />,
+      },
+    ],
+  },
 ]);
 
 function App() {
   const token = localStorage?.getItem('token');
   const tokenAdmin = localStorage.getItem('tokenAdmin');
   const dispatch = useDispatch();
-
+  
   const getAddress = async () => {
-    const response = await getCustomerAddress(token);
-    dispatch(addressData(response?.data?.result));
+    if (token) {
+      const response = await getCustomerAddress(token);
+      dispatch(addressData(response?.data?.result));
+    }
   };
   const getProvince = async () => {
-    const response = await getAllProvince();
-    dispatch(setProvinces(response?.data?.rajaongkir?.results));
+    if (token) {
+      const response = await getAllProvince();
+      if (response?.data?.rajaongkir?.results) {
+        console.log(response);
+        dispatch(setProvinces(response?.data?.rajaongkir?.results));
+      } else {
+        dispatch(setProvinces(response?.data));
+      }
+    }
+  };
+  const keepLoginCustomers = async () => {
+    if (token !== null) {
+      const response = await keepLoginCustomer(token);
+      dispatch(setData(response?.data?.result));
+    }
   };
 
   useEffect(() => {
-    if (token) {
-      keepLoginCustomer(dispatch, token);
-    } else {
-      return;
-    }
+    keepLoginCustomers();
   }, [token]);
 
   useEffect(() => {

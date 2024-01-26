@@ -9,7 +9,6 @@ export default class City extends Model {
   static associate(models) {
     // define association here
     City.hasMany(models.Address);
-    City.hasMany(models.Branch);
     City.belongsTo(models.Province);
   }
 }

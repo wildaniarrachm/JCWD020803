@@ -8,21 +8,59 @@ export default class Branch extends Model {
    */
   static associate(models) {
     // define association here
-    Branch.belongsTo(models.Admin)
-    Branch.belongsTo(models.City)
-    Branch.hasOne(models.Branch_product)
+    Branch.belongsTo(models.Admin);
+    Branch.hasOne(models.Branch_product);
   }
 }
 
 export const init = (sequelize) => {
-  Branch.init({
-    branch_name: DataTypes.STRING,
-    longitude: DataTypes.DECIMAL,
-    latitude: DataTypes.DECIMAL,
-    isDisabled: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Branch',
-  });
+  Branch.init(
+    {
+      branch_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      longitude: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      latitude: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      isDisabled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      store_contact: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      head_store: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      province_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      city_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Branch',
+    },
+  );
   return Branch;
 };
