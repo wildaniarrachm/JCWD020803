@@ -5,7 +5,7 @@ export const RegisterHeader = ({ title, subTitle, link }) => {
     <div className="h-[250px] flex flex-col m-auto justify-center items-center">
       <p className="font-poppins font-bold text-[40px]">{title}</p>
       <div>
-        <Breadcrumbs className="bg-white ">
+        <Breadcrumbs className="bg-gray-200 ">
           <a href="/" className="text-gray-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -32,7 +32,7 @@ export const ButtonScrollTop = () => {
     >
       <FaCircleChevronUp
         size={'40px'}
-        className="hover:scale-110 transition duration-300 text-main-pink/80 cursor-pointer"
+        className="hover:scale-110 transition duration-300 text-main-light/80 cursor-pointer"
       />
     </div>
   );

@@ -1,19 +1,33 @@
-import { Link, useParams } from 'react-router-dom';
-import { CiUser, CiLocationOn, CiSettings, CiLogout } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
+import {
+  CiUser,
+  CiLocationOn,
+  CiSettings,
+  CiLogout,
+  CiShoppingCart,
+} from 'react-icons/ci';
+import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { ProfileNavigation } from '../Navigation';
+import { useEffect } from 'react';
 export const ProfileHeader = ({ title, link, textLink }) => {
-  const { username } = useParams();
+  useEffect(() => {
+    AOS.init({
+      disable: false,
+      once: false,
+      duration: '2000',
+    });
+  });
   const items = [
     {
       icon: <CiUser size={'20px'} />,
       title: 'Profile',
-      url: `/customer-dashboard/profile/${username}`,
+      url: `/customer-dashboard/profile/`,
     },
     {
       icon: <CiLocationOn size={'20px'} />,
       title: 'Address',
-      url: `/customer-dashboard/address/${username}`,
+      url: `/customer-dashboard/address/`,
     },
     {
       icon: <CiSettings size={'20px'} />,
@@ -21,9 +35,9 @@ export const ProfileHeader = ({ title, link, textLink }) => {
       url: `/customer-dashboard/`,
     },
     {
-      icon: <CiLogout size={'20px'} />,
-      title: 'Sign Out',
-      url: `/customer-dashboard/`,
+      icon: <CiShoppingCart size={'20px'} />,
+      title: 'Go Shopping',
+      url: `/`,
     },
   ];
   return (
@@ -32,7 +46,6 @@ export const ProfileHeader = ({ title, link, textLink }) => {
       <div
         className="bg-white h-[250px] mt-[90px] mx-2 rounded-md shadow-lg"
         data-aos="fade-right"
-        data-aos-duration="1000"
       >
         <div>
           {items?.map((item, idx) => (

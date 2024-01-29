@@ -1,5 +1,5 @@
-import { AddProduct } from "./Add-product"
-import { ProductTable } from "./table-product"
+import { AddProduct } from "./addProduct"
+import { ProductTable } from "./tableProduct"
 
 
 export const ProductManagement = () => {

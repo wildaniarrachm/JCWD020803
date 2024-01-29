@@ -20,39 +20,16 @@ import { useState } from "react";
 import { RegisterAdmin } from "./registeradminmodal";
  
  
-const TABLE_HEAD = ["Admin", "Branch", "Status", "Employed", ""];
+const TABLE_HEAD = ["Id" ,"Name", "Edit"];
  
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-];
-
-
  
-export function AdminTable() {
-  const [adminData, setAdminData] = useState([])
+export function AdminTable({adminData}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
       setOpen((open) => !open);
   };
-  
 
+  
 
   return (
     <>
@@ -82,7 +59,7 @@ export function AdminTable() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-0">
+      <CardBody className="px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -103,32 +80,25 @@ export function AdminTable() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
-              ({ img, name, email, job, org, online, date }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
+            {adminData?.map(
+              (item, index) => {
+                const isLast = index === adminData.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
  
                 return (
-                  <tr key={name}>
+                  <tr key={item.id}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        <Avatar src={img} alt={name} size="sm" />
+                        {/* <Avatar src={img} alt={name} size="sm" /> */}
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {name}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {email}
+                            {item.id}
                           </Typography>
                         </div>
                       </div>
@@ -140,35 +110,9 @@ export function AdminTable() {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {job}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {org}
+                          {item.name}
                         </Typography>
                       </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={online ? "online" : "offline"}
-                          color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
                     </td>
                     <td className={classes}>
                       <Tooltip content="Edit User">

@@ -1,4 +1,4 @@
-import { Button, IconButton, Tooltip } from '@material-tailwind/react';
+import { IconButton, Tooltip } from '@material-tailwind/react';
 import { useEffect, useRef, useState } from 'react';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -9,13 +9,14 @@ import { ModalEmail } from './ModalEmail';
 import { ModalPhone } from './ModalPhone';
 import { useNavigate } from 'react-router-dom';
 import { ButtonVerifyPhone } from './ButtonVerifyPhone';
+import { requestVerifyEmail } from '../../../../utils/customer/change.email';
+import { MdVerified } from 'react-icons/md';
 
 export const ProfileBody = () => {
-  const navigate = useNavigate();
   useEffect(() => {
     AOS.init({
       disable: false,
-      once: true,
+      once: false,
       duration: '2000',
     });
   });
@@ -27,10 +28,15 @@ export const ProfileBody = () => {
     navigator.clipboard.writeText(textRef.current.innerText);
     setCopy('Copied');
   };
+  const token = localStorage.getItem('token');
+  const handleVerifyEmail = async () => {
+    const response = await requestVerifyEmail(token);
+    console.log(response);
+  };
 
   return (
     <section className="bg-gray-200 h-[100%] pb-3">
-      <div className="bg-white py-5 mx-2 h-[100%] shadow-lg rounded-lg">
+      <div className="bg-white py-5 mx-2 h-[100%] shadow-lg rounded-lg laptop:px-5">
         <div className="flex flex-col pl-3 pt-1">
           <div>
             <ModalUploadImage />
@@ -45,18 +51,14 @@ export const ProfileBody = () => {
               </p>
               <div className="flex gap-3 pr-1 tablet:flex tablet:gap-5 mobile:flex">
                 {user?.isVerified === false ? (
-                  <button className="bg-black/90 text-white rounded-lg px-[10px] text-[14px]">
+                  <button
+                    className="bg-black/90 text-white rounded-lg py-[10px] px-[15px] text-[14px]"
+                    onClick={handleVerifyEmail}
+                  >
                     Verify
                   </button>
                 ) : (
-                  <button
-                    className="bg-green-500/50 text-white rounded-lg px-[8px] text-[14px] cursor-not-allowed"
-                    disabled
-                    color="green"
-                    
-                  >
-                    Verified
-                  </button>
+                  <MdVerified className="text-blue-500" size={30} />
                 )}
                 <ModalEmail email={user?.email} />
               </div>
@@ -66,7 +68,7 @@ export const ProfileBody = () => {
                 Phone: {user?.phone_number}
               </p>
               <div className="flex gap-3 pr-1 tablet:flex tablet:gap-5 mobile:flex">
-               <ButtonVerifyPhone user={user} />
+                <ButtonVerifyPhone user={user} />
                 <ModalPhone />
               </div>
             </div>

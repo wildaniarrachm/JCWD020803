@@ -3,7 +3,7 @@ import { setAdminData } from "../../redux/admin.slice";
 
 export const keepLoginAdmin = async (dispatch, tokenAdmin) => {
     try {
-      const response = await api.get(`admins/admin/keep-login`, {
+      const response = await api.get(`admin/admin/keep-login`, {
         headers: {
           Authorization: `Bearer ${tokenAdmin}`,
         },

@@ -63,7 +63,7 @@ export const editCategory = async (req, res) => {
             }
         )
     }catch (error){
-        return error
+        return res.status(401).send({message: error.message})
     }
 };
 

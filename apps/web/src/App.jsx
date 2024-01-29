@@ -23,8 +23,16 @@ import { ResetPassword } from './pages/admin/reset-password/Index';
 import { ProductCatalogue } from './components/admin/dashboard/product/product-catalogue/Index';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import VerifyNewEmailPage from './pages/verify-new-email/Index';
+import { getCustomerAddress } from './utils/address/get.customer.address';
+import { addressData } from './redux/customer.address.slice';
+import EditAddressPage from './pages/user-dashboard/address/edit-address/Index';
+import { getAllProvince } from './utils/address/get.province';
+import { setProvinces } from './redux/province.slice';
+import { ToastContainer } from 'react-toastify';
 import { CategoryPage } from './pages/admin/CategoryManagement';
 import { SubCategoryPage } from './pages/admin/SubcategoryManagement';
+import { ProductPage } from './pages/product-detail/productPage';
 
 
 const router = createBrowserRouter([
@@ -32,16 +40,25 @@ const router = createBrowserRouter([
   { path: '/register-user', element: <RegisterUser /> },
   { path: '/login-user', element: <LoginUser /> },
   { path: '/register-user/verify/:token', element: <CreatePasswordPage /> },
+  { path: '/product', element: <ProductPage/> },
   {
     element: <UserRequired />,
     children: [
       {
-        path: '/customer-dashboard/:route/:username',
+        path: '/customer-dashboard/:route/',
         element: <CustomerProfile />,
       },
       {
         path: '/customer-dashboard/verification-phone/:verificationId',
         element: <VerifyCodePage />,
+      },
+      {
+        path: '/customer-dashboard/address/:id',
+        element: <EditAddressPage />,
+      },
+      {
+        path: '/verification/:token',
+        element: <VerifyNewEmailPage />,
       },
     ],
   },
@@ -50,38 +67,60 @@ const router = createBrowserRouter([
     path: '/forgot-password/new-password/:token',
     element: <NewPasswordPage />,
   },
-  { path: '/manage-product', element: <ManageProduct></ManageProduct>},
-  { path: '/product-catalogue', element: <ProductCatalogue></ProductCatalogue>},
-  { path: '/admin/reset-password/:tokenAdmin', element: <ResetPassword></ResetPassword> },
-  { path: '/admin/set-password/:tokenAdmin', element: <VerifyAdmin></VerifyAdmin>},
-  { path: '/home/register-user', element: <RegisterUser></RegisterUser> },
-  { path: '/home/login-user', element: <LoginUser></LoginUser> },
+
+  //admin
+  {
+    path: '/product-catalogue',
+    element: <ProductCatalogue></ProductCatalogue>,
+  },
+  {
+    path: '/admin/reset-password/:tokenAdmin',
+    element: <ResetPassword></ResetPassword>,
+  },
+  {
+    path: '/admin/set-password/:tokenAdmin',
+    element: <VerifyAdmin></VerifyAdmin>,
+  },
   { path: '/login-admin', element: <Login></Login> },
   { path: '/overview', element: <Overview></Overview> },
   { path: '/register-admin', element: <RegisterAdmin></RegisterAdmin> },
-  { path: '/admin/profile', element: <AdminProfilePage></AdminProfilePage>},
+  { path: '/admin/profile', element: <AdminProfilePage></AdminProfilePage> },
   {
-    element: <AdminRequired/>,
-    children: [{
-      path: '/admin-management', element: <AdminManagement/>
-    },
-    {
-      path: '/category-management', element: <CategoryPage/>
-    },
-    {
-      path: '/subcategory', element: <SubCategoryPage/>
-    }
-    ]
-    
-  }
+    element: <AdminRequired />,
+    children: [
+      {
+        path: '/admin-management',
+        element: <AdminManagement />,
+      },
+      {
+        path: '/category-management',
+        element: <CategoryPage/>
+      },
+      {
+        path: '/subcategory-management',
+        element: <SubCategoryPage/>
+      },
+      {
+        path: 'dashboard/product-management',
+        element: <ManageProduct/>
+      }
+    ],
+  },
 ]);
-
-
 
 function App() {
   const token = localStorage?.getItem('token');
   const tokenAdmin = localStorage.getItem('tokenAdmin');
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const getAddress = async () => {
+    const response = await getCustomerAddress(token);
+    dispatch(addressData(response?.data?.result));
+  };
+  const getProvince = async () => {
+    const response = await getAllProvince();
+    dispatch(setProvinces(response?.data?.rajaongkir?.results));
+  };
 
   useEffect(() => {
     if (token) {
@@ -92,15 +131,21 @@ function App() {
   }, [token]);
 
   useEffect(() => {
-    if (tokenAdmin){
-      keepLoginAdmin(dispatch, tokenAdmin)
+    if (tokenAdmin) {
+      keepLoginAdmin(dispatch, tokenAdmin);
     } else {
       return;
     }
-  }, [tokenAdmin])
+  }, [tokenAdmin]);
+
+  useEffect(() => {
+    getAddress();
+    getProvince();
+  }, []);
 
   return (
     <>
+      <ToastContainer />
       <RouterProvider router={router}></RouterProvider>
     </>
   );

@@ -8,14 +8,6 @@ import handlebars from 'handlebars';
 import path from 'path';
 import { transporter } from '../middleware/transporter.middlewar';
 
-import textflow from 'textflow.js';
-import { Vonage } from '@vonage/server-sdk';
-
-const vonage = new Vonage({
-  apiKey: process.env.API_KEY,
-  apiSecret: process.env.API_SECRET,
-});
-
 export const getCustomer = async () => {
   return await Customer.findAll();
 };
@@ -30,7 +22,6 @@ export const getById = async (req, res) => {
     });
     res.status(200).send(response);
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };
@@ -68,7 +59,7 @@ export const createCustomer = async (req, res) => {
     const tempCompile = await handlebars.compile(send);
     const tempResult = tempCompile({
       username: username,
-      create: `http://localhost:5173/register-user/verify/${token}`,
+      create: `${process.env.WEB_URL}register-user/verify/${token}`,
     });
     await transporter.sendMail({
       from: process.env.NODEMAILER_USER,
@@ -86,7 +77,7 @@ export const createCustomer = async (req, res) => {
           { email: { [Op.eq]: email } },
           { username: { [Op.eq]: username } },
         ],
-      },
+      },  
     });
     if (customerExist) {
       return res.status(400).send('Email or username already exist');
@@ -116,8 +107,7 @@ export const createCustomer = async (req, res) => {
             });
             verifyCustomer(result);
           } catch (error) {
-            console.log(error);
-            return error;
+            return res.status(500).send(error.message);
           }
           return res
             .status(200)
@@ -137,8 +127,7 @@ export const createCustomer = async (req, res) => {
         .send('Register success, check your email for verification');
     }
   } catch (error) {
-    console.log(error);
-    return error;
+    return res.status(500).send(error.message);
   }
 };
 
@@ -163,16 +152,22 @@ export const loginCustomer = async (req, res) => {
     if (customerExist.isVerified === false) {
       res.status(500).send('Your account is not verified yet');
     }
+    const { remember } = req?.body;
+    let expiredIn = '';
+    if (remember === true) {
+      expiredIn = '24h';
+    } else {
+      expiredIn = '3h';
+    }
     const payload = { id: customerExist.id };
     const token = jwt.sign(payload, process.env.KEY_CUSTOMER_JWT, {
-      expiresIn: '24h',
+      expiresIn: expiredIn,
     });
     res
       .status(200)
       .send({ message: 'Login success', result: customerExist, token });
   } catch (error) {
-    console.log(error);
-    res.send(error);
+    res.status(500).send(error.message);
   }
 };
 
@@ -200,7 +195,6 @@ export const verifyAccount = async (req, res) => {
     await Customer.update({ isVerified: true }, { where: { id: customerId } });
     res.send('Verification successful. Your account is now verified.');
   } catch (error) {
-    console.error(error);
     res.status(401).send('Invalid or expired token. Please try again.');
   }
 };
@@ -216,7 +210,6 @@ export const getCustomerByToken = async (req, res) => {
     const user = await Customer.findOne({ where: { id: customerId } });
     res.status(200).send(user);
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 };
@@ -242,23 +235,22 @@ export const createPasswordCustomer = async (req, res) => {
 
     res.status(200).send('Your password updated');
   } catch (error) {
-    console.error(error);
     res.status(500).send(error.message);
   }
 };
 
 export const uploadImageCustomer = async (req, res) => {
-  console.log(req?.file);
-  const { id } = req.body;
+  const { id } = req?.customer;
   try {
     let images = null;
     if (req?.file) {
-      images = req?.file?.path;
+      const fileName = req?.file?.filename;
+      const URL = process.env.IMAGE_URL;
+      images = `${URL}/${fileName}`;
     }
     await Customer.update({ images }, { where: { id: id } });
     res.status(200).send('Uploaded successfully');
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };
@@ -273,75 +265,9 @@ export const addedPhoneCustomer = async (req, res) => {
     );
     res.status(200).send('Phone number has been added');
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };
-
-//textflow verification
-// export const sendVerificationCode = async (req, res) => {
-//   const { phone_number } = req?.body;
-//   try {
-//     textflow.useKey(
-//       'TahbhNTnGtJfRdayo7ivauxs4bNcZmNcDwxiCW5wDlkvRlA8UltP7fVl3DIrxI6r',
-//     );
-//     const verifyOptions = {
-//       service_name: 'EZ Mart',
-//       seconds: 600,
-//     };
-//     const result = await textflow.sendVerificationSMS(
-//       phone_number,
-//       verifyOptions,
-//     );
-//     res.status(200).send(result);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error.message);
-//   }
-// };
-
-// export const verifyCodePhone = async (req, res) => {
-//   const { phone_number, verification_code } = req?.body;
-//   try {
-//     textflow.useKey(
-//       'TahbhNTnGtJfRdayo7ivauxs4bNcZmNcDwxiCW5wDlkvRlA8UltP7fVl3DIrxI6r',
-//     );
-//     let result = await textflow.verifyCode(phone_number, verification_code);
-//     res.status(200).send(result);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error.message);
-//   }
-// };
-
-//vonage verification
-
-// export const sendVerificationCode = async (req, res) => {
-//   const { phone_number } = req?.body;
-//   try {
-//     const result = await vonage.verify.start({
-//       number: phone_number,
-//       brand: 'EZ Mart',
-//     });
-//     console.log(result);
-//     res.status(200).send(result?.request_id);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error.message);
-//   }
-// };
-
-// export const verifyCodePhone = async (req, res) => {
-//   const { request_id, verification_code } = req?.body;
-//   try {
-//     const response = await vonage.verify.check(request_id, verification_code);
-//     console.log(response);
-//     res.status(200).send(response);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send(error.message);
-//   }
-// };
 
 export const forgotPassword = async (req, res) => {
   const { email } = req?.body;
@@ -368,7 +294,7 @@ export const forgotPassword = async (req, res) => {
     const tempCompile = await handlebars.compile(send);
     const tempResult = tempCompile({
       username: emailExists?.username,
-      create: `http://localhost:5173/forgot-password/new-password/${token}`,
+      create: `${process.env.WEB_URL}forgot-password/new-password/${token}`,
     });
     await transporter.sendMail({
       from: process.env.NODEMAILER_USER,
@@ -382,7 +308,6 @@ export const forgotPassword = async (req, res) => {
         'Verification send, please check your email for reset your password',
       );
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };
@@ -413,7 +338,6 @@ export const newPassword = async (req, res) => {
     );
     res.status(200).send('Password updated successfully');
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
   }
 };
@@ -431,6 +355,108 @@ export const verifiedPhoneNumber = async (req, res) => {
     );
     res.status(200).send('Verification Success');
   } catch (error) {
-    console.log(error);
     res.status(500).send(error.message);
-  }}
+  }
+};
+
+export const socialRegister = async (req, res) => {
+  const data = req?.body;
+  const { uid, email, displayName, photoURL, emailVerified } = data;
+  const { phoneNumber } = data?.providerData;
+  const name = displayName.split(' ');
+  const first_name = name[0];
+  const last_name = name.slice(1).join(' ');
+  const generateJwt = (data) => {
+    const payload = { id: data.id };
+    const token = jwt.sign(payload, process.env.KEY_CUSTOMER_JWT, {
+      expiresIn: '2h',
+    });
+    return token;
+  };
+  try {
+    const isExist = await Customer.findOne({ where: { firebase_uid: uid } });
+    if (isExist) {
+      const token = generateJwt(isExist);
+      return res
+        .status(200)
+        .send({ message: `Welcome ${displayName}`, isExist, token });
+    } else {
+      const generateReferralCode = () => {
+        const randomString = Math.random()
+          .toString(36)
+          .substr(2, 8)
+          .toUpperCase();
+        return `EZ${randomString}`;
+      };
+      const referral = generateReferralCode();
+      const isExist = await Customer.create({
+        first_name: first_name,
+        last_name: last_name,
+        username: displayName,
+        phoneNumber: phoneNumber,
+        email: email,
+        images: photoURL,
+        isVerified: emailVerified,
+        firebase_uid: uid,
+        referral_code: referral,
+        socialRegister: true,
+      });
+      return res
+        .status(200)
+        .send({ message: `Welcome ${displayName}`, isExist });
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+export const changeEmail = async (req, res) => {
+  const { email } = req?.body;
+  const { id } = req?.customer;
+  try {
+    const isExist = await Customer.findOne({ where: { email: email } });
+    if (isExist) {
+      return res.status(400).send('Email already exists');
+    }
+    await Customer.update(
+      { email: email, isVerified: false },
+      {
+        where: {
+          id: id,
+        },
+      },
+    );
+    res.status(200).send('Email has been changes');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+export const verifyNewEmail = async (req, res) => {
+  const { id } = req.customer;
+  try {
+    const user = await Customer.findOne({ where: { id: id } });
+    let payload = { id: id };
+    const token = jwt.sign(payload, process.env.KEY_CUSTOMER_JWT, {
+      expiresIn: '1h',
+    });
+    const send = fs.readFileSync(
+      path.join(__dirname, '../template_new_email.html'),
+      'utf-8',
+    );
+    const tempCompile = await handlebars.compile(send);
+    const tempResult = tempCompile({
+      email: user?.email,
+      create: `${process.env.WEB_URL}verification/${token}`,
+    });
+    await transporter.sendMail({
+      from: process.env.NODEMAILER_USER,
+      to: user?.email,
+      subject: 'EZ Mart - Verification New Email',
+      html: tempResult,
+    });
+    res.status(200).send('Please check your email for verification');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};

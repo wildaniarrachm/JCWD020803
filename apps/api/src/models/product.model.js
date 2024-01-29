@@ -29,6 +29,10 @@ export const init = (sequelize) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false},
+    weight:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     isDisabled: {
       type: DataTypes.BOOLEAN,
       defaultValue: false },

@@ -20,7 +20,7 @@ export const FormForgotPassword = () => {
     },
   });
   return (
-    <Card className="mx-6 shadow-lg">
+    <Card className="mx-auto shadow-lg w-[70%]">
       <form onSubmit={formik.handleSubmit}>
         <CardBody>
           <Typography

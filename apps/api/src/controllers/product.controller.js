@@ -1,30 +1,37 @@
 import Product from '../models/product.model'
 import Category from '../models/category.model';
+import Sub_category from '../models/sub_category.model';
+import Product_image from '../models/product_image.model';
 
 export const addProduct = async (req, res) => {
+    const { product_name, price, descriptions, CategoryId, SubCategoryId } = req.body;
+    console.log(req.body);
     try {
-      const { product_name, price, descriptions, CategoryId, SubCategoryId } = req.body;
-      console.log(req.body);
-
-      //check if product already exist
       const findProduct = await Product.findOne({
         where: {
-          product_name: product_name
+          product_name: product_name,
+          isDeleted: false
         },
       });
-
-      
-      if (findProduct == null) { 
-        await Product.create({
-            product_name: product_name,
-            price: price,
-            descriptions: descriptions,
-            CategoryId: CategoryId,
-            SubCategoryId: SubCategoryId
-        });
-       return res.status(200).send({ message: "Product added" });
-      } else {
-        return res.status(400).send({ message: "Product already exist" });      }
+      if (findProduct){
+        return res.status(402).send("Product already existed")
+      }
+    const product = await Product.create({
+        product_name,
+        price,
+        descriptions,
+        CategoryId,
+        SubCategoryId
+      })
+      let product_image = null;
+      if(req.file){
+        product_image = req.file?.path
+      }
+      await Product_image.create({
+        product_image,
+        ProductId: product.id
+      })
+      return res.status(200).send('Product added')
     } catch (error) {
       console.log("This is the error", error);
        return error;

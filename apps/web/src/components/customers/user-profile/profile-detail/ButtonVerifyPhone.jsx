@@ -3,7 +3,7 @@ import { auth } from '../../../../utils/customer/firebase';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { authPhone } from '../../../../redux/auth.phone.firebase';
-import { FcApproval } from 'react-icons/fc';
+import { MdVerified } from 'react-icons/md';
 
 export const ButtonVerifyPhone = ({ user }) => {
   const phone_number = user?.phone_number;
@@ -18,7 +18,6 @@ export const ButtonVerifyPhone = ({ user }) => {
         phone_number,
         recaptcha,
       );
-      // console.log(confirmation);
       if (confirmation.verificationId) {
         navigate(
           `/customer-dashboard/verification-phone/${confirmation?.verificationId}`,
@@ -34,7 +33,19 @@ export const ButtonVerifyPhone = ({ user }) => {
 
   return (
     <>
-      {!user?.phoneVerified ? (
+      {!user.phone_number ? (
+        <div className="relative">
+          <button
+            className="bg-gray-700/70  rounded-lg py-[6px] px-2 cursor-not-allowed text-[10px] text-main-light font-poppins"
+            disabled
+            color="green"
+          >
+            <p>Add your</p>
+            <p>phone number</p>
+          </button>
+          <div id="recaptcha" className="absolute top-0 -right-1"></div>
+        </div>
+      ) : !user?.phoneVerified ? (
         <div className="relative">
           <button
             className="bg-black/90 text-white rounded-lg py-[10px] px-[15px] text-[14px]"
@@ -45,13 +56,7 @@ export const ButtonVerifyPhone = ({ user }) => {
           <div id="recaptcha" className="absolute top-0 -right-1"></div>
         </div>
       ) : (
-        <button
-          className="bg-green-500/50 text-white rounded-lg px-[8px] text-[14px] cursor-not-allowed"
-          disabled
-          color="green"
-        >
-          Verified
-        </button>
+        <MdVerified className='text-blue-500' size={30} />
       )}
     </>
   );

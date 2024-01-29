@@ -8,18 +8,34 @@ export default class City extends Model {
    */
   static associate(models) {
     // define association here
-    City.hasMany(models.Address)
-    City.hasMany(models.Branch)
-    City.belongsTo(models.Province)
+    City.hasMany(models.Address);
+    City.hasMany(models.Branch);
+    City.belongsTo(models.Province);
   }
 }
 
 export const init = (sequelize) => {
-  City.init({
-    city: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'City',
-  });
+  City.init(
+    {
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      city_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      postal_code: {
+        type: DataTypes.STRING,
+      },
+      type: {
+        type: DataTypes.ENUM('Kota', 'Kabupaten'),
+      },
+    },
+    {
+      sequelize,
+      modelName: 'City',
+    },
+  );
   return City;
 };

@@ -8,7 +8,6 @@ const verifyToken = (req, res, next) => {
     }
     token = token.split(' ')[1];
     let verified = jwt.verify(token, process.env.KEY_CUSTOMER_JWT);
-    console.log(verified);
     req.customer = verified;
     next();
   } catch (error) {

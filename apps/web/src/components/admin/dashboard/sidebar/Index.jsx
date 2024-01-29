@@ -3,26 +3,28 @@ import { TbCategoryPlus } from 'react-icons/tb';
 import { IoPeople } from 'react-icons/io5';
 import { LuListPlus } from 'react-icons/lu';
 import { AiOutlineStock } from 'react-icons/ai';
-import { SideBar } from '../sidebar/sub-components/SidebarDesktop';
+import { SideBar } from './sub-components/SidebarDesktop';
 import { IoStorefrontOutline } from 'react-icons/io5';
-import { FaUsers } from "react-icons/fa";
+import { FaUsers } from 'react-icons/fa';
 
 export const Sidebar = () => {
   const items = [
     {
       name: 'Product',
+      admin: true,
       icon: <MdProductionQuantityLimits size={'25px'} />,
+      route: '/dashboard/product-management',
       subItems: [
         {
           name: 'Product Catalogue',
           route: '/product-catalogue',
         },
         {
-          name: 'Product Category', 
-          route: '/product-category'
+          name: 'Product Category',
+          route: '/product-category',
         },
-        { name: 'Add Product'},
-        { route: '/add-product'}
+        { name: 'Add Product' },
+        { route: '/add-product' },
       ],
     },
     { name: 'Sales Report', icon: <AiOutlineStock size={'25px'} /> },
@@ -38,13 +40,14 @@ export const Sidebar = () => {
     },
     {
       name: 'Customer',
-      icon: <FaUsers size={'30px'}/>,
-      route: '/customer-management'
+      icon: <FaUsers size={'30px'} />,
+      route: '/customer-management',
     },
     {
       name: 'Branch',
       icon: <IoStorefrontOutline size={'30px'} />,
-      route: 'branch',
+      route: '/branch-management',
+      admin: true,
     },
     {
       name: 'Category',
@@ -54,7 +57,7 @@ export const Sidebar = () => {
     {
       name: 'Subcategory',
       icon: <LuListPlus size={'30px'} />,
-      route: '/subcategory',
+      route: '/subcategory-management',
     },
   ];
 

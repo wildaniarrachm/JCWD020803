@@ -22,7 +22,7 @@ adminRouter.post('/register/superadmin', addSuperAdmin)
 adminRouter.post('/register-admin', checkRegister, registerAdmin);
 adminRouter.post('/admin/login', loginAdmin)
 adminRouter.get('/admin/keep-login', verifyAdminToken, keepLogin)
-adminRouter.get('/admin/get-admin', verifyAdminToken, getAdmin)
+adminRouter.get('/get-admin', verifyAdminToken, getAdmin)
 adminRouter.post('/admin/create-password', verifyAdminToken, inputPassword)
 adminRouter.get('/admin/create-password/:token', getAdminbyToken)
 adminRouter.post('/forgot-password', forgotPasswordAdmin)

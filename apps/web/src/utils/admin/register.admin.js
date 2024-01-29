@@ -3,7 +3,7 @@ import { api } from '../../libs/server.api'
 
 export const addAdmin = async (data) => {
     try{
-        const response = await api.post(`/admins/register-admin`, data);
+        const response = await api.post(`/admin/register-admin`, data);
         alert (response?.data);
     } catch (error) {
         alert(error.response.data.message)

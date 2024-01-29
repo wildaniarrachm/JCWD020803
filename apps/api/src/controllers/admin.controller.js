@@ -171,7 +171,7 @@ export const loginAdmin = async (req, res) => {
                 message: "Incorrect Password"
             })
         }
-        const payload = { id: admin.id }
+        const payload = { id: admin.id, isSuperAdmin: admin.isSuperAdmin}
         if (admin.isVerified === true){
             if(admin.isEnabled === true){
                 if(rememberme === true){
@@ -268,6 +268,7 @@ export const getAdmin = async (req, res) => {
         const adminData = await Admin.findAll({
             where: {
                 isVerified: true,
+                isSuperAdmin: false
             }
         });
         return res.status(200).send({adminData})

@@ -13,7 +13,7 @@ export const resetPassSchema = Yup.object({
 
 export const sendEmailVerification = async (data) => {
     try{
-        const response = api.post(`admins/forgot-password`, data)
+        const response = api.post(`admin/forgot-password`, data)
     } catch (error){
         console.log(error);
     }

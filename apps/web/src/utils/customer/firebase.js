@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDZpe9akiKczQEyTW2yAi7O-Tm2gG9UKDQ',
+  apiKey: import.meta.env.VITE_FIREBASE_KEY,
   authDomain: 'ez-mart-656b1.firebaseapp.com',
   projectId: 'ez-mart-656b1',
   storageBucket: 'ez-mart-656b1.appspot.com',
@@ -13,4 +13,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const provider = new GoogleAuthProvider();
 export default app;

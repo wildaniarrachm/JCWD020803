@@ -33,7 +33,7 @@ const TABLE_ROWS = [
 export function CategoryTable() {
   return (
     <div className="p-15 ">
-    <Card className="h-[] w-full overflow-scroll">
+    <Card className="h-[] w-full">
       <table className="w-full p-15 min-w-max table-auto text-left">
         <thead>
           <tr>

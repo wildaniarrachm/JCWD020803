@@ -10,6 +10,9 @@ export const keepLoginCustomer = async (dispatch, token) => {
       dispatch(setData(response?.data?.result));
     }
   } catch (error) {
-    console.log(error);
+    if (error) {
+      localStorage.removeItem('token');
+      console.log(error);
+    }
   }
 };

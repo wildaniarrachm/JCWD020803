@@ -14,7 +14,7 @@ export const registPassSchema = Yup.object({
 export const getAdminByToken = async (tokenAdmin) => {
   try{
     console.log(tokenAdmin);
-    const response = await api.get(`admins/admin/create-password/${tokenAdmin}`)
+    const response = await api.get(`admin/admin/create-password/${tokenAdmin}`)
     return response;
   } catch (error){
     console.log(error);
@@ -23,7 +23,7 @@ export const getAdminByToken = async (tokenAdmin) => {
 
 export const createPasswordAdmin = async (data, tokenAdmin) => {
   try{
-    const response = await api.post(`admins/admin/create-password`, data,{
+    const response = await api.post(`admin/admin/create-password`, data,{
       headers: {
         Authorization: `Bearer ${tokenAdmin}`
       }

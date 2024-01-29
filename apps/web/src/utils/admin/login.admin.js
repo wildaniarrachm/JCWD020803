@@ -8,7 +8,7 @@ export const handleSubmit = async (data, navigate, dispatch) => {
     if (data.input_data.includes('@')){
       data.email = data.input_data;
       delete data.input_data;
-      const response = await api.post(`admins/admin/login`, data);
+      const response = await api.post(`admin/admin/login`, data);
       console.log(response);
       dispatch(setAdminData(response.data.admin));
       localStorage.setItem('tokenAdmin', response.data.token);
@@ -17,7 +17,7 @@ export const handleSubmit = async (data, navigate, dispatch) => {
     } else if (data.input_data) {
       data.username = data.input_data;
       delete data.input_data;
-      const response = await api.post(`admins/admin/login`, data);
+      const response = await api.post(`admin/admin/login`, data);
       console.log(response);
       dispatch(setAdminData(response.data.admin));
       localStorage.setItem('tokenAdmin', response.data.token);

@@ -95,5 +95,5 @@ export const productImage = () => {
       cb(new error('Format file is not supported'));
     }
   };
-  return multer({ storage, fileFilter})
+  return multer({storage, fileFilter})
 };

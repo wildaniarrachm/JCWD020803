@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Layout } from '../../components/customers/Index';
 import { MainCarousel } from '../../components/carousel/Index';
