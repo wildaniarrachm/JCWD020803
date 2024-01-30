@@ -8,17 +8,20 @@ export default class Cart extends Model {
    */
   static associate(models) {
     // define association here
-    Cart.hasOne(models.Cart_detail)
-    Cart.belongsTo(models.Customer)
+    Cart.hasOne(models.Cart_detail);
+    Cart.belongsTo(models.Customer);
   }
 }
 
 export const init = (sequelize) => {
-  Cart.init({
-    isActive: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Cart',
-  });
+  Cart.init(
+    {
+      isActive: DataTypes.BOOLEAN,
+    },
+    {
+      sequelize,
+      modelName: 'Cart',
+    },
+  );
   return Cart;
 };

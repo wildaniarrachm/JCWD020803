@@ -27,5 +27,6 @@ module.exports = withMT({
       desktop: '1280px',
     },
   },
-  plugins: [],
+
+  plugins: [require('daisyui')],
 });

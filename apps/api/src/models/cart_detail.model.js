@@ -8,16 +8,19 @@ export default class Cart_detail extends Model {
    */
   static associate(models) {
     // define association here
-    Cart_detail.belongsTo(models.Product)
-    Cart_detail.belongsTo(models.Cart)
+    Cart_detail.belongsTo(models.Product);
+    Cart_detail.belongsTo(models.Cart);
   }
 }
 export const init = (sequelize) => {
-  Cart_detail.init({
-    quantity: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Cart_detail',
-  });
+  Cart_detail.init(
+    {
+      quantity: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Cart_detail',
+    },
+  );
   return Cart_detail;
 };

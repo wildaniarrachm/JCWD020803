@@ -36,6 +36,10 @@ import BranchPage from './pages/admin/branch-page/Index';
 import NewBranchPage from './pages/admin/branch-page/new-branch/Index';
 import EditBranchPage from './pages/admin/branch-page/edit-branch/Index';
 import SuperAdminRequired from './components/required/super.admin.required';
+import { Cart } from './pages/cart.page/Cart';
+import { CheckoutPage } from './pages/checkout.page/Checkout';
+import { OrderHistory } from './components/order-history/order-history';
+
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
   { path: '/register-user', element: <RegisterUser /> },
@@ -59,6 +63,18 @@ const router = createBrowserRouter([
       {
         path: '/verification/:token',
         element: <VerifyNewEmailPage />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
+      },
+      {
+        path: '/cart/shipment',
+        element: <CheckoutPage />,
+      },
+      {
+        path: '/customer-dashboard/profile/order-history',
+        element: <OrderHistory />,
       },
     ],
   },
@@ -118,7 +134,7 @@ function App() {
   const token = localStorage?.getItem('token');
   const tokenAdmin = localStorage.getItem('tokenAdmin');
   const dispatch = useDispatch();
-  
+
   const getAddress = async () => {
     if (token) {
       const response = await getCustomerAddress(token);

@@ -6,6 +6,7 @@ import {
 } from '@material-tailwind/react';
 import imageCarousel_1 from '../../assets/carousel_1.jpg';
 import imageCarousel_5 from '../../assets/carousel_5.jpg';
+import imageCarousel_6 from '../../assets/carousel_6.jpg';
 import imageCarousel_3 from '../../assets/carousel_3.jpg';
 import imageCarousel_4 from '../../assets/carousel_4.jpg';
 import AOS from 'aos';
@@ -27,7 +28,7 @@ export const MainCarousel = () => {
   });
   const items = [
     {
-      img: imageCarousel_1,
+      img: imageCarousel_6,
       alt: 'Image 1',
       title: 'Discount Up to 50% all items',
       subTitle:

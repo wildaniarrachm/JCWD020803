@@ -8,13 +8,13 @@ export default class Product extends Model {
    */
   static associate(models) {
     // define association here
-    Product.hasMany(models.Product_image)
-    Product.hasMany(models.Favourite)
-    Product.hasMany(models.Branch_product)
-    Product.hasMany(models.Cart_detail)
-    Product.hasMany(models.Transaction_product)
-    Product.belongsTo(models.Category)
-    Product.belongsTo(models.Sub_category)
+    Product.hasMany(models.Product_image);
+    Product.hasMany(models.Favourite);
+    Product.hasMany(models.Branch_product);
+    Product.hasMany(models.Cart_detail);
+    Product.hasMany(models.Transaction_product);
+    Product.belongsTo(models.Category);
+    Product.belongsTo(models.Sub_category);
   }
 }
 
