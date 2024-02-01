@@ -15,7 +15,30 @@ import { uploadImage } from '../../../../utils/customer/upload.image.customer';
 import { toast } from 'react-toastify';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import * as Yup from 'yup';
+const schema = Yup.object().shape({
+  file: Yup.mixed()
+    .required('Please select an image')
+    .test(
+      'fileSize',
+      'File size must be less than 1MB',
+      (value) => value && value.size <= 1024 * 1024,
+    )
+    .test(
+      'fileType',
+      'Invalid file format. Only JPG, JPEG, PNG, or GIF allowed',
+      (value) => {
+        if (!value) return true;
+        const supportedFormats = [
+          'image/jpeg',
+          'image/jpg',
+          'image/png',
+          'image/gif',
+        ];
+        return supportedFormats.includes(value.type);
+      },
+    ),
+});
 export const ModalUploadImage = () => {
   useEffect(() => {
     AOS.init({
@@ -33,11 +56,20 @@ export const ModalUploadImage = () => {
   const [image, setImage] = useState(null);
 
   const handleSubmit = async () => {
-    let formData = new FormData();
-    formData.append('file', image);
-    const response = await uploadImage(formData, token);
-    console.log(response);
-    handleOpen();
+    try {
+      // Lakukan validasi menggunakan Yup
+      await schema.validate({ file: image });
+
+      // Lanjutkan dengan mengunggah file jika valid
+      let formData = new FormData();
+      formData.append('file', image);
+      const response = await uploadImage(formData, token);
+      console.log(response);
+      handleOpen();
+    } catch (error) {
+      // Tangani kesalahan validasi dengan menampilkan pesan kesalahan di form
+      toast.error(error.message);
+    }
   };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -77,6 +109,7 @@ export const ModalUploadImage = () => {
             <FormUpImage
               selectedImage={selectedImage}
               handleImageChange={handleImageChange}
+              schema={schema.errors && schema.error}
             />
           </DialogBody>
           <DialogFooter>

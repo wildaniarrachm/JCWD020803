@@ -63,7 +63,6 @@ const main = async () => {
     serveWebProjectBuildResult(app);
 
     // await DB.sequelize.sync({ alter: true });
-    // await DB.sequelize.sync({ force: true });
 
     app.listen(PORT, (err) => {
       if (err) {

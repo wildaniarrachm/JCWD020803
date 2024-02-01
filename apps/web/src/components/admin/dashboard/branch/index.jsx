@@ -29,9 +29,11 @@ const TABLE_HEAD = [
 export const Branch = () => {
   const [branch, setBranch] = useState();
   const [fill, setFill] = useState(false);
+  const [page, setPage] = useState('');
   const tokenAdmin = localStorage.getItem('tokenAdmin');
   const getBranch = async () => {
     const response = await getAllBranch(tokenAdmin);
+    console.log(response);
     if (response?.status === 200) {
       setBranch(response?.data?.result);
     }

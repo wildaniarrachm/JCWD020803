@@ -3,14 +3,12 @@ import {
   CiUser,
   CiLocationOn,
   CiSettings,
-  CiLogout,
   CiShoppingCart,
 } from 'react-icons/ci';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { ProfileNavigation } from '../navigation';
 import { useEffect } from 'react';
-
 export const ProfileHeader = ({ title, link, textLink }) => {
   useEffect(() => {
     AOS.init({
@@ -33,7 +31,7 @@ export const ProfileHeader = ({ title, link, textLink }) => {
     {
       icon: <CiSettings size={'20px'} />,
       title: 'Change Password',
-      url: `/customer-dashboard/`,
+      url: `/customer-dashboard/change-password`,
     },
     {
       icon: <CiShoppingCart size={'20px'} />,

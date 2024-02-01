@@ -18,6 +18,8 @@ import {
   socialRegister,
   changeEmail,
   verifyNewEmail,
+  changePasswordCustomer,
+  sendReverification,
 } from '../controllers/customer.controller';
 import { verifyToken } from '../middleware/customer.auth.middleware';
 import { customerProfileUpload } from '../middleware/multer.middleware';
@@ -26,6 +28,7 @@ const customerRouter = Router();
 
 customerRouter.get('/get-referral', getReferral);
 customerRouter.post('/register-customer', createCustomer);
+customerRouter.post('/reverification', sendReverification);
 customerRouter.post('/login', loginCustomer);
 customerRouter.post('/social-register', socialRegister);
 customerRouter.post('/reset-password', forgotPassword);
@@ -37,6 +40,7 @@ customerRouter.patch(
   customerProfileUpload().single('file'),
   uploadImageCustomer,
 );
+customerRouter.post('/change-password', verifyToken, changePasswordCustomer);
 customerRouter.patch('/added-phone-number', verifyToken, addedPhoneCustomer);
 customerRouter.patch('/verify-phone-number', verifyToken, verifiedPhoneNumber);
 customerRouter.get('/keep-login', verifyToken, keepLogin);

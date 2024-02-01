@@ -172,6 +172,36 @@ export const loginCustomer = async (req, res) => {
   }
 };
 
+export const changePasswordCustomer = async (req, res) => {
+  const { OldPassword, password } = req?.body;
+  const { id } = req?.customer;
+  try {
+    const results = await Customer.findOne({ where: { id: id } });
+    const compPassword = await bcrypt.compare(OldPassword, results?.password);
+    const compNewPassword = await bcrypt.compare(password, results?.password);
+    console.log(compPassword === compNewPassword);
+    if (compPassword) {
+      if (compNewPassword === compPassword) {
+        return res
+          .status(500)
+          .send('The password must not be the same as the old password');
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        await Customer.update(
+          { password: hashedPassword },
+          { where: { id: results?.id } },
+        );
+        return res.status(200).send('Your password has been updated');
+      }
+    } else {
+      return res.status(404).send('Your old password not be matches');
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 export const keepLogin = async (req, res) => {
   try {
     const result = await Customer.findOne({
@@ -457,6 +487,45 @@ export const verifyNewEmail = async (req, res) => {
       html: tempResult,
     });
     res.status(200).send('Please check your email for verification');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+export const sendReverification = async (req, res) => {
+  const { email } = req?.body;
+  try {
+    const getCustomer = await Customer.findOne({ where: { email: email } });
+    if (getCustomer) {
+      if (getCustomer?.isVerified === true) {
+        return res.status(400).send('Your email has been verified');
+      } else {
+        let payload = { id: getCustomer?.id };
+        const token = jwt.sign(payload, process.env.KEY_CUSTOMER_JWT, {
+          expiresIn: '1h',
+        });
+        const send = fs.readFileSync(
+          path.join(__dirname, '../template.html'),
+          'utf-8',
+        );
+        const tempCompile = await handlebars.compile(send);
+        const tempResult = tempCompile({
+          username: getCustomer?.username,
+          create: `${process.env.WEB_URL}register-user/verify/${token}`,
+        });
+        await transporter.sendMail({
+          from: process.env.NODEMAILER_USER,
+          to: getCustomer?.email,
+          subject: 'EZ Mart - Verification',
+          html: tempResult,
+        });
+        return res
+          .status(200)
+          .send('Re-verification has been send on your email');
+      }
+    }else{
+      return res.status(400).send('Email doesnt match, please re-register')
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }

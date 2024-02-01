@@ -1,4 +1,4 @@
-import { CustomerProfile } from './CustomerProfile';
+import { CustomerProfile } from './customerProfile';
 import { CartItem } from '../../pages/cart.item/cart.item';
 
 export const NavbarRight = () => {

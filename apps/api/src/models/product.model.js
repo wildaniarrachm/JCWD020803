@@ -19,23 +19,34 @@ export default class Product extends Model {
 }
 
 export const init = (sequelize) => {
-  Product.init({
-    product_name: {
-      type: DataTypes.STRING,
-      allowNull: false},
-    descriptions: {
-      type: DataTypes.TEXT,
-    allowNull: true},
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false},
-    isDisabled: {
-      type: DataTypes.BOOLEAN},
-    isDeleted: {
-      type: DataTypes.BOOLEAN}
-  }, {
-    sequelize,
-    modelName: 'Product',
-  });
+  Product.init(
+    {
+      product_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      descriptions: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      isDisabled: {
+        type: DataTypes.BOOLEAN,
+      },
+      isDeleted: {
+        type: DataTypes.BOOLEAN,
+      },
+      weight: {
+        type: DataTypes.STRING,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'Product',
+    },
+  );
   return Product;
 };

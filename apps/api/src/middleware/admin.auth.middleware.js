@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 const verifyAdminToken = (req, res, next) => {
   try {
     let token = req.headers.authorization;
+    console.log(token);
     if (!token) {
       return res.status(500).send('Token is empty');
     }
@@ -22,7 +23,7 @@ const verifyIsSuperAdmin = (req, res, next) => {
     if (req?.admin?.isSuperAdmin === false) {
       return res.status(500).send('Access denied');
     }
-    next()
+    next();
   } catch (error) {
     return res.status(500).send(error);
   }

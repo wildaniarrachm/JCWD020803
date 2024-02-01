@@ -11,18 +11,7 @@ export const Sidebar = () => {
     {
       name: 'Product',
       icon: <MdProductionQuantityLimits size={'25px'} />,
-      subItems: [
-        {
-          name: 'Product Catalogue',
-          route: '/product-catalogue',
-        },
-        {
-          name: 'Product Category',
-          route: '/product-category',
-        },
-        { name: 'Add Product' },
-        { route: '/add-product' },
-      ],
+      route: '/dashboard/products',
     },
     { name: 'Sales Report', icon: <AiOutlineStock size={'25px'} /> },
     {

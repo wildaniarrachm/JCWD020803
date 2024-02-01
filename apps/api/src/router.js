@@ -5,8 +5,10 @@ import { customerRouter } from './routers/customer.route';
 import { addressRouter } from './routers/address.router';
 import { cityRouter } from './routers/city.router';
 import { productRouter } from './routers/product.router';
-import { branchRouter } from './routers/branch.router';import { cartRouter } from './routers/cart.router';
+import { branchRouter } from './routers/branch.router';
+import { cartRouter } from './routers/cart.router';
 import { transactionRouter } from './routers/transaction.router';
+import { branch_productRouter } from './routers/branch.product.router';
 
 const router = Router();
 
@@ -15,13 +17,12 @@ router.get('/', (req, res) => {
 });
 
 router.use('/sample', sampleRouter);
-router.use('/admin', adminRouter);
 router.use('/customer', customerRouter);
 router.use('/address', addressRouter);
 router.use('/cities', cityRouter);
 router.use('/cart', cartRouter);
+router.use('/branch-product', branch_productRouter);
 router.use('/admins', adminRouter);
-router.use('/customer', customerRouter);
 router.use('/product', productRouter);
 router.use('/branch', branchRouter);
 router.use('/transaction', transactionRouter);

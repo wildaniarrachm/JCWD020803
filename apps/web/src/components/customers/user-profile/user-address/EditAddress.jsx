@@ -5,7 +5,6 @@ import { getAddressById } from '../../../../utils/address/get.byid';
 import { fetchOpenCage } from '../../../../utils/address/fetch.opencage';
 import { Typography } from '@material-tailwind/react';
 import { FormEditAddress } from './formEditAddress';
-
 export const EditAddress = () => {
   const mapRef = useRef();
   const { id } = useParams();

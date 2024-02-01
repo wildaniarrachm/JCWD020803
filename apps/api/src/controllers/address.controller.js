@@ -2,7 +2,7 @@ import Address from '../models/address.model';
 import Customer from '../models/customer.model';
 import City from '../models/city.model';
 import { rajaOngkir } from './raja.ongkir';
-import { Op, where } from 'sequelize';
+import { Op } from 'sequelize';
 import Province from '../models/province.model';
 export const getAllCity = async (req, res) => {
   try {

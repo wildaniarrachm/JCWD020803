@@ -13,8 +13,6 @@ import {
 } from '@material-tailwind/react';
 import 'aos/dist/aos.css';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setData } from '../../../redux/customer.slice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -119,12 +117,20 @@ export const FormLogin = () => {
               Caps Lock is on
             </div>
           )}
-          <small
-            className="font-poppins text-gray-700 text-[14px] inline-block hover:underline hover:cursor-pointer decoration-solid "
-            onClick={() => navigate('/login-user/forgot-password')}
-          >
-            Forgot password?
-          </small>
+          <div className="flex justify-between">
+            <small
+              className="font-poppins text-gray-700 text-[14px] inline-block hover:underline hover:cursor-pointer decoration-solid "
+              onClick={() => navigate('/login-user/forgot-password')}
+            >
+              Forgot password?
+            </small>
+            <small
+              className="font-poppins text-gray-700 text-[14px] inline-block hover:underline hover:cursor-pointer decoration-solid "
+              onClick={() => navigate('/reverification')}
+            >
+              Send re-verification
+            </small>
+          </div>
           <div className="">
             <Checkbox
               onChange={handleRemember}

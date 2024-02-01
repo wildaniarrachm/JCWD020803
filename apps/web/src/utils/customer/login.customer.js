@@ -1,14 +1,14 @@
 import { api } from '../../libs/server.api';
 import * as Yup from 'yup';
 
-  export const loginCustomer = async (data) => {
-    try {
-      const response = await api.post(`customer/login`, data);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  };
+export const loginCustomer = async (data) => {
+  try {
+    const response = await api.post(`customer/login`, data);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const validateLogin = Yup.object({
   email: Yup.string()

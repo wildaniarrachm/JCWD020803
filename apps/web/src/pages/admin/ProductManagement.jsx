@@ -1,7 +1,6 @@
-import { AdminTable } from '../../components/admin/dashboard/admin-management/admintable';
 import { DesktopNav } from '../../components/admin/dashboard/nav/Index';
+import { ProductManagement } from '../../components/admin/dashboard/product';
 import { Sidebar } from '../../components/admin/dashboard/sidebar/Index';
-// import { SideBarReal } from '../../components/admin/dashboard/sidebar/sidebar';
 
 export const ManageProduct = () => {
   return (
@@ -10,9 +9,12 @@ export const ManageProduct = () => {
         <div className="row-span-2 z-30 h-full bg-main-light">
           <Sidebar />
         </div>
-        <div className="bg-main-light z-10"> <DesktopNav/> </div>
+        <div className="bg-main-light z-10">
+          {' '}
+          <DesktopNav />{' '}
+        </div>
         <div className=" bg-main-light rounded-lg p-10">
-          <AdminTable />
+          <ProductManagement />
         </div>
       </div>
     </>

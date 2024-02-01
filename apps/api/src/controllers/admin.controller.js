@@ -7,6 +7,7 @@ import handlebars from 'handlebars';
 import fs from 'fs';
 import { transporter } from '../middleware/transporter.middleware';
 import { log } from 'util';
+import Branch from '../models/branch.model';
 
 export const addSuperAdmin = async (req, res) => {
   try {
@@ -44,7 +45,7 @@ export const registerAdmin = async (req, res) => {
       const tempCompile = await handlebars.compile(send);
       const tempResult = tempCompile({
         username: username,
-        link: `${process.env.BASE_URL}admin/set-password/${token}`,
+        link: `${process.env.WEB_URL}admin/set-password/${token}`,
       });
       await transporter.sendMail({
         from: 'wildaniarrachman@gmail.com',
@@ -101,7 +102,7 @@ export const forgotPasswordAdmin = async (req, res) => {
     const tempCompile = await handlebars.compile(send);
     const tempResult = tempCompile({
       id: findEmail?.id,
-      create: `${process.env.BASE_URL}admin/reset-password/${token}`,
+      create: `${process.env.WEB_URL}admin/reset-password/${token}`,
     });
     await transporter.sendMail({
       from: process.env.NODEMAILER_USER,
@@ -269,6 +270,11 @@ export const getAdmin = async (req, res) => {
         isVerified: true,
         isSuperAdmin: false,
       },
+      include: [
+        {
+          model: Branch,
+        },
+      ],
     });
     return res.status(200).send({ adminData });
   } catch (error) {
