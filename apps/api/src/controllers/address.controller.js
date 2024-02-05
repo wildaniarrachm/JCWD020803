@@ -82,11 +82,10 @@ export const newAddress = async (req, res) => {
     }
     const addressExist = await Address.findOne({
       where: {
-        [Op.or]: [
-          { street: { [Op.eq]: street } },
-          { received_name: { [Op.eq]: received_name } },
-          { label_address: { [Op.eq]: label_address } },
-        ],
+        street: street,
+        received_name: received_name,
+        label_address: label_address,
+        CustomerId: id,
       },
     });
     if (addressExist) {

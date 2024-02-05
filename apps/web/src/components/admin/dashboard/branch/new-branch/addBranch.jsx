@@ -9,6 +9,7 @@ import { fetchMapboxGeocode } from '../../../../../utils/address/fetch.mapbox.ge
 import { useFormik } from 'formik';
 import { addNewBranch } from '../../../../../utils/branch/add.branch';
 import { SearchBenchmark } from './searchBenchmark';
+import { toast } from 'react-toastify';
 
 export const AddBranch = () => {
   const tokenAdmin = localStorage.getItem('tokenAdmin');
@@ -63,7 +64,6 @@ export const AddBranch = () => {
   const getDistrick = async () => {
     if (benchmark !== undefined) {
       const response = await fetchMapboxGeocode(benchmark);
-      console.log(response);
       if (response?.features?.length > 0) {
         setPlace(response?.features);
         handleOpen();
@@ -103,6 +103,18 @@ export const AddBranch = () => {
       AdminId: admins?.idAdmins,
     };
     const response = await addNewBranch(newData, tokenAdmin);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+    } else {
+      console.log(response);
+      toast.error(response?.response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+    }
     setBenchmark('');
   };
 

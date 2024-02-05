@@ -33,7 +33,6 @@ export const registerAdmin = async (req, res) => {
   try {
     const { name, username, email } = req.body;
     const verifyAdmin = async (data) => {
-      console.log('data', data?.dataValues);
       let payload = { id: data?.dataValues?.id };
       const token = jwt.sign(payload, process.env.KEY_ADMIN_JWT, {
         expiresIn: '24h',
@@ -228,7 +227,6 @@ export const inputPassword = async (req, res) => {
     const adminId = req.admin.id;
 
     const findAdmin = await Admin.findOne({ where: { id: adminId } });
-    console.log(findAdmin);
 
     if (findAdmin) {
       const salt = await bcrypt.genSalt(10);

@@ -15,6 +15,7 @@ export const RegisterBody = ({ title, subTitle, link, subLink }) => {
     try {
       const response = await signInWithPopup(auth, provider);
       const result = await socialRegister(response?.user);
+      console.log(result);
       dispacth(setData(result?.data?.isExist));
       localStorage.setItem('token', result?.data?.token);
       navigate(`/customer-dashboard/profile`);

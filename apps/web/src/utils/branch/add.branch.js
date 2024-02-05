@@ -7,6 +7,6 @@ export const addNewBranch = async (data, tokenAdmin) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

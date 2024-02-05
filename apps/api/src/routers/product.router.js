@@ -1,13 +1,27 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
-    addProduct, deleteProduct, editProduct, getAllProducts
-} from "../controllers/product.controller"
+  addProduct,
+  deleteProduct,
+  editProduct,
+  getAllProducts,
+} from '../controllers/product.controller';
+import {
+  verifyAdminToken,
+  verifyIsSuperAdmin,
+} from '../middleware/admin.auth.middleware';
+import { productImageUpload } from '../middleware/product.multer.middleware';
 
 const productRouter = Router();
 
-productRouter.post('/add-product', addProduct)
-productRouter.patch('/edit-product', editProduct)
-productRouter.get('/get-product', getAllProducts)
-productRouter.delete('/delete-product', deleteProduct)
+productRouter.get('/', getAllProducts);
+productRouter.post(
+  '/',
+  verifyAdminToken,
+  verifyIsSuperAdmin,
+  productImageUpload().single('file'),
+  addProduct,
+);
+productRouter.patch('/edit-product', editProduct);
+productRouter.delete('/delete-product', deleteProduct);
 
-export {productRouter}
+export { productRouter };

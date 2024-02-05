@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { CartFunction } from '../../utils/cart/cart.function';
 import { useNavigate } from 'react-router-dom';
 
@@ -5,14 +6,12 @@ export const Struk = () => {
   const navigate = useNavigate();
   const { cartData } = CartFunction();
 
-  const addToShipment = async () => {
-    try {
-      if (cartData.length > 0) {
-        localStorage.setItem('cartData', JSON.stringify(cartData));
-        navigate('/cart/shipment', { state: { cartData } });
-      }
-    } catch (err) {
-      console.log(err);
+  const addToShipment = () => {
+    if (cartData.length > 0) {
+      localStorage.setItem('cartData', JSON.stringify(cartData));
+      navigate('/cart/shipment', { state: { cartData } });
+    } else {
+      toast.info('Input items please', { autoClose: 3000 });
     }
   };
 

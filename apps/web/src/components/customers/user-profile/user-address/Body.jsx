@@ -74,8 +74,8 @@ export const CustomerAddressBody = ({ getAddress, token }) => {
       <div className=" h-full py-2 px-3 rounded-lg bg-white flex flex-col gap-5">
         <div className="w-full">
           <div className="flex justify-between w-full p-1 laptop:p-5">
-            <div className="w-[30%] flex flex-col gap-4 laptop:w-[40%]">
-              <div className="flex flex-col laptop:flex-row gap-2">
+            <div className="w-[30%] flex flex-col gap-4 tablet:w-[60%] laptop:w-[40%]">
+              <div className="flex flex-col tablet:flex-row gap-2">
                 <Input
                   label="Search recived name or address"
                   className="w-[220px] laptop:w-[100%]"
@@ -85,7 +85,7 @@ export const CustomerAddressBody = ({ getAddress, token }) => {
               <div className="flex gap-2">
                 {navigation?.map((nav) => (
                   <button
-                    className={`border text-[10px] laptop:text-[14px] border-gray-400 text-gray-600 px-10 py-1 laptop:px-6 laptop:py-5 rounded-lg ${
+                    className={`border text-[10px] laptop:text-[14px] border-gray-400 text-gray-600 px-10 py-1 tablet:px-6 tablet:py-5 rounded-lg ${
                       filter?.active === nav?.id
                         ? 'bg-main-pink/50 border-main-red text-main-red'
                         : null
@@ -100,7 +100,7 @@ export const CustomerAddressBody = ({ getAddress, token }) => {
                 ))}
               </div>
             </div>
-            <div className="w-[30%] laptop:w-[20%]">
+            <div className="w-[30%] tablet:w-[20%] laptop:w-[20%]">
               <AddAddress getAddress={getAddress} />
             </div>
           </div>

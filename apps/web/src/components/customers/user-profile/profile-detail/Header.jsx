@@ -9,7 +9,9 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { ProfileNavigation } from '../navigation';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 export const ProfileHeader = ({ title, link, textLink }) => {
+  const user = useSelector((state) => state.customer.value);
   useEffect(() => {
     AOS.init({
       disable: false,
@@ -35,8 +37,8 @@ export const ProfileHeader = ({ title, link, textLink }) => {
     },
     {
       icon: <CiShoppingCart size={'20px'} />,
-      title: 'Go Shopping',
-      url: `/`,
+      title: 'Cart',
+      url: `/cart/shipment`,
     },
   ];
   return (
@@ -47,8 +49,8 @@ export const ProfileHeader = ({ title, link, textLink }) => {
         data-aos="fade-right"
       >
         <div>
-          {items?.map((item, idx) => (
-            <div key={idx} className="flex gap-2 py-1">
+          {items?.map((item) => (
+            <div key={item} className="flex gap-2 py-1">
               <Link
                 to={item?.url}
                 className="flex font-poppins items-center gap-2 py-[15px] pl-5  focus:bg-main-light focus:text-main-red w-[100%] transition duration-500"

@@ -8,8 +8,7 @@ export const CartItem = () => {
     ? cartData.reduce((sum, item) => sum + item.Cart_detail.quantity, 0)
     : 0;
 
-  useEffect(() => {
-  }, [cartData]);
+  useEffect(() => {}, [cartData]);
 
   return (
     <section className="w-fit h-fit absolute right-0 -z-50">
@@ -37,7 +36,7 @@ export const CartItem = () => {
         </div>
         <div
           tabIndex={0}
-          className="card card-compact dropdown-content w-[100vw] mt-3 xl:w-[35vw] shadow bg-black"
+          className="card card-compact dropdown-content w-[100vw] mt-6 xl:w-[35vw] shadow bg-white"
         >
           <div className="card-body">
             <span className="font-bold text-lg">{totalQuantity} Items</span>
@@ -65,7 +64,9 @@ export const CartItem = () => {
             ))}
             <a href="/cart">
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+                <button className="btn bg-main-blue hover:bg-main-red text-white btn-block">
+                  View cart
+                </button>
               </div>
             </a>
           </div>

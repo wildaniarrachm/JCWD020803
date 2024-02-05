@@ -67,7 +67,6 @@ export const EditAddress = () => {
       setLoading(false);
     } catch (error) {
       setLoading(true);
-      console.log(error);
     }
   };
   const handleDrag = (e) => {

@@ -17,7 +17,7 @@ export const postAddress = async (data) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

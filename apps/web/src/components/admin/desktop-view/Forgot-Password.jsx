@@ -10,7 +10,7 @@ import {
   Checkbox,
 } from '@material-tailwind/react';
 import { useFormik } from 'formik';
-import email from '../../../assets/email.png'
+import email from '../../../assets/email.png';
 import { sendEmailVerification } from '../../../utils/admin/reset-password.admin';
 
 export function ForgotPassword({ open, handleOpen }) {
@@ -21,11 +21,9 @@ export function ForgotPassword({ open, handleOpen }) {
     onSubmit: (values, action) => {
       sendEmailVerification(values);
       console.log(values);
-      action.resetForm
-    }
+      action.resetForm;
+    },
   });
-
-
 
   return (
     <>
@@ -38,13 +36,16 @@ export function ForgotPassword({ open, handleOpen }) {
         <Card className="mx-auto bg-main-light w-full max-w-[22rem]">
           <form onSubmit={formik.handleSubmit}>
             <CardBody className="flex flex-col gap-4">
-                <div>
-              <Typography variant="h4" className='font-poppins text-center text-main-red'>
-                Forgot Password?
-              </Typography>
-                </div>
-              
-                <img src={email} className='h-[12rem] w-[15rem] mx-7'/>
+              <div>
+                <Typography
+                  variant="h4"
+                  className="font-poppins text-center text-main-red"
+                >
+                  Forgot Password?
+                </Typography>
+              </div>
+
+              <img src={email} className="h-[12rem] w-[15rem] mx-7" />
               <Typography className="-mb-2 font-poppins" variant="h6">
                 Input your email here
               </Typography>
@@ -57,14 +58,18 @@ export function ForgotPassword({ open, handleOpen }) {
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
               />
-               {formik.touched.email || formik.errors.email ? (
-                  <div className=" mt-[-20px] text-red-900">
-                    {formik.errors.email}
-                  </div>
-                ) : null}
+              {formik.touched.email || formik.errors.email ? (
+                <div className=" mt-[-20px] text-red-900">
+                  {formik.errors.email}
+                </div>
+              ) : null}
             </CardBody>
             <CardFooter className="pt-0">
-              <Button type="submit" className='bg-main-blue font-poppins' fullWidth>
+              <Button
+                type="submit"
+                className="bg-main-blue font-poppins"
+                fullWidth
+              >
                 Reset Password
               </Button>
             </CardFooter>

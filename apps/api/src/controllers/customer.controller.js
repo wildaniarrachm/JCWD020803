@@ -86,6 +86,7 @@ export const createCustomer = async (req, res) => {
         const referralMatches = await Customer.findOne({
           where: { referral_code: referralCode },
         });
+        console.log(referralMatches);
         if (!referralMatches) {
           return res.status(400).send('Referral doesnt match');
         } else {
@@ -97,13 +98,32 @@ export const createCustomer = async (req, res) => {
               email,
               referral_code: referral,
             });
-            await User_voucher.create({
-              CustomerId: referralMatches.id,
-              VoucherId: 2,
+
+            const findUserVoucher = await User_voucher.findOne({
+              where: { CustomerId: referralMatches?.id, VoucherId: 2 },
             });
+            if (!findUserVoucher) {
+              await User_voucher.create({
+                CustomerId: referralMatches?.id,
+                VoucherId: 2,
+                vouchers_amount: 1,
+              });
+            } else {
+              let amount = findUserVoucher?.vouchers_amount;
+              await User_voucher.update(
+                { vouchers_amount: (amount += 1) },
+                {
+                  where: {
+                    CustomerId: findUserVoucher?.CustomerId,
+                    VoucherId: findUserVoucher?.VoucherId,
+                  },
+                },
+              );
+            }
             await User_voucher.create({
-              CustomerId: result.id,
+              CustomerId: result?.id,
               VoucherId: 1,
+              vouchers_amount: 1,
             });
             verifyCustomer(result);
           } catch (error) {
@@ -177,6 +197,13 @@ export const changePasswordCustomer = async (req, res) => {
   const { id } = req?.customer;
   try {
     const results = await Customer.findOne({ where: { id: id } });
+    if (results?.socialRegister === true) {
+      return res
+        .status(400)
+        .send(
+          'Your account is social media account, please contact your social media provider',
+        );
+    }
     const compPassword = await bcrypt.compare(OldPassword, results?.password);
     const compNewPassword = await bcrypt.compare(password, results?.password);
     console.log(compPassword === compNewPassword);
@@ -432,9 +459,10 @@ export const socialRegister = async (req, res) => {
         referral_code: referral,
         socialRegister: true,
       });
+      const token = generateJwt(isExist);
       return res
         .status(200)
-        .send({ message: `Welcome ${displayName}`, isExist });
+        .send({ message: `Welcome ${displayName}`, isExist, token });
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -523,8 +551,8 @@ export const sendReverification = async (req, res) => {
           .status(200)
           .send('Re-verification has been send on your email');
       }
-    }else{
-      return res.status(400).send('Email doesnt match, please re-register')
+    } else {
+      return res.status(400).send('Email doesnt match, please re-register');
     }
   } catch (error) {
     res.status(500).send(error.message);

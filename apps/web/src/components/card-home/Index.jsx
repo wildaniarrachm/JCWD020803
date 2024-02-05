@@ -1,7 +1,9 @@
 import { Button } from '@material-tailwind/react';
 import category_snack from '../../assets/category_snack.jpg';
 import 'aos/dist/aos.css';
+import { CartFunction } from '../../utils/cart/cart.function';
 export const CardHome = ({ productList }) => {
+  const { addToCart } = CartFunction();
   return (
     <section className="font-poppins">
       <div className="text-center px-[15%] pt-5">
@@ -61,7 +63,7 @@ export const CardHome = ({ productList }) => {
               {product?.Product?.isDisabled === false ? (
                 <button
                   className="px-5 py-2 bg-main-red text-white rounded-lg text-sm font-bold"
-                  onClick={() => alert(`branch id: ${product?.BranchId} product id : ${product?.ProductId}`)}
+                  onClick={() => addToCart(product?.ProductId)}
                 >
                   +Basket
                 </button>

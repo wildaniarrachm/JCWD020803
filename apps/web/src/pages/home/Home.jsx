@@ -11,13 +11,13 @@ function Home() {
   const [branch, setBranch] = useState();
   const [productList, setProductList] = useState();
   const delivery = useSelector((state) => state.delivery.value);
+  const reload = () => window.location.reload();
   const getDistance = async () => {
     if (position) {
       const response = await getDistanceBranch(
         position?.latitude,
         position?.longitude,
       );
-      console.log(response);
       if (response?.status === 200) {
         return setBranch(response?.data?.branches);
       }
@@ -27,13 +27,12 @@ function Home() {
     if (branch) {
       const response = await getProductByBranch(branch?.id);
       setProductList(response?.data?.results);
-      console.log(response);
     }
   };
-  console.log(productList);
+
   useEffect(() => {
     getDistance();
-  }, [position, delivery]);
+  }, [position]);
 
   useEffect(() => {
     getProductBranch();

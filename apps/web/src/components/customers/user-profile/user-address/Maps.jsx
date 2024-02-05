@@ -3,7 +3,6 @@ import ReactMapGl, { Marker, NavigationControl } from 'react-map-gl';
 
 export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
   const mapRef = useRef();
-  console.log(direct);
   const getCurrentLocation = async () => {
     if (!geo?.lat && !geo?.lng) {
       if ('geolocation' in navigator) {
@@ -21,7 +20,6 @@ export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
       mapRef.current.flyTo({
         center: [geo?.lng, geo?.lat],
       });
-      console.log('test');
     }
   };
   useEffect(() => {

@@ -57,18 +57,16 @@ export const ModalUploadImage = () => {
 
   const handleSubmit = async () => {
     try {
-      // Lakukan validasi menggunakan Yup
       await schema.validate({ file: image });
-
-      // Lanjutkan dengan mengunggah file jika valid
       let formData = new FormData();
       formData.append('file', image);
-      const response = await uploadImage(formData, token);
-      console.log(response);
+      await uploadImage(formData, token);
       handleOpen();
+      window.location.reload();
     } catch (error) {
-      // Tangani kesalahan validasi dengan menampilkan pesan kesalahan di form
+      handleOpen();
       toast.error(error.message);
+      setSelectedImage(null);
     }
   };
   const handleImageChange = (e) => {
@@ -99,7 +97,6 @@ export const ModalUploadImage = () => {
           withBorder="true"
           className="p-0.5 text-[12px]"
           color="red"
-          
         />
       </Badge>
       <Dialog open={open} handler={handleOpen} size="xs">

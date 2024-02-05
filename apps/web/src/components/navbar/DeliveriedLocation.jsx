@@ -40,7 +40,7 @@ export const DeliveriedLocation = ({ deliveried }) => {
             </div>
           </div>
           <div
-            onClick={() => navigate('customer-dashboard/address')}
+            onClick={() => navigate('/customer-dashboard/address')}
             className="font-poppins h-[14%] w-full border border-main-red rounded-lg flex justify-center items-center cursor-pointer focus:border-main-red"
           >
             <p className="font-bold text-main-red text-[14px]">

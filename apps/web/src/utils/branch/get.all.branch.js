@@ -1,12 +1,9 @@
 import { api } from '../../libs/server.api';
 
-export const getAllBranch = async (tokenAdmin, page) => {
-  let pages = 1;
-  if (page) {
-    pages = page;
-  }
+export const getAllBranch = async (tokenAdmin, pages) => {
   try {
-    const response = await api.get(`branch?${pages}`, {
+    console.log(pages);
+    const response = await api.get(`branch?pages=${pages}`, {
       headers: { Authorization: `Bearer ${tokenAdmin}` },
     });
     return response;

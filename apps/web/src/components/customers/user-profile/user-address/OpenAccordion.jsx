@@ -41,19 +41,17 @@ export const OpenAccordion = ({
     setLoading(true);
     try {
       const response = await fetchMapboxGeocode(benchmark);
-      console.log(response?.features);
       setDetailAddress(response?.features);
       setLoading(false);
       setDirect(false);
     } catch (error) {
-      console.log(error);
+      return error
     }
   };
   const handleClick = (event) => {
     setGeo({ lng: event?.center[0], lat: event?.center[1] });
     setBenchmark(event?.place_name);
     setDirect(true);
-    console.log(event);
   };
 
   return (

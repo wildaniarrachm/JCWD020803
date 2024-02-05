@@ -10,35 +10,37 @@ import logo from '../../../assets/ez-mart-logo.png';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { ForgotPassword } from './Forgot-Password';
-import { handleSubmit, validationSchema } from '../../../utils/admin/login.admin';
+import {
+  handleSubmit,
+  validationSchema,
+} from '../../../utils/admin/login.admin';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 
 export default function LoginAdmin() {
   const [admin, setAdmin] = useState([]);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch ()
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen((open) => !open);
   };
 
   const handleRememberme = (e) => {
-    formik.setFieldValue('rememberme', e.target.checked)
+    formik.setFieldValue('rememberme', e.target.checked);
   };
-  
+
   const formik = useFormik({
     initialValues: {
       input_data: '',
       password: '',
-      rememberme: ''
+      rememberme: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values, action) => {
       console.log(values);
-      handleSubmit(values, navigate, dispatch );
+      handleSubmit(values, navigate, dispatch);
       action.resetForm();
     },
   });
@@ -116,9 +118,9 @@ export default function LoginAdmin() {
                 <div className=" flex flex-row items-center justify-between">
                   <div>
                     <Checkbox
-                    color='red'
-                    name='rememberme'
-                    type='checkbox'
+                      color="red"
+                      name="rememberme"
+                      type="checkbox"
                       label={
                         <Typography
                           color="gray"
@@ -141,7 +143,11 @@ export default function LoginAdmin() {
                     </Typography>
                   </div>
                 </div>
-                <Button type="submit" className="mt-6 font-poppins bg-main-blue" fullWidth>
+                <Button
+                  type="submit"
+                  className="mt-6 font-poppins bg-main-blue"
+                  fullWidth
+                >
                   Sign In
                 </Button>
               </form>

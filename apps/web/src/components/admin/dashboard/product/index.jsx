@@ -1,53 +1,41 @@
-import { Card, Typography } from '@material-tailwind/react';
 import { TableProducts } from './table-product';
 import { AddProducts } from './add-product';
-
-const TABLE_HEAD = [
-  'Name',
-  'Category',
-  'SubCategory',
-  'Stock',
-  'SubCategory',
-  'Price',
-  'Weight',
-  '',
-];
-
-const TABLE_ROWS = [
-  {
-    name: 'John Michael',
-    job: 'Manager',
-    date: '23/04/18',
-  },
-  {
-    name: 'Alexa Liras',
-    job: 'Developer',
-    date: '23/04/18',
-  },
-  {
-    name: 'Laurent Perrier',
-    job: 'Executive',
-    date: '19/09/17',
-  },
-  {
-    name: 'Michael Levi',
-    job: 'Developer',
-    date: '24/12/08',
-  },
-  {
-    name: 'Richard Gran',
-    job: 'Manager',
-    date: '04/10/21',
-  },
-];
+import { useEffect, useState } from 'react';
+import { getAllProducts } from '../../../../utils/product/getProduct';
+import { getAllCategory } from '../../../../utils/categories/getCategories';
 
 export const ProductManagement = () => {
+  const [page, setPage] = useState(1);
+  const [products, setProducts] = useState({ data: [], totalPages: '' });
+  const [category, setCategory] = useState();
+  const getCategory = async () => {
+    const response = await getAllCategory();
+    if (response?.status === 200) {
+      setCategory(response?.data);
+    }
+  };
+  console.log(category);
+  const getProduct = async () => {
+    const response = await getAllProducts(page);
+    if (response?.status === 200) {
+      setProducts({
+        data: response?.data?.result,
+        totalPages: response?.data?.totalPages,
+      });
+    }
+  };
+  useEffect(() => {
+    getProduct();
+  }, [page]);
+  useEffect(() => {
+    getCategory();
+  }, []);
   return (
-    <div className='flex flex-col gap-3'>
+    <div className="flex flex-col gap-3">
       <div className="flex justify-end">
-        <AddProducts />
+        <AddProducts category={category} />
       </div>
-      <TableProducts />
+      <TableProducts products={products} setPage={setPage} page={page} />
     </div>
   );
 };

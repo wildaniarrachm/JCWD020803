@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import ReactMapGl, { Marker, NavigationControl } from 'react-map-gl';
 export const MapsBranch = ({ geo, handleDrag, direct, setDirect }) => {
   const mapRef = useRef();
-  console.log(geo);
 
   const getDirection = () => {
     if (direct === true) {

@@ -12,7 +12,6 @@ const Geocoder = ({ setGeo }) => {
   useControl(() => ctrl);
   ctrl.on('result', (e) => {
     const coords = e.result.geometry.coordinates;
-    console.log(e?.result);
     setGeo({
       lat: coords[0],
       lng: coords[1],

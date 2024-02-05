@@ -20,26 +20,14 @@ export const MainCarousel = ({ deliveried, branch }) => {
     {
       img: imageCarousel_1,
       alt: 'Image 1',
-      title: 'Discount Up to 50% all items',
-      subTitle:
-        "Great News! Enjoy a 50% discount on all products. Don't miss out on these incredible savings. Shop now and indulge in the best deals!",
-      button: 'Shop Now',
     },
     {
       img: imageCarousel_4,
       alt: 'Image 4',
-      title: 'Discount 10%',
-      subTitle:
-        "Happy Friday! Today's special offer is just for you. Get an exclusive discount on all black-colored products. Elevate your style with our sleek and sophisticated items at a discounted price. Treat yourself this Friday and shop now!",
-      button: 'Shop Now',
     },
     {
       img: imageCarousel_5,
       alt: 'Image 4',
-      title: 'Discount 10%',
-      subTitle:
-        "Happy Friday! Today's special offer is just for you. Get an exclusive discount on all black-colored products. Elevate your style with our sleek and sophisticated items at a discounted price. Treat yourself this Friday and shop now!",
-      button: 'Shop Now',
     },
   ];
   const [open, setOpen] = useState(false);
@@ -49,7 +37,7 @@ export const MainCarousel = ({ deliveried, branch }) => {
   return (
     <div className="px-3 laptop:pr-[6%] laptop:pl-[3%] flex flex-col-reverse justify-center gap-2">
       <Carousel
-        className="h-[200px] rounded-lg laptop:h-[270px] laptop:my-[1%] laptop:w-[100%] bg-main-red laptop:rounded-lg"
+        className="h-[200px] rounded-lg laptop:h-[270px] laptop:w-[100%] bg-main-red laptop:rounded-lg"
         autoplay
         loop
         autoplayDelay={5000}
@@ -100,7 +88,7 @@ export const MainCarousel = ({ deliveried, branch }) => {
           </div>
         ))}
       </Carousel>
-      {deliveried.length >= 1 ? (
+      {deliveried?.length >= 1 ? (
         <div className="flex justify-between items-center">
           <DeliverLocation
             closeDrawer={closeDrawer}
@@ -113,7 +101,7 @@ export const MainCarousel = ({ deliveried, branch }) => {
         </div>
       ) : (
         <div>
-          <StoreLocation deliveried={deliveried} />
+          <StoreLocation deliveried={deliveried} branch={branch} />
         </div>
       )}
     </div>

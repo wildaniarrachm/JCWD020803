@@ -32,6 +32,7 @@ export const CartFunction = () => {
           headers: { Authorization: `Bearer ${userToken}` },
         },
       );
+      fetchData();
     } catch (err) {
       return err;
     }

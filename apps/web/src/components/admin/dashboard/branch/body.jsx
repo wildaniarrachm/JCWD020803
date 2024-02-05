@@ -39,7 +39,6 @@ export const BodyBranch = ({ TABLE_HEAD, branch }) => {
       swal('Your branch is safe!');
     }
   };
-  const filterBranch = branch?.filter((branch) => branch?.isDeleted === false);
   return (
     <>
       <CardBody className="overflow-scroll px-0 font-poppins">
@@ -63,7 +62,7 @@ export const BodyBranch = ({ TABLE_HEAD, branch }) => {
             </tr>
           </thead>
           <tbody>
-            {filterBranch?.map((branch) => {
+            {branch?.map((branch) => {
               const isLast = branch?.length - 1;
               const classes = isLast
                 ? 'p-4'
@@ -124,15 +123,13 @@ export const BodyBranch = ({ TABLE_HEAD, branch }) => {
                   </td>
                   <td className={classes}>
                     {branch?.head_store === true ? (
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <FcCheckmark size={25} />
-                        </IconButton>
-                      </Tooltip>
+                      <IconButton variant="text">
+                        <FcCheckmark size={25} />
+                      </IconButton>
                     ) : null}
                   </td>
                   <td className={classes}>
-                    <Tooltip content="Edit User">
+                    <Tooltip content="Edit Branch">
                       <IconButton
                         variant="text"
                         onClick={() => navigate(`/branch/edit/${branch?.id}`)}

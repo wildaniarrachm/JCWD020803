@@ -22,7 +22,6 @@ export const ModalEmail = ({ email }) => {
 
   const handleChangeEmail = async (data) => {
     const response = await changeEmail(data, token);
-    console.log(response);
   };
   const formik = useFormik({
     initialValues: {

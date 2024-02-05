@@ -4,8 +4,10 @@ import { transactionUploadPayment } from '../middleware/transaction.multer.middl
 import {
   addToCheckout,
   cancelOrder,
+  confirmPaymentByAdmin,
   deleteAllTransaction,
   getAll,
+  getAllByAdmin,
   getByDate,
   getById,
   uploadPaymentProof,
@@ -16,8 +18,10 @@ const transactionRouter = Router();
 const upload = transactionUploadPayment();
 
 transactionRouter.use(verifyToken);
-transactionRouter.post('/', addToCheckout);
 transactionRouter.get('/', getAll);
+transactionRouter.get('/admin', getAllByAdmin);
+transactionRouter.post('/', addToCheckout);
+transactionRouter.patch('/confirm/:transactionId', confirmPaymentByAdmin);
 transactionRouter.patch(
   '/upload-proof/:transactionId',
   upload.single('paymentProof'),

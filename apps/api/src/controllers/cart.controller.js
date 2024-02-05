@@ -1,4 +1,6 @@
 import Branch_product from '../models/branch_product.model';
+import Branch from '../models/branch.model';
+import Admin from '../models/admin.model';
 import Cart from '../models/cart.model';
 import CartDetail from '../models/cart_detail.model';
 import Product from '../models/product.model';
@@ -37,7 +39,24 @@ export const getActive = async (req, res) => {
           include: [
             {
               model: Product,
-              attributes: ['product_name', 'price', 'descriptions'],
+              attributes: ['product_name', 'price', 'descriptions', 'weight'],
+              include: [
+                {
+                  model: Branch_product,
+                  include: [
+                    {
+                      model: Branch,
+                      attributes: [
+                        'branch_name',
+                        'store_contact',
+                        'address',
+                        'province_id',
+                        'city_id',
+                      ],
+                    },
+                  ],
+                },
+              ],
             },
           ],
         },

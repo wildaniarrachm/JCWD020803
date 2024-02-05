@@ -5,8 +5,8 @@ import Branch_product from '../models/branch_product.model';
 import Cart from '../models/cart.model';
 import Cart_detail from '../models/cart_detail.model';
 import Customer from '../models/customer.model';
-import { Op } from 'sequelize';
 import Payment_method from '../models/payment_method';
+import { Op } from 'sequelize';
 
 export const getAll = async (req, res) => {
   try {
@@ -29,6 +29,40 @@ export const getAll = async (req, res) => {
     res.status(200).send({
       response,
     });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ message: err.message });
+  }
+};
+
+export const getAllByAdmin = async (req, res) => {
+  try {
+    const response = await Transaction.findAll({
+      include: [
+        { model: Transaction_product, include: [{ model: Product }] },
+        { model: Customer },
+      ],
+    });
+    res.status(200).send({ response });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ message: err.message });
+  }
+};
+
+export const confirmPaymentByAdmin = async (req, res) => {
+  try {
+    const { transactionId } = req.params;
+
+    if (!transactionId) {
+      res.status(400).send({ message: 'Transaction ID is required' });
+    }
+
+    const response = await Transaction.update(
+      { status: 'Payment Confirmed' },
+      { where: { id: transactionId, status: 'Waiting Payment Confirmation' } },
+    );
+    res.status(200).send({ response });
   } catch (err) {
     console.log(err);
     res.status(400).send({ message: err.message });
@@ -113,7 +147,7 @@ export const addToCheckout = async (req, res) => {
   console.log('CARA BAYAR', req.body);
   try {
     const customer = req.customer;
-    const { PaymentMethodId } = req.body; // Rename PaymentMethodId to match your request
+    const { PaymentMethodId } = req.body;
     const paymentMethodId = parseInt(PaymentMethodId);
 
     console.log('CARA BAYAR', paymentMethodId);
@@ -155,6 +189,7 @@ export const addToCheckout = async (req, res) => {
       total: 0,
       CustomerId: customerData.id,
       PaymentMethodId: newPaymentMethod.id,
+      sub_total: 0,
     });
 
     const activeCarts = await Cart.findAll({
@@ -177,6 +212,8 @@ export const addToCheckout = async (req, res) => {
         where: { ProductId: product.id },
       });
 
+      const SubTotal = [product].reduce((sum, item) => sum + item.price, 0);
+
       if (
         !productQuantity ||
         productQuantity.quantity < cart.Cart_detail.quantity
@@ -193,7 +230,10 @@ export const addToCheckout = async (req, res) => {
       });
 
       await Transaction.increment(
-        { total: cart.Cart_detail.quantity * product.price },
+        {
+          total: cart.Cart_detail.quantity * product.price,
+          sub_total: SubTotal,
+        },
         { where: { id: newTransaction.id } },
       );
 

@@ -55,7 +55,6 @@ export const FormEditAddress = ({ addressData, handleChange }) => {
           city_id: add?.data?.result?.city_id,
         };
         const response = await editAddress(newData, token);
-        console.log(response);
         if (response?.status === 200) {
           swal(response?.data, {
             icon: 'success',

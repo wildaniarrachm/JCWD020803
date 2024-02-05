@@ -16,6 +16,7 @@ import {
 } from '../../../../utils/address/add.address.customer';
 import { OpenAccordion } from './openAccordion';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 export const AddAddress = ({ getAddress }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
@@ -28,7 +29,6 @@ export const AddAddress = ({ getAddress }) => {
     try {
       if (idProvince) {
         const response = await getCityByProvince(idProvince);
-        console.log(response);
         if (response?.data?.rajaongkir?.results) {
           return setCities(response?.data?.rajaongkir?.results);
         } else {
@@ -36,7 +36,7 @@ export const AddAddress = ({ getAddress }) => {
         }
       }
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -53,12 +53,23 @@ export const AddAddress = ({ getAddress }) => {
         longitude: geo?.lng,
         latitude: geo?.lat,
       };
-      await postAddress(newData);
+      const results = await postAddress(newData);
       handleOpen(null);
-      window.location.reload();
-      getAddress();
+      if (results?.status === 200) {
+        toast.success(results?.data, {
+          autoClose: 3000,
+          position: 'top-right',
+        });
+        window.location.reload();
+      } else {
+        toast.error(results?.response?.data, {
+          autoClose: 3000,
+          position: 'top-right',
+        });
+        window.location.reload();
+      }
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -98,7 +109,7 @@ export const AddAddress = ({ getAddress }) => {
     <div className="sticky top-0 w-[90%]">
       <button
         onClick={handleOpen}
-        className="bg-green-600 shadow-lg text-[9px] laptop:text-[16px] text-white px-2 py-1 rounded-lg font-bold font-poppins"
+        className="bg-green-600 shadow-lg text-[9px] laptop:text-[16px] text-white px-2 py-1  tablet:px-4 tablet:py-2 tablet:text-[14px] rounded-lg font-bold font-poppins"
       >
         + Add New Address
       </button>
