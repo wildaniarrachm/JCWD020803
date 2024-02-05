@@ -14,7 +14,6 @@ export const ProductManagement = () => {
       setCategory(response?.data);
     }
   };
-  console.log(category);
   const getProduct = async () => {
     const response = await getAllProducts(page);
     if (response?.status === 200) {

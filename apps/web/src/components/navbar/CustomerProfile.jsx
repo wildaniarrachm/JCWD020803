@@ -8,17 +8,24 @@ import {
 } from '@material-tailwind/react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 export const CustomerProfile = () => {
   const user = useSelector((state) => state.customer.value);
-  const handleSignOut = () => {
-    const signOut = confirm('Are you sure you want to sign out');
-    if (signOut === true) {
-      localStorage.clear();
+  const handleSignOut = async () => {
+    const willSignOut = await swal({
+      title: 'Want to sign out?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    });
+    if (willSignOut) {
+      localStorage.removeItem('token');
       window.location.reload();
     } else {
       return;
     }
   };
+
   const items = [
     {
       icon: 'http://www.w3.org/2000/svg',
@@ -85,3 +92,34 @@ export const CustomerProfile = () => {
     </Menu>
   );
 };
+
+// const willEdited = await swal({
+//   title: 'Edit this address?',
+//   text: 'Make sure you have filled out all forms correctly',
+//   icon: 'warning',
+//   buttons: true,
+//   dangerMode: true,
+// });
+// if (willEdited) {
+//   try {
+//     const results = await getCityAndProvinceById(idCities, idProvince);
+//     const add = await addCities(results?.data?.rajaongkir?.results);
+//     const newData = {
+//       ...addressData,
+//       city_id: add?.data?.result?.city_id,
+//     };
+//     const response = await editAddress(newData, token);
+//     if (response?.status === 200) {
+//       swal(response?.data, {
+//         icon: 'success',
+//       });
+//       navigate(-1);
+//     }
+//   } catch (error) {
+//     swal(error?.message, {
+//       icon: 'error',
+//     });
+//   }
+// } else {
+//   swal('Your address not be edited!');
+// }

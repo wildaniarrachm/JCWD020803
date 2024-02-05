@@ -12,15 +12,15 @@ export const Navbar = () => {
         <div className="absolute top-0 tablet:absolute tablet:top-0 laptop:hidden">
           <HamburgerMenu />
         </div>
-        <Link
-          to={'/'}
+        <a
+          href="/"
           className="absolute cursor-pointer top-0 left-[55px] w-[150px] tablet:top-0 laptop:-top-5 laptop:left-0"
         >
           <img
             src={Logo}
             className=" object-fit w-[110px] h-[40px] laptop:w-[150px] laptop:h-[55px]"
           />
-        </Link>
+        </a>
       </div>
       <div className="hidden laptop:flex">
         <NavbarNav />

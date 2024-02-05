@@ -23,18 +23,18 @@ export const HeaderVouchers = () => {
   };
   useEffect(() => {
     getVoucher();
-  }, [activeTab, []]);
+  }, [activeTab]);
   const data = [
     {
       label: 'All',
       value: ' ',
     },
     {
-      label: 'Coupons New Member',
+      label: 'New Member',
       value: '1',
     },
     {
-      label: 'Coupons Referral',
+      label: 'Referral',
       value: '2',
     },
   ];
@@ -54,8 +54,8 @@ export const HeaderVouchers = () => {
             onClick={() => setActiveTab(value)}
             className={
               activeTab === value
-                ? 'text-gray-900 font-poppins'
-                : 'font-poppins'
+                ? 'text-gray-900 font-poppins text-[12px] tablet:text-sm'
+                : 'font-poppins text-[12px] tablet:text-sm'
             }
           >
             {label}
@@ -73,15 +73,16 @@ export const HeaderVouchers = () => {
                   )
                 }
                 key={item?.id}
-                className="flex relative  my-5 gap-10 font-poppins bg-main-red shadow-xl shadow-gray-200 h-[150px] w-[300px] rounded-xl cursor-pointer"
+                className="flex relative my-5 gap-10 font-poppins bg-main-red shadow-xl shadow-gray-200 h-[110px] w-[190px] text-[12px] rounded-xl cursor-pointer laptop:h-[180px] laptop:w-[300px] laptop:text-[18px]"
               >
-                <span className="absolute -right-1 -top-1 text-main-blue font-bold text-[20px] h-10 w-10 bg-white text-center rounded-full border-2 border-main-red">
+                <span className="absolute -right-1 -top-1 text-main-blue font-bold text-[16px] h-8 w-8 bg-white text-center rounded-full border-2 border-main-red laptop:w-10 laptop:h-10 laptop:text-[22px]">
                   {item?.vouchers_amount}x
                 </span>
-                <span className="absolute bg-gray-100 h-[30px] w-10 rounded-[50%] -left-5 top-[40%]"></span>
-                <span className="absolute bg-gray-100 h-[30px] w-10 rounded-[50%] -right-5 top-[40%]"></span>
+                <span className="absolute bg-white h-[25px] w-8 rounded-[50%] -left-5 top-[35%] laptop:h-[35px] laptop:w-10 laptop:top-[40%]"></span>
+                <span className="absolute bg-white h-[25px] w-8 rounded-[50%] -right-5 top-[35%] laptop:h-[35px] laptop:w-10 laptop:top-[40%]"></span>
                 <div className="w-full h-full flex flex-col items-center justify-between py-3">
                   <h1 className="font-bold text-red-100">
+                    {' '}
                     {item?.Voucher?.voucher_name}
                   </h1>
                   <div className="flex flex-col gap-2">

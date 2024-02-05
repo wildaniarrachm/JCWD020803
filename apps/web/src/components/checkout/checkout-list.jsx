@@ -111,7 +111,7 @@ export const CheckoutList = ({ cartData }) => {
           )}
           {cartData.map((item) => (
             <section key={item?.id}>
-              <div className="flex bg-white pl-6 mt-2 xl:mt-4 pt-10 pb-20 xl:rounded-xl shadow-lg">
+              <div className="flex bg-white pl-6 mt-2 xl:mt-4 pt-10 pb-28 laptop:pb-20 xl:rounded-xl shadow-lg">
                 <div className="flex w-full">
                   <div className="w-[17vw] h-[8vh] md:w-[12vw] md:h-[10vh] xl:w-[6.5vw] xl:h-[13vh]">
                     <img
@@ -131,7 +131,7 @@ export const CheckoutList = ({ cartData }) => {
                       </p>
                     </div>
                     <p>80cm x 30cm 1 barang (1 kg)</p>
-                    <div className="flex justify-between">
+                    <div className="flex flex-col justify-between gap-5 laptop:flex laptop:gap-2 ">
                       <Select
                         label="Choose courier"
                         onChange={(e) => handleShipmentValue(e)}
@@ -143,7 +143,7 @@ export const CheckoutList = ({ cartData }) => {
                         ))}
                       </Select>
                       <Select
-                      label='Choose services...'
+                        label="Choose services..."
                         disabled={services?.disable === true}
                         onChange={(e) => handleCost(e)}
                       >
@@ -182,7 +182,11 @@ export const CheckoutList = ({ cartData }) => {
             </section>
           ))}
         </div>
-        <Checkout cartData={cartData} deliveried={deliveried} finalCost={finalCost} />
+        <Checkout
+          cartData={cartData}
+          deliveried={deliveried}
+          finalCost={finalCost}
+        />
       </header>
     </div>
   );

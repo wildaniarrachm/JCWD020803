@@ -12,15 +12,15 @@ export const addProduct = async (req, res) => {
       SubCategoryId,
       weight,
     } = req.body;
-    console.log('file',req?.file)
     let file = null;
-    // const prices = parseInt(price);
     if (req?.file) {
       const fileName = req?.file?.filename;
       const URL = process.env.IMAGE_URL;
       file = `${URL}/${fileName}`;
     }
-    console.log(file);
+
+    const prices = parseInt(price);
+
     const findProduct = await Product.findOne({
       where: {
         product_name: product_name,
@@ -30,7 +30,7 @@ export const addProduct = async (req, res) => {
     if (findProduct == null) {
       const create = await Product.create({
         product_name: product_name,
-        price: price,
+        price: prices,
         descriptions: descriptions,
         CategoryId: CategoryId,
         SubCategoryId: SubCategoryId,
@@ -54,7 +54,7 @@ export const getAllProducts = async (req, res) => {
   try {
     const {
       page,
-      limit = 2,
+      limit = 3,
       sortBy = 'createdAt',
       sortOrder = 'asc',
     } = req.query;

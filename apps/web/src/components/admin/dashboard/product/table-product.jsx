@@ -5,7 +5,7 @@ const TABLE_HEAD = [
   'Description',
   'Category',
   'Price',
-  'Weight (in ounces)',
+  'Weight (grams)',
   '',
 ];
 
@@ -40,7 +40,6 @@ export const TableProducts = ({ products, page, setPage }) => {
           </thead>
           <tbody>
             {products?.data?.map((product, index) => {
-              console.log(product);
               const isLast = index === products?.length - 1;
               const classes = isLast
                 ? 'p-4'
@@ -110,11 +109,13 @@ export const TableProducts = ({ products, page, setPage }) => {
           </tbody>
         </table>
       </Card>
-      <div className="flex justify-between">
+      <div className="flex justify-between font-poppins">
         <Button disabled={page <= 1} onClick={handlePrev}>
           Prev
         </Button>
-        <p>Page 1 of {products?.totalPages}</p>
+        <p>
+          Page {page} of {products?.totalPages}
+        </p>
         <Button disabled={page >= products?.totalPages} onClick={handleNext}>
           Next
         </Button>

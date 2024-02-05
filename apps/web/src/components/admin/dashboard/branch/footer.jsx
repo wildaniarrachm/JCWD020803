@@ -7,7 +7,6 @@ export const FooterBranch = ({ setPage, page, totalPages }) => {
   const handlePrevPages = () => {
     setPage((page -= 1));
   };
-  console.log(page);
   return (
     <>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 font-poppins">

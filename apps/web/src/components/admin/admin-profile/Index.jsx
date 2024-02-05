@@ -2,7 +2,6 @@ import { Avatar, Badge, Input } from '@material-tailwind/react';
 import { FaUserEdit } from 'react-icons/fa';
 
 export const AdminProfile = () => {
-  // console.log(apa);
   return (
     <>
       <div className="grid grid-row-3 gap-3 h-96 justify-center pl-5 w-80 shadow-lg">

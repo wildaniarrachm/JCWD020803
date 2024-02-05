@@ -27,6 +27,7 @@ export const ProfileFooter = () => {
     {
       icon: <MdOutlineHistory size={'50%'} className="text-main-pink" />,
       title: 'Order History',
+      route: '/customer-dashboard/profile/order-history',
     },
   ];
   return (

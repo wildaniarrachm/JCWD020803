@@ -7,6 +7,7 @@ import {
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const FormRegist = () => {
   useEffect(() => {
@@ -16,6 +17,20 @@ export const FormRegist = () => {
       duration: '2000',
     });
   });
+  const handleSubmited = async (values) => {
+    const response = await addCustomer(values);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+    } else {
+      toast.error(response?.response?.data, {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+    }
+  };
   const formik = useFormik({
     initialValues: {
       first_name: '',
@@ -26,7 +41,7 @@ export const FormRegist = () => {
     },
     validationSchema: registSchema,
     onSubmit: (values, action) => {
-      addCustomer(values);
+      handleSubmited(values);
       action.resetForm();
     },
   });

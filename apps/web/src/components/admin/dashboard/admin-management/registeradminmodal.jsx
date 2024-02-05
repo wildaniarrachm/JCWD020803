@@ -22,7 +22,6 @@ export function RegisterAdmin({ open, handleOpen }) {
     },
     validationSchema: registSchema,
     onSubmit: (values, action) => {
-      console.log(values);
       addAdmin(values);
       action.resetForm();
     },

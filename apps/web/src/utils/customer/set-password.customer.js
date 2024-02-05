@@ -6,24 +6,20 @@ export const getCustomerByToken = async (token) => {
     const response = await api.get(`customer/create-password/${token}`);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
-export const createPasswordCustomer = async (data,token) => {
+export const createPasswordCustomer = async (data, token) => {
   try {
-    const response = await api.post(`customer/create-password`, data,{
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
+    const response = await api.post(`customer/create-password`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
-    if (response.status === 200) {
-      alert(response?.data);
-    } else {
-      return;
-    }
+    return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

@@ -4,9 +4,9 @@ import { api } from '../../libs/server.api';
 export const addCustomer = async (data) => {
   try {
     const response = await api.post(`customer/register-customer`, data);
-    alert(response?.data);
+    return response;
   } catch (error) {
-    alert(error?.response?.data);
+    return error;
   }
 };
 
@@ -15,7 +15,7 @@ export const socialRegister = async (data) => {
     const response = await api.post(`customer/social-register`, data);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -38,7 +38,6 @@ export const validateReferral = async (referral_code) => {
     }
   }
 };
-
 
 export const registSchema = Yup.object({
   first_name: Yup.string()

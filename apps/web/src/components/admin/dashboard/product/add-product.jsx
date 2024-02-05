@@ -12,10 +12,11 @@ import {
 import { useFormik } from 'formik';
 import { addProduct } from '../../../../utils/product/addProduct';
 import { getSubCategory } from '../../../../utils/categories/getCategories';
+import { toast } from 'react-toastify';
 
 export const AddProducts = ({ category }) => {
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
+  const [images, setimages] = useState(null);
   const tokenAdmin = localStorage.getItem('tokenAdmin');
   const [subCategory, setSubCategory] = useState();
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -27,21 +28,31 @@ export const AddProducts = ({ category }) => {
       setSubCategory(response?.data);
     }
   };
-  const handleFile = (e) => {
-    setFile(e?.target?.value);
+  const handleimages = (e) => {
+    setimages(e?.target?.files[0]);
   };
-  const handleSubmited = async (values, file) => {
-    console.log(values);
+  const handleSubmited = async (values) => {
     let formData = new FormData();
     formData?.append('product_name', values?.product_name);
     formData?.append('descriptions', values?.descriptions);
     formData?.append('weight', values?.weight);
     formData?.append('price', values?.price);
-    formData?.append('file', file);
+    formData?.append('file', images);
     formData?.append('CategoryId', selectedCategory);
     formData?.append('SubCategoryId', selecterSubCat);
     const response = await addProduct(formData, tokenAdmin);
     console.log(response);
+    if (response?.status === 200) {
+      toast.success(response?.data?.message, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+    } else {
+      toast.error(response?.response?.data?.message, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+    }
     handleOpen();
   };
   const formik = useFormik({
@@ -52,7 +63,7 @@ export const AddProducts = ({ category }) => {
       price: '',
     },
     onSubmit: (values, action) => {
-      handleSubmited(values, file);
+      handleSubmited(values);
     },
   });
   useEffect(() => {
@@ -92,7 +103,7 @@ export const AddProducts = ({ category }) => {
                 alue={formik.values.weight}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                placeholder="weight in ounces example: 1000 for 1kg"
+                placeholder="weight in grams example: 1000grams for 1kg"
                 name="weight"
               />
               <Input
@@ -125,8 +136,8 @@ export const AddProducts = ({ category }) => {
                 type="file"
                 variant="static"
                 label="Choose photo"
-                name="file"
-                onChange={(e) => handleFile(e)}
+                name="images"
+                onChange={(e) => handleimages(e)}
               />
             </div>
           </DialogBody>

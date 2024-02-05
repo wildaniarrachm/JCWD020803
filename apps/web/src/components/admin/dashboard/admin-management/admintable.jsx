@@ -35,7 +35,6 @@ export function AdminTable() {
   useEffect(() => {
     getAdmin();
   }, []);
-  console.log(admins);
   return (
     <>
       <Card className="h-full w-full bg-main-light">

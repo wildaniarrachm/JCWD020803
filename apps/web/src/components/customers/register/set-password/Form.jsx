@@ -11,19 +11,33 @@ import {
   createPasswordCustomer,
   passwordSchema,
 } from '../../../../utils/customer/set-password.customer';
+import { toast } from 'react-toastify';
 
-export const FormSetPassword = ({token}) => {
+export const FormSetPassword = ({ token }) => {
   const navigate = useNavigate();
+  const handleSubmited = async (values) => {
+    const response = await createPasswordCustomer(values, token);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      localStorage.removeItem('token');
+      navigate('/login-user');
+    } else {
+      toast.error(response?.response?.data, {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+    }
+  };
   const formik = useFormik({
     initialValues: {
       password: '',
     },
     validationSchema: passwordSchema,
-    onSubmit: (values, action) => {
-      createPasswordCustomer(values, token);
-      action.resetForm();
-      localStorage.clear();
-      navigate('/');
+    onSubmit: (values) => {
+      handleSubmited(values);
     },
   });
   return (
