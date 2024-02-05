@@ -5,6 +5,7 @@ import { LuListPlus } from 'react-icons/lu';
 import { AiOutlineStock } from 'react-icons/ai';
 import { SideBar } from '../sidebar/sub-components/SidebarDesktop';
 import { IoStorefrontOutline } from 'react-icons/io5';
+import { GrTransaction } from 'react-icons/gr';
 
 export const Sidebar = () => {
   const items = [
@@ -23,6 +24,11 @@ export const Sidebar = () => {
       name: 'Admin',
       icon: <IoPeople size={'30px'} />,
       route: '/admin-management',
+    },
+    {
+      name: 'Transaction',
+      icon: <GrTransaction size={'30px'} />,
+      route: '/admin-transaction',
     },
     {
       name: 'Branch',

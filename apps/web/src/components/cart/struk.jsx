@@ -15,10 +15,15 @@ export const Struk = () => {
     }
   };
 
-  const totalPrice = cartData.reduce(
-    (sum, item) => sum + item.Cart_detail.Product.price,
+  const totalNumericPrice = cartData.reduce(
+    (sum, item) => sum + item.Cart_detail?.Product.price,
     0,
   );
+
+  const totalPriceIDR = totalNumericPrice.toLocaleString('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  });
 
   return (
     <>
@@ -28,7 +33,7 @@ export const Struk = () => {
           <section className="flex flex-col space-y-4 mt-10 pb-8 border-b border-gray.300">
             <div className="flex justify-between text-md">
               <p>Subtotal</p>
-              <p>Rp.{totalPrice}</p>
+              <p>{totalPriceIDR}</p>
             </div>
             <div className="flex justify-between text-md">
               <p>Discount</p>
@@ -37,7 +42,7 @@ export const Struk = () => {
           </section>
           <div className="flex justify-between text-lg font-semibold mt-8">
             <p>Total</p>
-            <p>Rp.{totalPrice}</p>
+            <p>{totalPriceIDR}</p>
           </div>
           <button
             onClick={addToShipment}

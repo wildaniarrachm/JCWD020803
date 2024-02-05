@@ -9,7 +9,7 @@ export const ProductListCheckout = () => {
   useEffect(() => {
     setCartItemsExist(cartData.length > 0);
   }, [cartData]);
-console.log(cartData)
+
   return (
     <div>
       <div className=" w-[100%]  xl:w-[73%] py-3 flex px-7 bg-main-red text-white mt-[4rem] rounded-md font-semibold text-sm">
@@ -29,10 +29,13 @@ console.log(cartData)
                 />
               </div>
               <p className="ml-1 md:ml-6 xl:ml-6 w-[24vw] md:w-[23.5vw] xl:w-[24vw] h-fit">
-                {cartItem.Cart_detail.Product.product_name}
+                {cartItem.Cart_detail?.Product.product_name}
               </p>
               <p className="w-[19vw] md:w-[16vw] xl:w-[10vw] mr-2">
-                Rp.{cartItem.Cart_detail.Product.price}
+                {cartItem.Cart_detail?.Product.price.toLocaleString('id-ID', {
+                  style: 'currency',
+                  currency: 'IDR',
+                })}
               </p>
               <div className="flex justify-center cursor-pointer space-x-4 px-2 w-[18vw] h-[3vh] md:w-[13vw] xl:w-[7vw] xl:h-[5vh] items-center rounded-full bg-gray-200 ml-2">
                 <div
@@ -40,20 +43,20 @@ console.log(cartData)
                   onClick={() =>
                     handleQuantityChange(
                       cartItem.Cart_detail.id,
-                      cartItem.Cart_detail.quantity - 1,
+                      cartItem.Cart_detail?.quantity - 1,
                       'decrement',
                     )
                   }
                 >
                   -
                 </div>
-                <div>{cartItem.Cart_detail.quantity}</div>
+                <div>{cartItem.Cart_detail?.quantity}</div>
                 <div
                   className="pb-0 font-semibold"
                   onClick={() =>
                     handleQuantityChange(
                       cartItem.Cart_detail.id,
-                      cartItem.Cart_detail.quantity + 1,
+                      cartItem.Cart_detail?.quantity + 1,
                       'increment',
                     )
                   }

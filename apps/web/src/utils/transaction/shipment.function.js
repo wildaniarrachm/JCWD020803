@@ -11,8 +11,8 @@ export const shipmentFunction = (
   const [dibatalkan, setDibatalkan] = useState([]);
   const [waitingProof, setWaitingProof] = useState([]);
   const [waitingConfirmed, setWaitingConfirmed] = useState([]);
+  const [onProcess, setOnProcess] = useState([]);
   const [transactionDetail, setTransactionDetail] = useState({});
-  const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
@@ -86,6 +86,22 @@ export const shipmentFunction = (
     }
   };
 
+  const orderOnProcess = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:8000/api/transaction',
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      const process = response.data.response.filter(
+        (order) =>
+          order.status === 'On Process' || order.status === 'Payment Confirmed',
+      );
+      setOnProcess(process);
+    } catch (err) {
+      return err;
+    }
+  };
+
   const fetchById = async (transactionId) => {
     try {
       const response = await axios.get(
@@ -118,9 +134,9 @@ export const shipmentFunction = (
     }
   };
 
-  const handleSearchById = () => {
+  const handleSearchById = (orderId) => {
     const results = shipmentData.filter(
-      (order) => order.id.toString() === searchTerm,
+      (order) => order.id.toString() === orderId.toString(),
     );
     setSearchResult(results);
   };
@@ -145,9 +161,10 @@ export const shipmentFunction = (
     waitingPaymentProof,
     dibatalkan,
     orderCancelled,
+    orderOnProcess,
+    onProcess,
     searchResult,
     setSearchResult,
-    setSearchTerm,
     transactionDetail,
     postData,
     handleSearchById,

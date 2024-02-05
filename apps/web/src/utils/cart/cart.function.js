@@ -23,6 +23,7 @@ export const CartFunction = () => {
   const addToCart = async (productId) => {
     try {
       const userToken = localStorage.getItem('token');
+
       await axios.post(
         'http://localhost:8000/api/cart/add-to-cart',
         {

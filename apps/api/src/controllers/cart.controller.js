@@ -4,6 +4,7 @@ import Admin from '../models/admin.model';
 import Cart from '../models/cart.model';
 import CartDetail from '../models/cart_detail.model';
 import Product from '../models/product.model';
+import Product_image from '../models/product_image.model';
 import Customer from '../models/customer.model';
 
 export const getAllProductsInCart = async (req, res) => {

@@ -9,7 +9,7 @@ export default class Branch extends Model {
   static associate(models) {
     // define association here
     Branch.belongsTo(models.Admin);
-    Branch.hasOne(models.Branch_product);
+    Branch.hasMany(models.Branch_product);
   }
 }
 

@@ -26,8 +26,15 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
   );
 
   const totalHargaProduk = cartData.reduce(
-    (total, item) => total + item.Cart_detail.Product.price,
-    0,
+    (total, item) =>
+      total +
+      (
+        item.Cart_detail.quantity * item.Cart_detail.Product.price
+      ).toLocaleString('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+      }),
+    '',
   );
 
   useEffect(() => {
@@ -72,7 +79,7 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
           </div>
         </section>
         <button className="font-semibold text-gray-800 border w-full border-gray-400 py-3 rounded-lg">
-          Makin hemat pakai promo
+          Save More with Promo
         </button>
         <button
           disabled={deliveried?.length < 1}
@@ -88,7 +95,7 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
               : 'cursor-not-allowed  w-full py-3 rounded-md text-white font-bold bg-gray-200'
           }`}
         >
-          Pilih Pembayaran
+          Select Payment
         </button>
       </div>
       <section>
@@ -148,7 +155,7 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
                 onClick={postData}
                 className="bg-main-red text-white px-[6.5vw] rounded-md"
               >
-                Bayar
+                Pay
               </button>
             </div>
           </div>

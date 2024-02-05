@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const PaymentProof = ({ orderId, onClose }) => {
   const [file, setFile] = useState(null);
@@ -25,7 +26,7 @@ export const PaymentProof = ({ orderId, onClose }) => {
 
   const handleFileUpload = async () => {
     if (!file) {
-      alert('Please select an image to upload.');
+      toast.error('Please select an image to upload.', { autoClose: 3000 });
       return;
     }
 
@@ -45,10 +46,10 @@ export const PaymentProof = ({ orderId, onClose }) => {
           },
         },
       );
-      alert('File uploaded successfully.');
+      toast.success('File uploaded successfully.', { autoClose: 3000 });
       onClose();
-    } catch (error) {
-      console.error('Error uploading file:', error.message);
+    } catch (err) {
+      return err;
     }
   };
 

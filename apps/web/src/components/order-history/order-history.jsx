@@ -8,17 +8,19 @@ import { OrderFilter } from './order-filter';
 import { useEffect, useState } from 'react';
 import { PaymentProof } from '../../pages/payment-proof/payment-proof';
 import { CancelOrder } from '../cancel-order/cancel-order';
+import { RiUploadCloudLine } from 'react-icons/ri';
+import { BsTrash } from 'react-icons/bs';
 
 export const OrderHistory = () => {
   const {
     shipmentData,
     searchResult,
-    searchTerm,
-    setSearchTerm,
     handleResetFilters,
     handleSearchById,
     orderCancelled,
     dibatalkan,
+    orderOnProcess,
+    onProcess,
     waitingConfirmed,
     waitingPaymentConfirmed,
     waitingPaymentProof,
@@ -53,9 +55,12 @@ export const OrderHistory = () => {
     } else if (newStatus === 'menunggu konfirmasi') {
       await waitingPaymentConfirmed();
       handleResetFilters();
-    } else {
+    } else if (newStatus === 'di proses') {
+      await orderOnProcess();
       handleResetFilters();
+    } else {
       fetchData();
+      handleResetFilters();
     }
   };
 
@@ -63,6 +68,7 @@ export const OrderHistory = () => {
     orderCancelled();
     waitingPaymentConfirmed();
     waitingPaymentProof();
+    orderOnProcess();
     fetchData();
   }, []);
 
@@ -77,7 +83,9 @@ export const OrderHistory = () => {
             ? waitingConfirmed
             : status === 'menunggu pembayaran'
               ? waitingProof
-              : shipmentData;
+              : status === 'di proses'
+                ? onProcess
+                : shipmentData;
 
   return (
     <>
@@ -86,25 +94,43 @@ export const OrderHistory = () => {
         <div>
           <div className="w-full xl:w-[90vw] mx-auto bg-white py-8 px-5 rounded-xl border-gray-200 border">
             <OrderFilter
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
               handleResetFilters={handleResetFilters}
               handleSearchById={handleSearchById}
               fetchByDate={fetchByDate}
             />
             <StatusOrder handleStatusClick={handleStatusClick} />
-
             {ordersToRender?.map((order) => (
               <div key={order.id}>
                 {order?.Transaction_products?.map((product) => (
                   <div key={product.id}>
                     <section className="mt-7 xl:mt-20">
-                      <div className="flex flex-col px-6 xl:mt-4 py-1 pb-10 xl:pt-4 xl:pb-10  rounded-xl xl:rounded-xl shadow-inner-more-depth gap-5">
-                        <div className="flex space-x-10">
-                          <p>{moment(order.createdAt).format('LL')}</p>{' '}
-                          <p>{order.status}</p>
-                          <p>Order No : {order.id}</p>
+                      <div className="flex flex-col px-6 xl:mt-4 py-2 pb-3 xl:pt-4 xl:pb-10  rounded-xl xl:rounded-xl shadow-inner-more-depth gap-5">
+                        <div className="flex space-x-3">
+                          <p className="text-sm">
+                            {moment(order.createdAt).format('LL')}
+                          </p>
+                          <p
+                            className={
+                              order.status == 'Waiting Payment Confirmation' &&
+                              'Waiting Payment'
+                                ? 'bg-yellow-700 px-2 rounded-lg text-sm flex items-center text-white'
+                                : order.status == 'Payment Confirmed' &&
+                                    'On Process'
+                                  ? 'bg-blue-500  px-2 rounded-lg text-sm flex items-center text-white'
+                                  : order.status == 'Order Cancelled'
+                                    ? 'bg-main-red px-2 rounded-lg text-sm flex items-center text-white'
+                                    : 'bg-gray-400 px-2 rounded-lg text-sm flex items-center text-white'
+                            }
+                          >
+                            {order.status}
+                          </p>
                         </div>
+                        <p>
+                          {
+                            product.Product.Branch_products[0].Branch
+                              .branch_name
+                          }
+                        </p>
                         <div className="flex w-full">
                           <div className="w-[17vw] h-[8vh] md:w-[12vw] md:h-[10vh] xl:w-[6.5vw] xl:h-[13vh]">
                             <img
@@ -125,22 +151,36 @@ export const OrderHistory = () => {
                                 Quantity: {product.quantity}
                               </p>
                             </div>
-                            <p>80cm x 30cm 1 barang (1 kg)</p>
+                            <p>{product.Product.descriptions}</p>
                             {order.status === 'Waiting Payment' && (
                               <div className="flex space-x-3 xl:space-x-5 justify-end">
                                 <button
                                   onClick={() =>
                                     handleUploadPaymentProof(order.id)
                                   }
-                                  className="bg-[#00AA5B] w-[36vw] h-10 xl:px-[22.8vw] xl:py-2 rounded-md font-bold text-white"
+                                  className="bg-[#00AA5B] flex items-center hidden md:block justify-center h-fit md:h-10 w-[50vw] xl:px-[8vw] xl:py-2 rounded-md font-bold text-white"
                                 >
                                   Upload Payment
                                 </button>
                                 <button
+                                  onClick={() =>
+                                    handleUploadPaymentProof(order.id)
+                                  }
+                                  className="md:hidden"
+                                >
+                                  <RiUploadCloudLine className="text-[6vw]" />
+                                </button>
+                                <button
                                   onClick={() => handleCancelOrder(order.id)}
-                                  className="bg-main-red  w-[29vw] h-10 xl:px-2 xl:py-2 rounded-md font-bold text-white"
+                                  className="bg-main-red hidden md:block md:w-[19vw] xl:h-10 xl:py-2 rounded-md font-bold text-white"
                                 >
                                   Cancel Order
+                                </button>
+                                <button
+                                  onClick={() => handleCancelOrder(order.id)}
+                                  className="md:hidden"
+                                >
+                                  <BsTrash className="text-main-red text-[6vw]" />
                                 </button>
                               </div>
                             )}

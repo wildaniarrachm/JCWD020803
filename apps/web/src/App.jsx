@@ -45,8 +45,8 @@ import { getHeadBranch } from './utils/branch/get.head.branch';
 import 'react-toastify/dist/ReactToastify.css';
 import ReverificationPage from './pages/reverification-page';
 import { AdminTransaction } from './components/transaction-admin/admin-transaction';
+import { ManageTransaction } from './pages/admin/ManageTransaction';
 import DetailVouchersPage from './pages/user-dashboard/detail-vouchers';
-
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -126,6 +126,7 @@ const router = createBrowserRouter([
         element: <AdminManagement />,
       },
       { path: '/dashboard/products', element: <ManageProduct></ManageProduct> },
+      { path: '/admin-transaction', element: <ManageTransaction /> },
     ],
   },
 

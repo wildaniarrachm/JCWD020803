@@ -7,6 +7,7 @@ import Cart_detail from '../models/cart_detail.model';
 import Customer from '../models/customer.model';
 import Payment_method from '../models/payment_method';
 import { Op } from 'sequelize';
+import Branch from '../models/branch.model';
 
 export const getAll = async (req, res) => {
   try {
@@ -21,7 +22,22 @@ export const getAll = async (req, res) => {
       include: [
         {
           model: Transaction_product,
-          include: [{ model: Product }],
+          include: [
+            {
+              model: Product,
+              include: [
+                {
+                  model: Branch_product,
+                  include: [
+                    {
+                      model: Branch,
+                      attributes: ['branch_name', 'store_contact', 'address'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
     });
@@ -39,7 +55,25 @@ export const getAllByAdmin = async (req, res) => {
   try {
     const response = await Transaction.findAll({
       include: [
-        { model: Transaction_product, include: [{ model: Product }] },
+        {
+          model: Transaction_product,
+          include: [
+            {
+              model: Product,
+              include: [
+                {
+                  model: Branch_product,
+                  include: [
+                    {
+                      model: Branch,
+                      attributes: ['branch_name', 'store_contact', 'address'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
         { model: Customer },
       ],
     });
@@ -144,13 +178,10 @@ export const getByDate = async (req, res) => {
 };
 
 export const addToCheckout = async (req, res) => {
-  console.log('CARA BAYAR', req.body);
   try {
     const customer = req.customer;
     const { PaymentMethodId, shipment_fee, shipment_method } = req.body;
     const paymentMethodId = parseInt(PaymentMethodId);
-
-    console.log('CARA BAYAR', paymentMethodId);
 
     if (!customer) {
       return res.status(400).send('User must be registered');
@@ -238,7 +269,6 @@ export const addToCheckout = async (req, res) => {
         },
         { where: { id: newTransaction.id } },
       );
-
       await Branch_product.decrement('quantity', {
         by: cart.Cart_detail.quantity,
         where: { id: productQuantity.id },
