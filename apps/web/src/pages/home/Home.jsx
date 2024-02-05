@@ -5,11 +5,13 @@ import { CardHome } from '../../components/card-home/Index';
 import { useSelector } from 'react-redux';
 import { getDistanceBranch } from '../../utils/branch/get.distance.branch';
 import { getProductByBranch } from '../../utils/branch-product/getProductByBranch';
+import { toast } from 'react-toastify';
 
 function Home() {
   const position = useSelector((state) => state.position.value);
   const [branch, setBranch] = useState();
   const [productList, setProductList] = useState();
+  const [distance, setDistance] = useState();
   const delivery = useSelector((state) => state.delivery.value);
   const reload = () => window.location.reload();
   const getDistance = async () => {
@@ -19,7 +21,13 @@ function Home() {
         position?.longitude,
       );
       if (response?.status === 200) {
-        return setBranch(response?.data?.branches);
+        setBranch(response?.data?.branch);
+        setDistance(response?.data?.distance);
+      } else {
+        toast.warn(response?.response?.data, {
+          position: 'top-right',
+          autoClose: 3000,
+        });
       }
     }
   };
@@ -39,7 +47,7 @@ function Home() {
   }, [branch]);
   return (
     <Layout>
-      <MainCarousel branch={branch} deliveried={delivery} />
+      <MainCarousel branch={branch} deliveried={delivery} distance={distance} />
       <CardHome productList={productList} />
     </Layout>
   );

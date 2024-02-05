@@ -18,9 +18,7 @@ export const addProduct = async (req, res) => {
       const URL = process.env.IMAGE_URL;
       file = `${URL}/${fileName}`;
     }
-
     const prices = parseInt(price);
-
     const findProduct = await Product.findOne({
       where: {
         product_name: product_name,

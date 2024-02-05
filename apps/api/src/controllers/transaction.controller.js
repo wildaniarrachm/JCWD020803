@@ -147,7 +147,7 @@ export const addToCheckout = async (req, res) => {
   console.log('CARA BAYAR', req.body);
   try {
     const customer = req.customer;
-    const { PaymentMethodId } = req.body;
+    const { PaymentMethodId, shipment_fee, shipment_method } = req.body;
     const paymentMethodId = parseInt(PaymentMethodId);
 
     console.log('CARA BAYAR', paymentMethodId);
@@ -190,6 +190,8 @@ export const addToCheckout = async (req, res) => {
       CustomerId: customerData.id,
       PaymentMethodId: newPaymentMethod.id,
       sub_total: 0,
+      shipment_fee: shipment_fee,
+      shipment_method: shipment_method,
     });
 
     const activeCarts = await Cart.findAll({

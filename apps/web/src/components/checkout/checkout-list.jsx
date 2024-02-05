@@ -7,7 +7,7 @@ import { shippingCost } from '../../utils/transaction/shipping.cost';
 
 export const CheckoutList = ({ cartData }) => {
   const deliveried = useSelector((state) => state.delivery.value);
-  const [finalCost, setFinalCost] = useState();
+  const [finalCost, setFinalCost] = useState({ method: '', cost: [] });
   const couriers = [
     {
       name: 'JNE',
@@ -33,7 +33,7 @@ export const CheckoutList = ({ cartData }) => {
     courier: '',
   });
   const handleCost = (e) => {
-    setFinalCost(e?.cost);
+    setFinalCost({ method: e?.description, cost: e?.cost });t
   };
   const navigate = useNavigate();
   const handleShipmentValue = (e) => {
@@ -186,6 +186,7 @@ export const CheckoutList = ({ cartData }) => {
           cartData={cartData}
           deliveried={deliveried}
           finalCost={finalCost}
+          shipmenValue={shipmenValue?.courier}
         />
       </header>
     </div>

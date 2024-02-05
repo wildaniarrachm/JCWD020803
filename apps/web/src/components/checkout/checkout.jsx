@@ -3,21 +3,27 @@ import { CartFunction } from '../../utils/cart/cart.function';
 import { shipmentFunction } from '../../utils/transaction/shipment.function';
 import { AiOutlineClose } from 'react-icons/ai';
 
-export const Checkout = ({ deliveried, finalCost }) => {
+export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
   const { cartData } = CartFunction();
   const [totalPrice, setTotalPrice] = useState();
+  const [shipmentFee, setShipmentFee] = useState();
   const calculateCheckout = (e) => {
     let fee = 0;
     if (finalCost) {
-      finalCost?.map((cost) => {
+      finalCost?.cost?.map((cost) => {
         fee = cost?.value;
+        setShipmentFee(cost?.value);
       });
     }
     const total = (fee += e);
     setTotalPrice(total);
   };
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const { postData } = shipmentFunction(selectedPaymentMethod);
+  const { postData } = shipmentFunction(
+    selectedPaymentMethod,
+    shipmentFee,
+    finalCost?.method,
+  );
 
   const totalHargaProduk = cartData.reduce(
     (total, item) => total + item.Cart_detail.Product.price,
@@ -42,7 +48,7 @@ export const Checkout = ({ deliveried, finalCost }) => {
                 })}
               </p>
             </div>
-            {finalCost?.map((value) => (
+            {finalCost?.cost?.map((value) => (
               <div key={value?.value} className="flex justify-between text-sm">
                 <p>Ongkos kirim</p>
                 <p>

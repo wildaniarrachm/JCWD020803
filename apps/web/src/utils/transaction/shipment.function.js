@@ -2,7 +2,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const shipmentFunction = (selectedPaymentMethod) => {
+export const shipmentFunction = (
+  selectedPaymentMethod,
+  shipment_fee,
+  shipment_method,
+) => {
   const [shipmentData, setShipmentData] = useState([]);
   const [dibatalkan, setDibatalkan] = useState([]);
   const [waitingProof, setWaitingProof] = useState([]);
@@ -100,7 +104,11 @@ export const shipmentFunction = (selectedPaymentMethod) => {
     try {
       await axios.post(
         'http://localhost:8000/api/transaction',
-        { PaymentMethodId: selectedPaymentMethod },
+        {
+          PaymentMethodId: selectedPaymentMethod,
+          shipment_fee: shipment_fee,
+          shipment_method: shipment_method,
+        },
         { headers: { Authorization: `Bearer ${token}` } },
       );
       navigate('/customer-dashboard/profile/order-history');

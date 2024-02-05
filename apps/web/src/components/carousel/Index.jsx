@@ -9,7 +9,7 @@ import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
 import { StoreLocation } from './storeLocation';
 import { DeliverLocation } from './deliverLocation';
 
-export const MainCarousel = ({ deliveried, branch }) => {
+export const MainCarousel = ({ deliveried, branch, distance }) => {
   useEffect(() => {
     AOS.init({
       once: true,
@@ -33,7 +33,7 @@ export const MainCarousel = ({ deliveried, branch }) => {
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
-
+  const distances = distance?.toFixed(2);
   return (
     <div className="px-3 laptop:pr-[6%] laptop:pl-[3%] flex flex-col-reverse justify-center gap-2">
       <Carousel
@@ -97,7 +97,11 @@ export const MainCarousel = ({ deliveried, branch }) => {
             open={open}
           />
           <span className="w-0.5 ml-1 h-10 bg-gray-400 laptop:hidden"></span>
-          <StoreLocation deliveried={deliveried} branch={branch} />
+          <StoreLocation
+            deliveried={deliveried}
+            branch={branch}
+            distances={distances}
+          />
         </div>
       ) : (
         <div>
