@@ -1,5 +1,5 @@
-import { Layout } from '../../../components/mobile-view/Index';
-import { ProfileDetail } from '../../../components/user-profile/profile-detail/Index';
+import { Layout } from '../../../components/customers/Index';
+import { ProfileDetail } from '../../../components/customers/user-profile/profile-detail/Index';
 
 function ProfileDetailPage() {
   return (

@@ -1,10 +1,11 @@
 import { Layout } from '../../../../components/customers/Index';
-import { VerifyCode } from '../../../../components/customers/user-profile/profile-detail/VerifyCode';
+import { VerifyCode } from '../../../../components/customers/user-profile/profile-detail/verifyCode';
 
-export const VerifyCodePage = () => {
+function VerifyCodePages() {
   return (
     <Layout>
       <VerifyCode />
     </Layout>
   );
-};
+}
+export default VerifyCodePages;

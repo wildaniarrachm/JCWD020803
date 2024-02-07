@@ -1,4 +1,4 @@
-import { ProfileHeader } from '../profile-detail/Header';
+import { ProfileHeader } from '../profile-detail/header';
 import { FormChangePassword } from './formChangePassword';
 
 export const ChangePasswordCustomer = () => {

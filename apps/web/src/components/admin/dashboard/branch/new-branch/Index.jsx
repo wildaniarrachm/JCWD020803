@@ -1,4 +1,4 @@
-import { AddBranch } from './AddBranch';
+import { AddBranch } from './addBranch';
 
 export const NewBranch = () => {
   return (

@@ -9,7 +9,7 @@ import { fetchMapboxGeocode } from '../../../../../utils/address/fetch.mapbox.ge
 import { getAllProvince } from '../../../../../utils/address/get.province';
 import { getCityByProvince } from '../../../../../utils/address/get.city';
 import { getAllAdmin } from '../../../../../utils/admin/get.all.admins';
-import { FormEditBranch } from './Form';
+import { FormEditBranch } from './form';
 import { editBranch } from '../../../../../utils/branch/edit.branch';
 
 export const EditBranch = () => {

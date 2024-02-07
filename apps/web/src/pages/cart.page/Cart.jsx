@@ -3,7 +3,7 @@ import { ProductListCheckout } from '../../components/cart/product-list-checkout
 import { Coupon } from '../../components/cart/coupon';
 import { Struk } from '../../components/cart/struk';
 import { Navbar } from '../../components/navbar/Index';
-import { Footer } from '../../components/footer';
+import { Footer } from '../../components/footer/Index';
 import { IoArrowBack } from 'react-icons/io5';
 
 export const Cart = () => {
