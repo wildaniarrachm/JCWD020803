@@ -1,4 +1,4 @@
-import { Layout } from '../../../components/admin/dashboard/Index';
+import { Layout } from '../../../components/admin/dashboard/index';
 import { Branches } from '../../../components/admin/dashboard/branch/index';
 
 function BranchPage() {
