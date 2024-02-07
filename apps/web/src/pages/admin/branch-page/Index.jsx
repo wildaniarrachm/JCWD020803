@@ -1,5 +1,5 @@
-import { Layout } from '../../../components/admin/dashboard/index';
-import { Branches } from '../../../components/admin/dashboard/branch/index';
+import { Layout } from '../../../components/admin/dashboard/Index';
+import { Branches } from '../../../components/admin/dashboard/branch/Index';
 
 function BranchPage() {
   return (

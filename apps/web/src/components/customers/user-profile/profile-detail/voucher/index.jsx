@@ -1,4 +1,4 @@
-import { ProfileHeader } from '../Header';
+import { ProfileHeader } from '../header';
 import { HeaderVouchers } from './header';
 
 export const UserVouchers = () => {

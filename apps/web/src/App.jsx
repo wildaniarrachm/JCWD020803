@@ -1,12 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/home/Home';
-import RegisterUser from './pages/register-user/Register';
-import LoginUser from './pages/login-user/LoginPage';
-import { CreatePasswordPage } from './pages/register-user/create-password/Index';
-import UserRequired from './pages/required/user.required';
+import Home from './pages/home/homePage';
+import RegisterUser from './pages/register-user/Index';
+import LoginUser from './pages/login-user/loginPage';
+import UserRequired from './pages/required/userRequired';
 import { keepLoginCustomer } from './utils/customer/keep.login.customer';
-import { CustomerProfile } from './components/customers/user-profile/Index';
-import { VerifyCodePage } from './pages/user-dashboard/profle-detail-page/verification-code/Index';
 import ResetPasswordPage from './pages/forgot-password-page/Index';
 import NewPasswordPage from './pages/forgot-password-page/new-password-page/Index';
 import Login from './pages/admin/LoginAdmin';
@@ -15,7 +12,6 @@ import { RegisterAdmin } from './components/admin/dashboard/admin-management/reg
 import { AdminManagement } from './pages/admin/AdminManagement';
 import AdminRequired from './components/required/admin.require';
 import { keepLoginAdmin } from './utils/admin/keeplogin.admin';
-import { AdminProfile } from './components/admin/admin-profile/Index';
 import { ManageProduct } from './pages/admin/ProductManagement';
 import { AdminProfilePage } from './pages/admin/Profile';
 import { VerifyAdmin } from './pages/admin/verify/Index';
@@ -31,7 +27,6 @@ import { getAllProvince } from './utils/address/get.province';
 import { setProvinces } from './redux/province.slice';
 import { ToastContainer } from 'react-toastify';
 import { setData } from './redux/customer.slice';
-import { AdminTable } from './components/admin/dashboard/admin-management/admintable';
 import BranchPage from './pages/admin/branch-page/Index';
 import NewBranchPage from './pages/admin/branch-page/new-branch/Index';
 import EditBranchPage from './pages/admin/branch-page/edit-branch/Index';
@@ -41,12 +36,14 @@ import { CheckoutPage } from './pages/checkout.page/Checkout';
 import { OrderHistory } from './components/order-history/order-history';
 import { positionData } from './redux/position.slice';
 import { deliveryData } from './redux/delivery.slice';
-import { getHeadBranch } from './utils/branch/get.head.branch';
 import 'react-toastify/dist/ReactToastify.css';
-import ReverificationPage from './pages/reverification-page';
+import ReverificationPage from './pages/reverification-page/Index';
 import { AdminTransaction } from './components/transaction-admin/admin-transaction';
 import { ManageTransaction } from './pages/admin/ManageTransaction';
-import DetailVouchersPage from './pages/user-dashboard/detail-vouchers';
+import DetailVouchersPage from './pages/user-dashboard/detail-vouchers/Index';
+import CreatePasswordPage from './pages/register-user/create-password/Index';
+import { CustomerProfile } from './components/navbar/customerProfile';
+import VerifyCodePages from './pages/user-dashboard/profle-detail-page/verification-code/Index';
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -62,7 +59,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/customer-dashboard/verification-phone/:verificationId',
-        element: <VerifyCodePage />,
+        element: <VerifyCodePages />,
       },
       {
         path: '/customer-dashboard/address/:id',

@@ -2,7 +2,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Navbar } from '../navbar/Index';
 import { shipmentFunction } from '../../utils/transaction/shipment.function';
-import { Footer } from '../footer';
+import { Footer } from '../footer/Index';
 import { StatusOrder } from './status-order';
 import { OrderFilter } from './order-filter';
 import { useEffect, useState } from 'react';

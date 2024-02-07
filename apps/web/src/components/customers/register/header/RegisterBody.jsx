@@ -1,7 +1,7 @@
 import { FcGoogle } from 'react-icons/fc';
 import { FormRegist } from '../form/formRegist';
 import { Link, useNavigate } from 'react-router-dom';
-import { FormLogin } from '../../login/Form';
+import { FormLogin } from '../../login/form';
 import { auth, provider } from '../../../../utils/customer/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { socialRegister } from '../../../../utils/customer/add.customer';

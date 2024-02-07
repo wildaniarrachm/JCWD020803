@@ -1,11 +1,12 @@
-import { Layout } from "../../../components/customers/Index";
-import{SetPassword} from '../../../components/customers/register/set-password/Index'
+import { Layout } from '../../../components/customers/Index';
+import { SetPassword } from '../../../components/customers/register/set-password/Index';
 
-
-export const CreatePasswordPage = () => {
+function CreatePasswordPage() {
   return (
     <Layout>
       <SetPassword />
     </Layout>
   );
-};
+}
+
+export default CreatePasswordPage;
