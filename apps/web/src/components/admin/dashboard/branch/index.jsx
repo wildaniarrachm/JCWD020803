@@ -26,7 +26,7 @@ const TABLE_HEAD = [
   '',
 ];
 
-export const Branch = () => {
+export const Branches = () => {
   const [branch, setBranch] = useState();
   const [fill, setFill] = useState(false);
   const [page, setPage] = useState(1);
