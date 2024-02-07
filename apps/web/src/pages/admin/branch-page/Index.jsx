@@ -1,10 +1,10 @@
-import { Branch } from '../../../components/admin/dashboard/branch/Index';
 import { Layout } from '../../../components/admin/dashboard/Index';
+import { Branches } from '../../../components/admin/dashboard/branch/index';
 
 function BranchPage() {
   return (
     <Layout>
-      <Branch />
+      <Branches />
     </Layout>
   );
 }

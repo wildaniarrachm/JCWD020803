@@ -5,11 +5,7 @@ import { ProfileHeader } from './Header';
 export const ProfileDetail = () => {
   return (
     <div>
-      <ProfileHeader
-        title={'My Profile'}
-        link={'#'}
-        textLink={'Profile'}
-      />
+      <ProfileHeader title={'My Profile'} link={'#'} textLink={'Profile'} />
       <ProfileBody />
       <ProfileFooter />
     </div>
