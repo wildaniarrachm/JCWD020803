@@ -4,18 +4,41 @@ import {
   CardBody,
   CardFooter,
   Input,
+  Spinner,
   Typography,
 } from '@material-tailwind/react';
 import { useFormik } from 'formik';
 import { sendVerificationEmail } from '../../../utils/customer/reset.password';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export const FormForgotPassword = () => {
+  const [load, setLoad] = useState(false);
+  const navigate = useNavigate();
+  const handleSubmit = async (values) => {
+    setLoad(true);
+    const response = await sendVerificationEmail(values);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+      navigate('/login-user');
+    } else {
+      toast.error(response?.response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+      setLoad(false);
+    }
+  };
   const formik = useFormik({
     initialValues: {
       email: '',
     },
     onSubmit: (values, action) => {
-      sendVerificationEmail(values);
+      handleSubmit(values);
       action.resetForm();
     },
   });
@@ -45,7 +68,9 @@ export const FormForgotPassword = () => {
           />
         </CardBody>
         <CardFooter className="pt-0 mx-auto">
-          <Button type="submit">Send request</Button>
+          <Button type="submit" disabled={load === true}>
+            {load === true ? <Spinner /> : ' Send request'}
+          </Button>
         </CardFooter>
       </form>
     </Card>

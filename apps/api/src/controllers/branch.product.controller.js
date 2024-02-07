@@ -25,3 +25,12 @@ export const getProductByBranch = async (req, res) => {
     res.status(200).send(error.message);
   }
 };
+export const removeProductFromBranch = async (req, res) => {
+  const { id } = req?.params;
+  try {
+    await Branch_product.destroy({ where: { id: id } });
+    res.status(200).send('Successfully removed');
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

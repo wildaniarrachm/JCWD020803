@@ -3,9 +3,9 @@ import { api } from '../../libs/server.api';
 export const sendVerificationEmail = async (data) => {
   try {
     const response = await api.post(`customer/reset-password`, data);
-    alert(response?.data);
+    return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -16,8 +16,8 @@ export const resetPassword = async (data, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    alert(response?.data);
+    return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

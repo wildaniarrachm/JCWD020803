@@ -12,17 +12,14 @@ import { useEffect, useState } from 'react';
 import { api } from '../../../../libs/server.api';
 import { useSelector } from 'react-redux';
 
-
 export const DesktopNav = () => {
-  const adminData = useSelector((state) => state.admin.value)
-  console.log(adminData);
+  const adminData = useSelector((state) => state.admin.value);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("tokenAdmin");
-    navigate('/login-admin')
-  }
-
+    localStorage.removeItem('tokenAdmin');
+    navigate('/login-admin');
+  };
 
   return (
     <>
@@ -31,7 +28,7 @@ export const DesktopNav = () => {
           <img src={logo} className="h-14 w-40" />
         </div>
         <div className="grid grid-cols-2 items-center">
-          <div className='ml-64'>
+          <div className="ml-64">
             <Menu>
               <MenuHandler>
                 <div className="flex text-main-blue align-middle">
@@ -39,15 +36,19 @@ export const DesktopNav = () => {
                 </div>
               </MenuHandler>
               <MenuList>
-                <Link to='/admin/profile'>
-                <MenuItem className="font-poppins">Profile</MenuItem>
+                <Link to="/admin/profile">
+                  <MenuItem className="font-poppins">Profile</MenuItem>
                 </Link>
-                <MenuItem onClick={handleLogout} className="font-poppins"> Sign Out</MenuItem>
+                <MenuItem onClick={handleLogout} className="font-poppins">
+                  {' '}
+                  Sign Out
+                </MenuItem>
               </MenuList>
             </Menu>
           </div>
           <div className="font-poppins">
-            <Typography> Hello, {adminData?.name || 'undefined'}! </Typography> </div>
+            <Typography> Hello, {adminData?.name || 'undefined'}! </Typography>{' '}
+          </div>
         </div>
       </div>
     </>

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { verifyPhoneNumber } from '../../../../utils/customer/verify.phone.number';
 import OtpInput from 'react-otp-input';
+import { toast } from 'react-toastify';
 export const VerifyCode = () => {
   const [otp, setOtp] = useState('');
   const verification = useSelector((state) => state.authPhone.value);
@@ -16,14 +17,20 @@ export const VerifyCode = () => {
       if (response?._tokenResponse?.idToken) {
         const result = await verifyPhoneNumber(token);
         if (result?.status === 200) {
-          alert(result?.data);
+          toast.success(result?.data, {
+            autoClose: 3000,
+            position: 'top-right',
+          });
           navigate(`/customer-dashboard/profile`);
           window.location.reload();
         }
         localStorage.removeItem('_grecaptcha');
       }
     } catch (error) {
-      console.log(error);
+      toast.error(`${error?.message} please request verify again`, {
+        position: 'top-right',
+        autoClose: 3000,
+      });
     }
   };
 

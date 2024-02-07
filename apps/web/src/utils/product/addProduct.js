@@ -10,3 +10,14 @@ export const addProduct = async (data, token) => {
     return error;
   }
 };
+
+export const addIntoBranch = async (data, tokenAdmin) => {
+  try {
+    const response = await api.post(`product/add-to-branch`, data, {
+      headers: { Authorization: `Bearer ${tokenAdmin}` },
+    });
+    return response;
+  } catch (error) {
+    return error;
+  }
+};

@@ -7,7 +7,6 @@ import Cart_detail from '../models/cart_detail.model';
 import Customer from '../models/customer.model';
 import Payment_method from '../models/payment_method';
 import { Op } from 'sequelize';
-import Branch from '../models/branch.model';
 
 export const getAll = async (req, res) => {
   try {

@@ -253,3 +253,21 @@ export const recoverAddress = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
+export const searchAddress = async (req, res) => {
+  const { received_name } = req?.query;
+  const { id } = req?.customer;
+  try {
+    const results = await Address.findAll({
+      where: {
+        received_name: {
+          [Op.like]: received_name,
+        },
+        CustomerId: id,
+      },
+    });
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};

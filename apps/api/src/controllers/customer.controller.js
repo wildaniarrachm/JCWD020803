@@ -317,6 +317,12 @@ export const addedPhoneCustomer = async (req, res) => {
   const { id } = req.customer;
   const { phone_number } = req?.body;
   try {
+    const isExist = await Customer.findOne({
+      where: { phone_number: phone_number },
+    });
+    if (isExist) {
+      return res.status(400).send('Phone number already exists');
+    }
     await Customer.update(
       { phone_number: phone_number, phoneVerified: false },
       { where: { id: id } },

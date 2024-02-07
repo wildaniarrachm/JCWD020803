@@ -1,5 +1,12 @@
 
-export const StoreLocation = ({ deliveried, branch, distances }) => {
+export const StoreLocation = ({ deliveried, branch }) => {
+  let distance = null;
+  if (branch?.distance !== 0) {
+    distance = branch?.distance?.toFixed(3);
+  } else {
+    distance = branch?.distance + ',000';
+  }
+  console.log(branch);
   return (
     <div className="font-poppins rounded-lg w-[50%] laptop:py-2 laptop:px-1 overflow-hidden">
       <div
@@ -8,11 +15,17 @@ export const StoreLocation = ({ deliveried, branch, distances }) => {
         } laptop:flex laptop:justify-start`}
       >
         <div className="flex flex-col">
-          <small className="font-bold laptop:text-sm">
-            {branch?.branch_name} {`${distances ? distances + ' Km' : ''}`}
+          <small
+            className={`${
+              distance ? 'text-center' : 'text-start'
+            } font-bold text-[10px] text-center tablet:text-sm`}
+          >
+            {branch?.branch?.branch_name}{' '}
+            {`${distance ? distance + ' Km' : ''}`}
+            {branch?.branch?.head_store === true ? ' (Head store)' : ''}
           </small>
-          <small className="text-gray-500 text-[10px] laptop:text-sm">
-            {branch?.address}
+          <small className="text-gray-500 text-[10px] text-center tablet:text-start tablet:text-sm">
+            {branch?.branch?.address}
           </small>
         </div>
       </div>

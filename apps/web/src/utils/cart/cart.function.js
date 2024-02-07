@@ -95,7 +95,9 @@ export const CartFunction = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (token) {
+      fetchData();
+    }
   }, []);
 
   return {

@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from '@material-tailwind/react';
+import { IconButton, Spinner, Tooltip } from '@material-tailwind/react';
 import { useEffect, useRef, useState } from 'react';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { ModalPhone } from './modalPhone';
 import { ButtonVerifyPhone } from './buttonVerifyPhone';
 import { requestVerifyEmail } from '../../../../utils/customer/change.email';
 import { MdVerified } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 export const ProfileBody = () => {
   useEffect(() => {
@@ -22,14 +23,27 @@ export const ProfileBody = () => {
   const user = useSelector((state) => state.customer.value);
   const textRef = useRef('');
   const [copy, setCopy] = useState('Copy');
-
+  const [load, setLoad] = useState(false);
+  const [verified, setVerified] = useState(false);
   const handleCopied = () => {
     navigator.clipboard.writeText(textRef.current.innerText);
     setCopy('Copied');
   };
   const token = localStorage.getItem('token');
   const handleVerifyEmail = async () => {
+    setLoad(true);
     const response = await requestVerifyEmail(token);
+    if (response?.status === 200) {
+      toast.success(response?.data, { autoClose: 3000, position: 'top-right' });
+      setVerified(true);
+    } else {
+      toast.error(response?.response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+    }
+    setLoad(false);
+    console.log(response);
   };
 
   return (
@@ -50,10 +64,15 @@ export const ProfileBody = () => {
               <div className="flex gap-3 pr-1 tablet:flex tablet:gap-5 mobile:flex">
                 {user?.isVerified === false ? (
                   <button
-                    className="bg-black/90 text-white rounded-lg py-[10px] px-[15px] text-[14px]"
+                    disabled={verified === true}
+                    className={`bg-black/90 text-white rounded-lg py-[10px] px-[15px] text-[14px] ${
+                      verified === true
+                        ? 'cursor-not-allowed'
+                        : 'cursor-pointer'
+                    }`}
                     onClick={handleVerifyEmail}
                   >
-                    Verify
+                    {load === true ? <Spinner /> : 'Verify'}
                   </button>
                 ) : (
                   <MdVerified className="text-blue-500" size={30} />

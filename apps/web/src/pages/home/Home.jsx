@@ -21,8 +21,7 @@ function Home() {
         position?.longitude,
       );
       if (response?.status === 200) {
-        setBranch(response?.data?.branch);
-        setDistance(response?.data?.distance);
+        setBranch(response?.data);
       } else {
         toast.warn(response?.response?.data, {
           position: 'top-right',
@@ -33,7 +32,7 @@ function Home() {
   };
   const getProductBranch = async () => {
     if (branch) {
-      const response = await getProductByBranch(branch?.id);
+      const response = await getProductByBranch(branch?.branch?.id);
       setProductList(response?.data?.results);
     }
   };

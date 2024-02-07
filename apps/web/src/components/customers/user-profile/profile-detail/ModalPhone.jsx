@@ -5,15 +5,14 @@ import {
   DialogFooter,
   DialogHeader,
   IconButton,
-  Input,
 } from '@material-tailwind/react';
 import { useState } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
-import { useFormik } from 'formik';
 import { addPhoneNumber } from '../../../../utils/customer/add.phone.number';
 import { useSelector } from 'react-redux';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import { toast } from 'react-toastify';
 
 export const ModalPhone = () => {
   const [open, setOpen] = useState(false);
@@ -21,19 +20,42 @@ export const ModalPhone = () => {
   const token = localStorage.getItem('token');
   const user = useSelector((state) => state.customer.value);
   const [phone_number, setPhone_number] = useState();
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = {
       id: user.id,
       phone_number: phone_number,
     };
     if (data.phone_number === '' || data.phone_number === undefined) {
-      return alert('Please enter a phone number');
+      toast.error('Please enter a phone number', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      handleOpen(null);
+      return;
     }
     if (data.phone_number === user.phone_number) {
-      return alert('Your phone number is already');
+      toast.error('Your phone number is already', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      handleOpen(null);
+      return;
     }
-    addPhoneNumber(data, token);
-    handleOpen(null);
+    const response = await addPhoneNumber(data, token);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+      handleOpen(null);
+      window.location.reload();
+    } else {
+      toast.error(response?.response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+      handleOpen(null);
+    }
   };
   return (
     <>

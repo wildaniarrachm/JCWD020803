@@ -39,7 +39,6 @@ export const validateReferral = async (referral_code) => {
   }
 };
 
-
 export const registSchema = Yup.object({
   first_name: Yup.string()
     .matches(/^[a-zA-Z\s]+$/, 'First name must contain only letters')

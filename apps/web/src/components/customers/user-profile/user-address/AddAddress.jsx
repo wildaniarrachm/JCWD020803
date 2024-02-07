@@ -109,7 +109,7 @@ export const AddAddress = ({ getAddress }) => {
     <div className="sticky top-0 w-[90%]">
       <button
         onClick={handleOpen}
-        className="bg-green-600 shadow-lg text-[9px] laptop:text-[16px] text-white px-2 py-1  tablet:px-4 tablet:py-2 tablet:text-[14px] rounded-lg font-bold font-poppins"
+        className="bg-green-600 text-[9px] tablet:shadow-lg laptop:text-[16px] text-white px-2 py-2  tablet:px-4 tablet:py-2 tablet:text-[14px] rounded-lg font-bold font-poppins"
       >
         + Add New Address
       </button>

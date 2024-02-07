@@ -26,7 +26,7 @@ export const createPasswordCustomer = async (data, token) => {
 export const passwordSchema = Yup.object({
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters long')
-    .matches(/[0-9]/, 'Password must contain at least 1 digit')
+    .matches(/[0-9]/, 'Password must contain at least 1 digit of number')
     .matches(
       /[!@#$%^&*(),.?":{}|<>_-]/,
       'Password must contain at least 1 special character (!@#$%^&*(),.?":{}|<>_-)',

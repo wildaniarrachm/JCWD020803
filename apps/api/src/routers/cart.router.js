@@ -11,12 +11,12 @@ import { verifyToken } from '../middleware/customer.auth.middleware';
 
 const cartRouter = Router();
 
-cartRouter.use(verifyToken);
-cartRouter.get('/', getAllProductsInCart);
-cartRouter.get('/active', getActive);
-cartRouter.post('/add-to-cart', addToCart);
-cartRouter.delete('/delete-all', deleteAllCarts);
-cartRouter.delete('/delete-cart-detail/:cartDetailId', deleteCartDetail);
-cartRouter.put('/update-cart/:cartDetailId', updateCart);
+// cartRouter.use(verifyToken);
+cartRouter.get('/',verifyToken, getAllProductsInCart);
+cartRouter.get('/active', verifyToken,getActive);
+cartRouter.post('/add-to-cart',verifyToken, addToCart);
+cartRouter.delete('/delete-all',verifyToken, deleteAllCarts);
+cartRouter.delete('/delete-cart-detail/:cartDetailId',verifyToken, deleteCartDetail);
+cartRouter.put('/update-cart/:cartDetailId',verifyToken, updateCart);
 
 export { cartRouter };

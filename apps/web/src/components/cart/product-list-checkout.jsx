@@ -9,7 +9,7 @@ export const ProductListCheckout = () => {
   useEffect(() => {
     setCartItemsExist(cartData.length > 0);
   }, [cartData]);
-
+console.log(cartData)
   return (
     <div>
       <div className=" w-[100%]  xl:w-[73%] py-3 flex px-7 bg-main-red text-white mt-[4rem] rounded-md font-semibold text-sm">

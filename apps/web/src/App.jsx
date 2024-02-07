@@ -184,17 +184,31 @@ function App() {
       dispatch(setData(response?.data?.result));
     }
   };
+
   const getStoreLocation = async () => {
-    if (token) {
-      if (deliveried) {
-        deliveried?.map((deliveried) => {
-          dispatch(positionData(deliveried));
-        });
-      }
-    } else if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        dispatch(positionData(position?.coords));
+    if (deliveried?.length) {
+      deliveried?.map((deliveried) => {
+        dispatch(positionData(deliveried));
       });
+    } else {
+      try {
+        if (navigator.geolocation) {
+          await navigator.geolocation.getCurrentPosition(
+            (position) => {
+              dispatch(positionData(position?.coords));
+            },
+            (error) => {
+              console.log(error);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+            },
+          );
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

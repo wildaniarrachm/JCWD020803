@@ -41,7 +41,6 @@ export const AddProducts = ({ category }) => {
     formData?.append('CategoryId', selectedCategory);
     formData?.append('SubCategoryId', selecterSubCat);
     const response = await addProduct(formData, tokenAdmin);
-    console.log(response);
     if (response?.status === 200) {
       toast.success(response?.data?.message, {
         autoClose: 3000,
@@ -64,6 +63,7 @@ export const AddProducts = ({ category }) => {
     },
     onSubmit: (values, action) => {
       handleSubmited(values);
+      action.resetForm();
     },
   });
   useEffect(() => {
@@ -80,6 +80,7 @@ export const AddProducts = ({ category }) => {
           <DialogBody>
             <div className="grid grid-cols-2 gap-10">
               <Input
+                required
                 label="Product Name"
                 name="product_name"
                 variant="static"
@@ -89,6 +90,7 @@ export const AddProducts = ({ category }) => {
                 placeholder="Spicy Burger"
               />
               <Input
+                required
                 label="Product Descriptions"
                 name="descriptions"
                 variant="static"
@@ -98,6 +100,7 @@ export const AddProducts = ({ category }) => {
                 placeholder="Spicy burger with salad and beef inside"
               />
               <Input
+                required
                 variant="static"
                 label="Product Weight"
                 alue={formik.values.weight}
@@ -107,6 +110,7 @@ export const AddProducts = ({ category }) => {
                 name="weight"
               />
               <Input
+                required
                 variant="static"
                 label="Price"
                 name="price"
@@ -115,7 +119,11 @@ export const AddProducts = ({ category }) => {
                 onBlur={formik.handleBlur}
                 value={formik?.values?.price}
               />
-              <Select label="Category" onChange={(e) => setSelectedCategory(e)}>
+              <Select
+                required
+                label="Category"
+                onChange={(e) => setSelectedCategory(e)}
+              >
                 {category?.map((category) => (
                   <Option key={category?.id} value={category?.id}>
                     {category?.name}
@@ -123,8 +131,10 @@ export const AddProducts = ({ category }) => {
                 ))}
               </Select>
               <Select
+                required
                 label="Subcategory"
                 onChange={(e) => setSelecterSubCat(e)}
+                disabled={selectedCategory === ''}
               >
                 {subCategory?.map((subCat) => (
                   <Option key={subCat?.id} value={subCat?.id}>
@@ -134,6 +144,7 @@ export const AddProducts = ({ category }) => {
               </Select>
               <Input
                 type="file"
+                required
                 variant="static"
                 label="Choose photo"
                 name="images"

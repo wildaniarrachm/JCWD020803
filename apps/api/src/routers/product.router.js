@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import {
+  addIntoBranch,
   addProduct,
   deleteProduct,
   editProduct,
-  getAllProducts,
+  getProduct,
+  getProductOutsideBranch,
+
 } from '../controllers/product.controller';
 import {
   verifyAdminToken,
@@ -13,7 +16,9 @@ import { productImageUpload } from '../middleware/product.multer.middleware';
 
 const productRouter = Router();
 
-productRouter.get('/', getAllProducts);
+productRouter.get('/', verifyAdminToken, getProduct);
+productRouter.get('/outside', verifyAdminToken, getProductOutsideBranch);
+productRouter.post('/add-to-branch', verifyAdminToken, addIntoBranch)
 productRouter.post(
   '/',
   verifyAdminToken,

@@ -1,4 +1,13 @@
-import { Button, Card, Typography } from '@material-tailwind/react';
+
+import {
+  Button,
+  Card,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@material-tailwind/react';
+import { IoIosRemoveCircleOutline } from 'react-icons/io';
+import { removeProductFromBranch } from '../../../../utils/branch-product/removed';
 
 const TABLE_HEAD = [
   'Name',
@@ -6,18 +15,34 @@ const TABLE_HEAD = [
   'Category',
   'Price',
   'Weight (grams)',
+  'Quantity',
   '',
 ];
 
-export const TableProducts = ({ products, page, setPage }) => {
+export const TableProducts = ({
+  products,
+  page,
+  setPage,
+  admin,
+  getOutsideProduct,
+  getProduct,
+}) => {
   const handlePrev = () => {
     setPage((page -= 1));
   };
   const handleNext = () => {
     setPage((page += 1));
   };
+  const handleRemoved = async (id) => {
+    const response = await removeProductFromBranch(id);
+    getProduct();
+    getOutsideProduct();
+  };
   return (
     <>
+      <h1 className="text-center font-poppins font-bold">
+        Product in your branch
+      </h1>
       <Card className="h-full w-full overflow-scroll">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
@@ -52,7 +77,9 @@ export const TableProducts = ({ products, page, setPage }) => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {product?.product_name}
+                      {admin?.isSuperAdmin === true
+                        ? product?.product_name
+                        : product?.Product?.product_name}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -61,7 +88,9 @@ export const TableProducts = ({ products, page, setPage }) => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {product?.descriptions}
+                      {admin?.isSuperAdmin === true
+                        ? product?.descriptions
+                        : product?.Product?.descriptions}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -70,7 +99,9 @@ export const TableProducts = ({ products, page, setPage }) => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {product?.Category?.name}
+                      {admin?.isSuperAdmin === true
+                        ? product?.Category?.name
+                        : product?.Product?.Category?.name}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -79,10 +110,15 @@ export const TableProducts = ({ products, page, setPage }) => {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {product?.price.toLocaleString('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                      })}
+                      {admin?.isSuperAdmin === true
+                        ? product?.price?.toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                          })
+                        : product?.Product?.price?.toLocaleString('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                          })}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -91,7 +127,9 @@ export const TableProducts = ({ products, page, setPage }) => {
                       color="blue-gray"
                       className="font-normal text-center"
                     >
-                      {product?.weight}
+                      {admin?.isSuperAdmin === true
+                        ? product?.weight
+                        : product?.Product?.weight}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -100,8 +138,31 @@ export const TableProducts = ({ products, page, setPage }) => {
                       color="blue-gray"
                       className="font-normal text-center"
                     >
-                      Edit
+                      {product?.quantity}
                     </Typography>
+                  </td>
+                  <td className={classes}>
+                    {admin?.isSuperAdmin === true ? (
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal text-center"
+                      >
+                        Edit
+                      </Typography>
+                    ) : (
+                      <Tooltip content="Remove product from branch">
+                        <IconButton
+                          className="bg-transparent"
+                          onClick={() => handleRemoved(product?.id)}
+                        >
+                          <IoIosRemoveCircleOutline
+                            size={25}
+                            className="text-red-500"
+                          />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                   </td>
                 </tr>
               );

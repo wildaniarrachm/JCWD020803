@@ -4,14 +4,19 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { authPhone } from '../../../../redux/auth.phone.firebase';
 import { MdVerified } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { Spinner } from '@material-tailwind/react';
 
 export const ButtonVerifyPhone = ({ user }) => {
   const phone_number = user?.phone_number;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [load, setLoad] = useState(false);
 
   const sendOtp = async () => {
     try {
+      setLoad(true);
       const recaptcha = new RecaptchaVerifier(auth, 'recaptcha', {});
       const confirmation = await signInWithPhoneNumber(
         auth,
@@ -24,7 +29,10 @@ export const ButtonVerifyPhone = ({ user }) => {
         );
         dispatch(authPhone(confirmation));
       } else {
-        alert(confirmation.errorMessage);
+        toast.success(confirmation.errorMessage, {
+          position: 'top-right',
+          autoClose: 3000,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -51,12 +59,12 @@ export const ButtonVerifyPhone = ({ user }) => {
             className="bg-black/90 text-white rounded-lg py-[10px] px-[15px] text-[14px]"
             onClick={sendOtp}
           >
-            Verify
+            {load === true ? <Spinner /> : 'Verify'}
           </button>
           <div id="recaptcha" className="absolute top-0 -right-1"></div>
         </div>
       ) : (
-        <MdVerified className='text-blue-500' size={30} />
+        <MdVerified className="text-blue-500" size={30} />
       )}
     </>
   );

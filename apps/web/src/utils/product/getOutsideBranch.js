@@ -1,9 +1,8 @@
 import { api } from '../../libs/server.api';
 
-
-export const getAllProducts = async (page, tokenAdmin) => {
+export const getProductOutsideBranch = async (tokenAdmin) => {
   try {
-    const response = await api.get(`product?page=${page}`, {
+    const response = await api.get(`product/outside`, {
       headers: { Authorization: `Bearer ${tokenAdmin}` },
     });
     return response;

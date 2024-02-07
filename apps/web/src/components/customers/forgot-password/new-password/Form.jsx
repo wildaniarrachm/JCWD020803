@@ -9,17 +9,35 @@ import {
 import { useFormik } from 'formik';
 import { passwordSchema } from '../../../../utils/customer/set-password.customer';
 import { resetPassword } from '../../../../utils/customer/reset.password';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const FormNewPassword = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
+  const handleSubmit = async (values) => {
+    const response = await resetPassword(values, token);
+    if (response?.status === 200) {
+      toast.success(response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+      navigate('/login-user');
+    } else {
+      toast.error(response?.response?.data, {
+        autoClose: 3000,
+        position: 'top-right',
+      });
+    }
+    console.log(response);
+  };
   const formik = useFormik({
     initialValues: {
       password: '',
     },
     validationSchema: passwordSchema,
     onSubmit: (values, action) => {
-      resetPassword(values, token);
+      handleSubmit(values, token);
       action.resetForm();
     },
   });

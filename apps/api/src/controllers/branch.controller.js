@@ -51,7 +51,6 @@ export const addBranch = async (req, res) => {
         branch_name: data?.branch_name,
         address: data?.address,
       },
-
     });
     const adminExist = await Branch.findOne({
       where: { AdminId: data?.AdminId },
@@ -154,9 +153,10 @@ export const getDistanceBranch = async (req, res) => {
     }
 
     function generateRandomRadius() {
-      return Math.random() * 5;
+      return 7;
     }
     if (lat && lng) {
+      console.log(lng, lat);
       const branches = await Branch.findAll();
       const randomRadius = generateRandomRadius();
       branches.forEach((branch) => {
@@ -167,19 +167,26 @@ export const getDistanceBranch = async (req, res) => {
           branch.longitude,
         );
         branch.distance = distance;
+        console.log(branch.distance);
       });
       branches.sort((a, b) => a.distance - b.distance);
+      console.log(randomRadius);
       const closestBranch = branches.find(
         (branch) => branch.distance <= randomRadius,
       );
+      console.log(closestBranch);
       if (closestBranch) {
+        console.log(closestBranch);
         return res
           .status(200)
           .send({ branch: closestBranch, distance: closestBranch.distance });
       } else {
-        return res.status(400).send('Your location is so far from distance branch');
+        return res
+          .status(400)
+          .send('Your location is so far from distance branch');
       }
     } else {
+      console.log('tes');
       const results = await Branch.findOne({
         where: { head_store: true },
       });

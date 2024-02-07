@@ -16,10 +16,10 @@ import {
 const branchRouter = Router();
 
 branchRouter.get('/', getAllBranch);
-branchRouter.post('/', verifyAdminToken, verifyIsSuperAdmin, addBranch);
-branchRouter.patch('/', verifyAdminToken, verifyIsSuperAdmin, editBranch);
 branchRouter.get('/head-branch', getHeadBranch);
 branchRouter.get('/distance', getDistanceBranch);
+branchRouter.post('/', verifyAdminToken, verifyIsSuperAdmin, addBranch);
+branchRouter.patch('/', verifyAdminToken, verifyIsSuperAdmin, editBranch);
 branchRouter.get(
   '/delete/:id',
   verifyAdminToken,

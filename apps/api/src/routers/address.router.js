@@ -12,6 +12,7 @@ import {
   getCustomerAddress,
   newAddress,
   recoverAddress,
+  searchAddress,
   switchDeliveriedAddress,
   switchPrimaryAddress,
 } from '../controllers/address.controller';
@@ -24,6 +25,7 @@ addressRouter.get('/city', getAllCity);
 addressRouter.get('/province', getAllProvince);
 addressRouter.get('/city-province', getCityByProvince);
 addressRouter.get('/city-province-id', getCityAndProvinceById);
+addressRouter.get('/search', verifyToken, searchAddress);
 addressRouter.patch('/delete-address/:id', deleteAddress);
 addressRouter.delete('/delete-permanent/:id', deletePermanentAddress);
 addressRouter.patch('/recover-address/:id', recoverAddress);

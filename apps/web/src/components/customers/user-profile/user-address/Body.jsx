@@ -10,7 +10,9 @@ import { recoverAddress } from '../../../../utils/address/recover.address';
 import swal from 'sweetalert';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { searchAddress } from '../../../../utils/address/search.address';
 export const CustomerAddressBody = ({ getAddress, token }) => {
+  const [search, setSearch] = useState('');
   const navigation = [
     { id: 1, name: 'All Address', key: false },
     { id: 2, name: 'Recently Deleted', key: true },
@@ -66,6 +68,10 @@ export const CustomerAddressBody = ({ getAddress, token }) => {
     await switchDeliveriedAddress(data, token);
     getAddress();
   };
+  const handleSearch = async () => {
+    const response = await searchAddress(search, token);
+    // console.log(response);
+  };
   return (
     <section className="bg-gray-200 p-2">
       <h2 className="font-bold text-[20px] font-poppins text-center mb-2">
@@ -75,17 +81,21 @@ export const CustomerAddressBody = ({ getAddress, token }) => {
         <div className="w-full">
           <div className="flex justify-between w-full p-1 laptop:p-5">
             <div className="w-[30%] flex flex-col gap-4 tablet:w-[60%] laptop:w-[40%]">
-              <div className="flex flex-col tablet:flex-row gap-2">
+              {/* <div className="flex flex-col tablet:flex-row gap-2">
                 <Input
                   label="Search recived name or address"
                   className="w-[220px] laptop:w-[100%]"
+                  onChange={(e) => setSearch(e?.target?.value)}
+                  value={search}
                 />
-                <Button size="sm">Search</Button>
-              </div>
+                <Button size="sm" onClick={handleSearch}>
+                  Search
+                </Button>
+              </div> */}
               <div className="flex gap-2">
                 {navigation?.map((nav) => (
                   <button
-                    className={`border text-[10px] laptop:text-[14px] border-gray-400 text-gray-600 px-10 py-1 tablet:px-6 tablet:py-5 rounded-lg ${
+                    className={`border text-[10px] laptop:text-[14px] border-gray-400 text-gray-600 px-8 py-1 tablet:px-6 tablet:py-5 rounded-lg ${
                       filter?.active === nav?.id
                         ? 'bg-main-pink/50 border-main-red text-main-red'
                         : null

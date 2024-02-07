@@ -151,6 +151,14 @@ export const OrderHistory = () => {
                                 Quantity: {product.quantity}
                               </p>
                             </div>
+                            <p>Courier: {order.shipment_method}</p>
+                            <p>
+                              Cost:{' '}
+                              {order.shipment_fee?.toLocaleString('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                              })}
+                            </p>
                             <p>{product.Product.descriptions}</p>
                             {order.status === 'Waiting Payment' && (
                               <div className="flex space-x-3 xl:space-x-5 justify-end">
