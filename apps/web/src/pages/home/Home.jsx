@@ -1,38 +1,54 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import reactLogo from '../../assets/react.svg';
-import viteLogo from '/vite.svg';
-import './Home.css';
+import { Layout } from '../../components/customers/Index';
+import { MainCarousel } from '../../components/carousel/Index';
+import { CardHome } from '../../components/card-home/Index';
+import { useSelector } from 'react-redux';
+import { getDistanceBranch } from '../../utils/branch/get.distance.branch';
+import { getProductByBranch } from '../../utils/branch-product/getProductByBranch';
+import { toast } from 'react-toastify';
 
 function Home() {
-  const [sampleData, setSampleData] = useState([]);
+  const position = useSelector((state) => state.position.value);
+  const [branch, setBranch] = useState();
+  const [productList, setProductList] = useState();
+  const [distance, setDistance] = useState();
+  const delivery = useSelector((state) => state.delivery.value);
+  const reload = () => window.location.reload();
+  const getDistance = async () => {
+    if (position) {
+      const response = await getDistanceBranch(
+        position?.latitude,
+        position?.longitude,
+      );
+      if (response?.status === 200) {
+        setBranch(response?.data);
+      } else {
+        toast.warn(response?.response?.data, {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+      }
+    }
+  };
+  const getProductBranch = async () => {
+    if (branch) {
+      const response = await getProductByBranch(branch?.branch?.id);
+      setProductList(response?.data?.results);
+    }
+  };
 
   useEffect(() => {
-    (async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/sample`,
-      );
-      setSampleData(data);
-    })();
-  }, []);
+    getDistance();
+  }, [position]);
 
+  useEffect(() => {
+    getProductBranch();
+  }, [branch]);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Purwadhika Final Project Template using Vite + React</h1>
-      <h3>Test Data</h3>
-      {sampleData.map((data, idx) => (
-        <div key={idx.toString()}>{data.name}</div>
-      ))}
-    </>
+    <Layout>
+      <MainCarousel branch={branch} deliveried={delivery} distance={distance} />
+      <CardHome productList={productList} />
+    </Layout>
   );
 }
-
 export default Home;
