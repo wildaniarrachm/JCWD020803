@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { getCustomerAddress } from '../../../../utils/address/get.customer.address';
-import { ProfileHeader } from '../profile-detail/header';
+import { ProfileHeader } from '../profile-detail/Header';
 import { CustomerAddressBody } from './Body';
 import { addressData } from '../../../../redux/customer.address.slice';
 
