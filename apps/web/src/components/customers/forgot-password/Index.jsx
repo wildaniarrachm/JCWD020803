@@ -1,5 +1,5 @@
-import { FormForgotPassword } from './form';
-import { HeaderForgotPassword } from './headers';
+import { FormForgotPassword } from './Form';
+import { HeaderForgotPassword } from './Headers';
 
 export const ResetPassword = () => {
   return (

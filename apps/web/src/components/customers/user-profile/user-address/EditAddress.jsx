@@ -4,7 +4,7 @@ import ReactMapGl, { Marker, NavigationControl } from 'react-map-gl';
 import { getAddressById } from '../../../../utils/address/get.byid';
 import { fetchOpenCage } from '../../../../utils/address/fetch.opencage';
 import { Typography } from '@material-tailwind/react';
-import { FormEditAddress } from './formEditAddress';
+import { FormEditAddress } from './FormEditAddress';
 export const EditAddress = () => {
   const mapRef = useRef();
   const { id } = useParams();

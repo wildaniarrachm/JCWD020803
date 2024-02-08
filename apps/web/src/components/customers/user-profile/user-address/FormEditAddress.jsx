@@ -12,7 +12,6 @@ import { getCityByProvince } from '../../../../utils/address/get.city';
 import { editAddress } from '../../../../utils/address/edit.address';
 import { getCityAndProvinceById } from '../../../../utils/address/get.byid';
 import { addCities } from '../../../../utils/address/add.address.customer';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';

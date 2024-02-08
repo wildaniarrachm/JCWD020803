@@ -1,4 +1,3 @@
-import { Layout } from '../../Index';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FcApproval } from 'react-icons/fc';
 import { verifyAccount } from '../../../../utils/customer/change.email';

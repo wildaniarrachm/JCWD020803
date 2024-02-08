@@ -1,11 +1,6 @@
 import {
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
   Switch,
 } from '@material-tailwind/react';
-import { useState } from 'react';
 import { FcCheckmark } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';

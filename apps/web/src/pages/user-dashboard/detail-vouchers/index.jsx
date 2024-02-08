@@ -1,7 +1,7 @@
-import { DetailVouchers } from '../../../components/customers/user-profile/profile-detail/voucher/detailVouchers';
+import { UserVouchers } from '../../../components/customers/user-profile/profile-detail/voucher/index';
 
 function DetailVouchersPage() {
-  return <DetailVouchers />;
+  return <UserVouchers />;
 }
 
 export default DetailVouchersPage;

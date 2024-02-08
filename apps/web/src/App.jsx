@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/home/homePage';
 import RegisterUser from './pages/register-user/Index';
-import LoginUser from './pages/login-user/loginPage';
+import LoginUser from './pages/login-user/LoginPage';
 import UserRequired from './pages/required/userRequired';
 import { keepLoginCustomer } from './utils/customer/keep.login.customer';
 import ResetPasswordPage from './pages/forgot-password-page/Index';
@@ -37,13 +37,13 @@ import { OrderHistory } from './components/order-history/order-history';
 import { positionData } from './redux/position.slice';
 import { deliveryData } from './redux/delivery.slice';
 import 'react-toastify/dist/ReactToastify.css';
-import ReverificationPage from './pages/reverification-page/Index';
 import { AdminTransaction } from './components/transaction-admin/admin-transaction';
 import { ManageTransaction } from './pages/admin/ManageTransaction';
-import DetailVouchersPage from './pages/user-dashboard/detail-vouchers/Index';
 import CreatePasswordPage from './pages/register-user/create-password/Index';
-import { CustomerProfile } from './components/navbar/customerProfile';
 import VerifyCodePages from './pages/user-dashboard/profle-detail-page/verification-code/Index';
+import DetailVouchersPage from './pages/user-dashboard/detail-vouchers/index';
+import ReverificationPage from './pages/reverification-page/index';
+import CustomerProfile from './components/customers/user-profile/Index';
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },

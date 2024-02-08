@@ -1,5 +1,5 @@
-import { FormNewPassword } from './form';
-import { NewPasswordHeaders } from './header';
+import { FormNewPassword } from './Form';
+import { NewPasswordHeaders } from './Header';
 
 export const NewPassword = () => {
   return (

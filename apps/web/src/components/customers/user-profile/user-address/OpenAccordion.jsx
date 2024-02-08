@@ -10,8 +10,8 @@ import mapIcon from '../../../../assets/map.png';
 import { useState } from 'react';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { FormNewAddress } from './form';
-import { OpenMaps } from './maps';
+import { FormNewAddress } from './Form';
+import { OpenMaps } from './Maps';
 import { fetchMapboxGeocode } from '../../../../utils/address/fetch.mapbox.geocode';
 
 export const OpenAccordion = ({

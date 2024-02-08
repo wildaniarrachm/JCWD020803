@@ -2,7 +2,7 @@ import { VerifyNewEmail } from '../../components/customers/user-profile/verify-n
 
 function VerifyNewEmailPage() {
   return (
-    <div className='h-screen bg-gray-200'>
+    <div className="h-screen bg-gray-200">
       <VerifyNewEmail />
     </div>
   );

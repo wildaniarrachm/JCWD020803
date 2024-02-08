@@ -14,7 +14,7 @@ import {
   addressSchema,
   postAddress,
 } from '../../../../utils/address/add.address.customer';
-import { OpenAccordion } from './openAccordion';
+import { OpenAccordion } from './OpenAccordion';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 export const AddAddress = ({ getAddress }) => {

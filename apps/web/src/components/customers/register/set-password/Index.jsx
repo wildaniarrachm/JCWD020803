@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getCustomerByToken } from '../../../../utils/customer/set-password.customer';
-import { FormSetPassword } from './form';
+import { FormSetPassword } from './Form';
 
 export const SetPassword = () => {
   const { token } = useParams();

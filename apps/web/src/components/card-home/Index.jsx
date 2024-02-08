@@ -17,7 +17,7 @@ export const CardHome = ({ productList }) => {
       <div className="snap-mandatory snap-x flex gap-5 overflow-x-scroll overflow-y-hidden whitespace-nowrap py-3 laptop:snap-mandatory laptop:snap-x laptop:whitespace-nowrap  laptop:flex laptop:gap-3 laptop:w-[100%] laptop:overflow-x-scroll laptop:items-center px-[3%]">
         {productList?.map((product) => (
           <div
-            className="snap-center rounded-xl px-2 w-[300px] flex justify-between flex-col shadow-lg laptop:snap-center laptop:h-[400px] laptop:w-[200px] laptop:hover:scale-105 transition duration-300"
+            className="snap-center rounded-xl px-2 w-[300px] flex justify-between flex-col shadow-lg laptop:snap-center laptop:h-[400px] laptop:w-[200px] laptop:hover:scale-115 transition duration-300"
             key={product?.Product?.id}
             data-aos="fade-up"
             data-aos-duration="1000"
