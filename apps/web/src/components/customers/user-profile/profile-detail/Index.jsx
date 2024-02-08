@@ -1,6 +1,6 @@
-import { ProfileBody } from './body';
-import { ProfileFooter } from './footer';
-import { ProfileHeader } from './header';
+import { ProfileBody } from './Body';
+import { ProfileFooter } from './Footer';
+import { ProfileHeader } from './Header';
 
 export const ProfileDetail = () => {
   return (
