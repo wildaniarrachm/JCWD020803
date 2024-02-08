@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node src/index.js",
-    "build": "babel src -d dist && mkdir -p dist/public &&  cp src/*.html dist/",
+    "build": "babel src -d dist &&  cp src/*.html dist/",
     "lint": "eslint . --ext js --report-unused-disable-directives --max-warnings 0",
     "test": "jest --forceExit --detectOpenHandles",
     "serve": "cross-env NODE_ENV=production node dist/index.js",
