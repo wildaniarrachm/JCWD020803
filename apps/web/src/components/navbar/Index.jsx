@@ -1,8 +1,8 @@
 import Logo from '../../assets/ez-mart-high-resolution-logo-transparent.png';
-import { HamburgerMenu } from './hamburgerMenu';
+import { HamburgerMenu } from './HamburgerMenu';
 import { Link } from 'react-router-dom';
-import { NavbarRight } from './navbarRight';
-import { NavbarNav } from './navbarNav';
+import { NavbarRight } from './NavbarRight';
+import { NavbarNav } from './NavbarNav';
 export const Navbar = () => {
   const token = localStorage.getItem('token');
 

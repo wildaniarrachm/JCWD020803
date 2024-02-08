@@ -92,34 +92,3 @@ export const CustomerProfile = () => {
     </Menu>
   );
 };
-
-// const willEdited = await swal({
-//   title: 'Edit this address?',
-//   text: 'Make sure you have filled out all forms correctly',
-//   icon: 'warning',
-//   buttons: true,
-//   dangerMode: true,
-// });
-// if (willEdited) {
-//   try {
-//     const results = await getCityAndProvinceById(idCities, idProvince);
-//     const add = await addCities(results?.data?.rajaongkir?.results);
-//     const newData = {
-//       ...addressData,
-//       city_id: add?.data?.result?.city_id,
-//     };
-//     const response = await editAddress(newData, token);
-//     if (response?.status === 200) {
-//       swal(response?.data, {
-//         icon: 'success',
-//       });
-//       navigate(-1);
-//     }
-//   } catch (error) {
-//     swal(error?.message, {
-//       icon: 'error',
-//     });
-//   }
-// } else {
-//   swal('Your address not be edited!');
-// }

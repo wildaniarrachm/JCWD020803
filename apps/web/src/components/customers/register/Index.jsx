@@ -1,5 +1,5 @@
-import { RegisterBody } from './header/registerBody';
-import { RegisterHeader } from './header/registerHeader';
+import { RegisterBody } from './header/RegisterBody';
+import { RegisterHeader } from './header/RegisterHeader';
 import 'aos/dist/aos.css';
 
 export const RegisterPage = () => {

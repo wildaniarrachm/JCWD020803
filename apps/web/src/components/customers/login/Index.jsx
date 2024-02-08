@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { RegisterBody } from '../register/header/registerBody';
-import { RegisterHeader } from '../register/header/registerHeader';
+import { RegisterBody } from '../register/header/RegisterBody';
+import { RegisterHeader } from '../register/header/RegisterHeader';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 

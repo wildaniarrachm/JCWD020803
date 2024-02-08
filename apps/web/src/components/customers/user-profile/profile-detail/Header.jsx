@@ -7,7 +7,7 @@ import {
 } from 'react-icons/ci';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ProfileNavigation } from '../navigation';
+import { ProfileNavigation } from '../Navigation';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 export const ProfileHeader = ({ title, link, textLink }) => {
