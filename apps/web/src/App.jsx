@@ -17,8 +17,8 @@ import { AdminProfilePage } from './pages/admin/Profile';
 import { VerifyAdmin } from './pages/admin/verify/Index';
 import { ResetPassword } from './pages/admin/reset-password/Index';
 import { ProductCatalogue } from './components/admin/dashboard/product/product-catalogue/Index';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
 import VerifyNewEmailPage from './pages/verify-new-email/Index';
 import { getCustomerAddress } from './utils/address/get.customer.address';
 import { addressData } from './redux/customer.address.slice';
@@ -44,125 +44,138 @@ import VerifyCodePages from './pages/user-dashboard/profle-detail-page/verificat
 import DetailVouchersPage from './pages/user-dashboard/detail-vouchers/index';
 import ReverificationPage from './pages/reverification-page/index';
 import CustomerProfile from './components/customers/user-profile/Index';
-
-const router = createBrowserRouter([
-  { path: '/', element: <Home /> },
-  { path: '/register-user', element: <RegisterUser /> },
-  { path: '/login-user', element: <LoginUser /> },
-  { path: '/register-user/verify/:token', element: <CreatePasswordPage /> },
-  {
-    element: <UserRequired />,
-    children: [
-      {
-        path: '/customer-dashboard/:route/',
-        element: <CustomerProfile />,
-      },
-      {
-        path: '/customer-dashboard/verification-phone/:verificationId',
-        element: <VerifyCodePages />,
-      },
-      {
-        path: '/customer-dashboard/address/:id',
-        element: <EditAddressPage />,
-      },
-      {
-        path: '/verification/:token',
-        element: <VerifyNewEmailPage />,
-      },
-      {
-        path: '/customer-dashboard/vouchers/detail/:code',
-        element: <DetailVouchersPage />,
-      },
-      {
-        path: '/cart',
-        element: <Cart />,
-      },
-      {
-        path: '/cart/shipment',
-        element: <CheckoutPage />,
-      },
-      {
-        path: '/customer-dashboard/profile/order-history',
-        element: <OrderHistory />,
-      },
-    ],
-  },
-  { path: '/login-user/forgot-password', element: <ResetPasswordPage /> },
-  {
-    path: '/forgot-password/new-password/:token',
-    element: <NewPasswordPage />,
-  },
-  {
-    path: '/reverification',
-    element: <ReverificationPage />,
-  },
-
-  //admin
-  {
-    path: '/product-catalogue',
-    element: <ProductCatalogue></ProductCatalogue>,
-  },
-  {
-    path: '/admin/reset-password/:tokenAdmin',
-    element: <ResetPassword></ResetPassword>,
-  },
-  {
-    path: '/admin/set-password/:tokenAdmin',
-    element: <VerifyAdmin></VerifyAdmin>,
-  },
-  { path: '/login-admin', element: <Login></Login> },
-  { path: '/overview', element: <Overview></Overview> },
-  { path: '/register-admin', element: <RegisterAdmin></RegisterAdmin> },
-  { path: '/admin/profile', element: <AdminProfilePage></AdminProfilePage> },
-  { path: '/admin/transaction', element: <AdminTransaction /> },
-  {
-    element: <AdminRequired />,
-    children: [
-      {
-        path: '/admin-management',
-        element: <AdminManagement />,
-      },
-      { path: '/dashboard/products', element: <ManageProduct></ManageProduct> },
-      { path: '/admin-transaction', element: <ManageTransaction /> },
-    ],
-  },
-
-  {
-    element: <SuperAdminRequired />,
-    children: [
-      {
-        path: '/dashboard/branch',
-        element: <BranchPage />,
-      },
-      {
-        path: '/branch/new-branch',
-        element: <NewBranchPage />,
-      },
-      {
-        path: '/branch/edit/:id',
-        element: <EditBranchPage />,
-      },
-    ],
-  },
-]);
+import { fetchMapboxLngLat } from './utils/address/fetch.mapbox.geocode';
 
 function App() {
+  const [placeName, setPlaceName] = useState();
+  const router = createBrowserRouter([
+    { path: '/', element: <Home placeName={placeName} /> },
+    { path: '/register-user', element: <RegisterUser /> },
+    { path: '/login-user', element: <LoginUser /> },
+    { path: '/register-user/verify/:token', element: <CreatePasswordPage /> },
+    {
+      element: <UserRequired />,
+      children: [
+        {
+          path: '/customer-dashboard/:route/',
+          element: <CustomerProfile />,
+        },
+        {
+          path: '/customer-dashboard/verification-phone/:verificationId',
+          element: <VerifyCodePages />,
+        },
+        {
+          path: '/customer-dashboard/address/:id',
+          element: <EditAddressPage />,
+        },
+        {
+          path: '/verification/:token',
+          element: <VerifyNewEmailPage />,
+        },
+        {
+          path: '/customer-dashboard/vouchers/detail/:code',
+          element: <DetailVouchersPage />,
+        },
+        {
+          path: '/cart',
+          element: <Cart />,
+        },
+        {
+          path: '/cart/shipment',
+          element: <CheckoutPage />,
+        },
+        {
+          path: '/customer-dashboard/profile/order-history',
+          element: <OrderHistory />,
+        },
+      ],
+    },
+    { path: '/login-user/forgot-password', element: <ResetPasswordPage /> },
+    {
+      path: '/forgot-password/new-password/:token',
+      element: <NewPasswordPage />,
+    },
+    {
+      path: '/reverification',
+      element: <ReverificationPage />,
+    },
+
+    //admin
+    {
+      path: '/product-catalogue',
+      element: <ProductCatalogue></ProductCatalogue>,
+    },
+    {
+      path: '/admin/reset-password/:tokenAdmin',
+      element: <ResetPassword></ResetPassword>,
+    },
+    {
+      path: '/admin/set-password/:tokenAdmin',
+      element: <VerifyAdmin></VerifyAdmin>,
+    },
+    { path: '/login-admin', element: <Login></Login> },
+    { path: '/overview', element: <Overview></Overview> },
+    { path: '/register-admin', element: <RegisterAdmin></RegisterAdmin> },
+    { path: '/admin/profile', element: <AdminProfilePage></AdminProfilePage> },
+    { path: '/admin/transaction', element: <AdminTransaction /> },
+    {
+      element: <AdminRequired />,
+      children: [
+        {
+          path: '/admin-management',
+          element: <AdminManagement />,
+        },
+        {
+          path: '/dashboard/products',
+          element: <ManageProduct></ManageProduct>,
+        },
+        { path: '/admin-transaction', element: <ManageTransaction /> },
+      ],
+    },
+
+    {
+      element: <SuperAdminRequired />,
+      children: [
+        {
+          path: '/dashboard/branch',
+          element: <BranchPage />,
+        },
+        {
+          path: '/branch/new-branch',
+          element: <NewBranchPage />,
+        },
+        {
+          path: '/branch/edit/:id',
+          element: <EditBranchPage />,
+        },
+      ],
+    },
+  ]);
   const token = localStorage?.getItem('token');
   const tokenAdmin = localStorage.getItem('tokenAdmin');
   const dispatch = useDispatch();
-  const deliveried = useSelector((state) => state.delivery.value);
   const getAddress = async () => {
-    if (token) {
-      const response = await getCustomerAddress(token);
+    const response = await getCustomerAddress(token);
+    if (response?.data) {
       if (response?.data?.result?.length > 1) {
         const deliveryAddress = response?.data?.result?.filter(
           (delivery) => delivery?.isDeliveried === true,
         );
+        dispatch(positionData(deliveryAddress));
         dispatch(deliveryData(deliveryAddress));
       } else {
+        dispatch(positionData(response?.data?.result));
         dispatch(deliveryData(response?.data?.result));
       }
       dispatch(addressData(response?.data?.result));
+    } else {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          dispatch(positionData(position?.coords));
+          const response = await fetchMapboxLngLat(position?.coords);
+          setPlaceName(response?.features[0]?.place_name);
+        });
+      }
     }
   };
   const getProvince = async () => {
@@ -182,33 +195,6 @@ function App() {
     }
   };
 
-  const getStoreLocation = async () => {
-    if (deliveried?.length) {
-      deliveried?.map((deliveried) => {
-        dispatch(positionData(deliveried));
-      });
-    } else {
-      try {
-        if (navigator.geolocation) {
-          await navigator.geolocation.getCurrentPosition(
-            (position) => {
-              dispatch(positionData(position?.coords));
-            },
-            (error) => {
-              console.log(error);
-            },
-            {
-              enableHighAccuracy: true,
-              timeout: 10000,
-            },
-          );
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
   useEffect(() => {
     keepLoginCustomers();
   }, [token]);
@@ -223,9 +209,6 @@ function App() {
     getAddress();
     getProvince();
   }, []);
-  useEffect(() => {
-    getStoreLocation();
-  }, [deliveried]);
 
   return (
     <>

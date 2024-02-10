@@ -1,4 +1,3 @@
-
 export const StoreLocation = ({ deliveried, branch }) => {
   let distance = null;
   if (branch?.distance !== 0) {
@@ -6,9 +5,8 @@ export const StoreLocation = ({ deliveried, branch }) => {
   } else {
     distance = branch?.distance + ',000';
   }
-  console.log(branch);
   return (
-    <div className="font-poppins rounded-lg w-[50%] laptop:py-2 laptop:px-1 overflow-hidden">
+    <div className="font-poppins rounded-lg w-[50%] my-2 laptop:py-2 laptop:px-1 overflow-hidden">
       <div
         className={`${
           deliveried ? 'flex justify-center' : 'flex justify-start'

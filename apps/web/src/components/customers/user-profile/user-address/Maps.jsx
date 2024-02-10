@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactMapGl, { Marker, NavigationControl } from 'react-map-gl';
+import { fetchMapboxLngLat } from '../../../../utils/address/fetch.mapbox.geocode';
 
-export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
+export const OpenMaps = ({ setGeo, geo, handleDrag }) => {
   const mapRef = useRef();
+  const [details, setDetails] = useState();
   const getCurrentLocation = async () => {
     if (!geo?.lat && !geo?.lng) {
       if ('geolocation' in navigator) {
@@ -22,11 +24,17 @@ export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
       });
     }
   };
+  const handleDetailAddress = async () => {
+    const response = await fetchMapboxLngLat(geo);
+    setDetails(response?.features[0]?.place_name);
+  };
+  console.log(geo);
   useEffect(() => {
     getCurrentLocation();
-  }, [direct === true]);
+    handleDetailAddress();
+  }, [geo]);
   return (
-    <div className=" mx-auto w-[100%] h-[300px] tablet:h-[300px] laptop:h-[300px] py-5 ">
+    <div className=" mx-auto w-[100%] h-[400px] tablet:h-[300px] laptop:h-[300px] py-5 ">
       <div className="h-[100%] laptop:h-[100%] w-full">
         <ReactMapGl
           ref={mapRef}
@@ -34,8 +42,6 @@ export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
             width: '100%',
             height: '100%',
             borderRadius: '5px',
-            boxShadow:
-              '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
           }}
           mapboxAccessToken={import.meta.env.VITE_MAPBOX_KEY}
           initialViewState={{
@@ -55,6 +61,7 @@ export const OpenMaps = ({ setGeo, geo, handleDrag, direct, setDirect }) => {
           <NavigationControl position="bottom-right" />
         </ReactMapGl>
       </div>
+      <p>{details}</p>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import Transaction_product from '../models/transaction_product.model';
 import Transaction from '../models/transaction.model';
 import Product from '../models/product.model';
 import Branch_product from '../models/branch_product.model';
+import Branch from '../models/branch.model';
 import Cart from '../models/cart.model';
 import Cart_detail from '../models/cart_detail.model';
 import Customer from '../models/customer.model';

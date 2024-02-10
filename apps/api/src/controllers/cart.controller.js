@@ -64,6 +64,10 @@ export const getActive = async (req, res) => {
       ],
     });
 
+    response?.map((item) => {
+      console.log(item);
+    });
+
     res.status(200).send({ data: response, message: 'Success' });
   } catch (err) {
     console.log(err);

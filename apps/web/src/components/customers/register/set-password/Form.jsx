@@ -6,7 +6,7 @@ import {
   Button,
 } from '@material-tailwind/react';
 import { useFormik } from 'formik';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   createPasswordCustomer,
   passwordSchema,

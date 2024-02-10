@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { getVoucherByCode } from '../../../../../utils/vouchers/getVoucherCode';
-import { ProfileHeader } from '../header';
+import { ProfileHeader } from '../Header';
 import { useEffect, useState } from 'react';
 import { Typography, Button, Tooltip } from '@material-tailwind/react';
 import { useCopyToClipboard } from 'usehooks-ts';

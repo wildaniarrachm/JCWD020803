@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Option, Select } from '@material-tailwind/react';
 import { shippingCost } from '../../utils/transaction/shipping.cost';
+import formatRupiah from '../../libs/formatCurrency';
 
 export const CheckoutList = ({ cartData }) => {
   const deliveried = useSelector((state) => state.delivery.value);
@@ -69,7 +70,7 @@ export const CheckoutList = ({ cartData }) => {
           {deliveried?.length >= 1 ? (
             deliveried?.map((delivery) => (
               <section
-                className="-mt-8 xl:mt-6 space-y-2 bg-white px-5 py-6 xl:rounded-xl shadow-lg"
+                className="-mt-8 xl:mt-6 space-y-2 bg-white px-5 py-6 xl:rounded-xl shadow-lg font-poppins"
                 key={delivery?.id}
               >
                 <p className="xl:font-semibold text-xs xl:text-sm text-[#6D7588]">
@@ -173,10 +174,7 @@ export const CheckoutList = ({ cartData }) => {
                               {service?.cost?.map((costs) => (
                                 <div key={costs}>
                                   <p className="font-bold">
-                                    {costs?.value.toLocaleString('id-ID', {
-                                      style: 'currency',
-                                      currency: 'IDR',
-                                    })}
+                                    {formatRupiah(costs?.value)}
                                   </p>
                                   <p>Estimasi : {costs?.etd} hari</p>
                                 </div>
