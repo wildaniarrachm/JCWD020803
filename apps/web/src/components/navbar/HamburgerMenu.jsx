@@ -30,7 +30,7 @@ export function HamburgerMenu() {
     <>
       <button
         onClick={openDrawer}
-        className="bg-main-red rounded-[25%] p-[3px]"
+        className="bg-main-pink/80 rounded-[25%] p-[3px]"
       >
         <HiOutlineMenuAlt1 size={35} className="text-white" />
       </button>

@@ -48,7 +48,7 @@ export const FormRegist = () => {
 
   return (
     <form
-      className="w-[100%] flex flex-col gap-5 static tablet:w-[60%] laptop:w-[40%]"
+      className="w-[100%] flex flex-col px-5 gap-5 static tablet:w-[60%] laptop:w-[40%]"
       onSubmit={formik.handleSubmit}
       data-aos="fade-left"
     >

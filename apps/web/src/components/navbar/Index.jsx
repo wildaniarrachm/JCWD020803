@@ -7,7 +7,7 @@ export const Navbar = () => {
   const token = localStorage.getItem('token');
 
   return (
-    <div className="flex justify-between border border-b-gray-200 align-middle text-main-blue h-[70px] laptop:h-[95px] p-[3%] sticky top-0 z-20 laptop:pl-[5%] latpop:pr-[10%] bg-white transition duration-300">
+    <div className="flex justify-between border border-b-gray-200 align-middle text-main-blue h-[70px] laptop:h-[95px] p-[3%] relative z-20 laptop:pl-[5%] latpop:pr-[10%] bg-white transition duration-300">
       <div className="flex align-middle relative">
         <div className="absolute top-0 tablet:absolute tablet:top-0 laptop:hidden">
           <HamburgerMenu />

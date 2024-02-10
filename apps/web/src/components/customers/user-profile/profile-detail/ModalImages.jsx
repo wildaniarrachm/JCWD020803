@@ -100,7 +100,19 @@ export const ModalUploadImage = () => {
         />
       </Badge>
       <Dialog open={open} handler={handleOpen} size="xs">
-        <DialogHeader>Upload Images</DialogHeader>
+        <DialogHeader className="font-poppins font-normal">
+          <div className="flex justify-between w-full px-2">
+            <div>
+              <p>Upload Images</p>
+            </div>
+            <button
+              onClick={handleOpen}
+              className="border-none bg-white hover:bg-gray-200 px-2 rounded-full"
+            >
+              x
+            </button>
+          </div>
+        </DialogHeader>
         <form>
           <DialogBody>
             <FormUpImage
@@ -110,17 +122,19 @@ export const ModalUploadImage = () => {
             />
           </DialogBody>
           <DialogFooter>
-            <Button
-              variant="text"
-              color="red"
-              onClick={handleOpen}
-              className="mr-1"
-            >
-              <span>Cancel</span>
-            </Button>
-            <Button variant="gradient" color="pink" onClick={handleSubmit}>
-              <span>Upload</span>
-            </Button>
+            <div className="flex flex-col font-poppins gap-5 w-full">
+              <div>
+                <p className="text-start">jpg, jpeg, png, or gif (Max 1 mb)</p>
+              </div>
+              <Button
+                variant="gradient"
+                color="pink"
+                onClick={handleSubmit}
+                fullWidth
+              >
+                <span>Upload</span>
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </Dialog>

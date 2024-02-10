@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { CartFunction } from '../../utils/cart/cart.function';
 import { shipmentFunction } from '../../utils/transaction/shipment.function';
 import { AiOutlineClose } from 'react-icons/ai';
+import formatRupiah from '../../libs/formatCurrency';
 
 export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
   const { cartData } = CartFunction();
@@ -15,7 +16,7 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
         setShipmentFee(cost?.value);
       });
     }
-    const total = (fee += e);
+    const total = fee + e;
     setTotalPrice(total);
   };
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
@@ -27,14 +28,8 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
 
   const totalHargaProduk = cartData.reduce(
     (total, item) =>
-      total +
-      (
-        item.Cart_detail.quantity * item.Cart_detail.Product.price
-      ).toLocaleString('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-      }),
-    '',
+      total + item.Cart_detail.quantity * item.Cart_detail.Product.price,
+    0,
   );
 
   useEffect(() => {
@@ -58,12 +53,7 @@ export const Checkout = ({ deliveried, finalCost, shipmenValue }) => {
             {finalCost?.cost?.map((value) => (
               <div key={value?.value} className="flex justify-between text-sm">
                 <p>Ongkos kirim</p>
-                <p>
-                  {value?.value.toLocaleString('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                  })}
-                </p>
+                <p>{formatRupiah(value?.value)}</p>
               </div>
             ))}
           </div>

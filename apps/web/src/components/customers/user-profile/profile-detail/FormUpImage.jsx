@@ -11,10 +11,15 @@ export const FormUpImage = ({ selectedImage, handleImageChange, schema }) => {
         opacity: 0.7,
       }}
     >
-      <h1 className="absolute top-20 left-32 text-black/80 laptop:absolute laptop:top-20 laptop:left-[45%]">
+      <h1 className="absolute top-14 left-[40%] text-black/80 laptop:absolute laptop:top-14 laptop:left-[40%]">
         <label htmlFor="uploadInput">
           <IoCloudUploadOutline size={'60px'} />
         </label>
+        {selectedImage ? null : (
+          <label className="absolute top-14 text-center font-poppins">
+            No file choose
+          </label>
+        )}
       </h1>
       <input
         type="file"

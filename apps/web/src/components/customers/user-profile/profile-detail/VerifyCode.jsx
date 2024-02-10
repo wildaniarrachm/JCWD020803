@@ -1,8 +1,8 @@
-import { Button, Input } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { verifyPhoneNumber } from '../../../../utils/customer/verify.phone.number';
 import OtpInput from 'react-otp-input';
 import { toast } from 'react-toastify';

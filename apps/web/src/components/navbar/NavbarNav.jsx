@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogBody,
   DialogFooter,
@@ -13,7 +12,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CgPin, CgChevronDown } from 'react-icons/cg';
 import { DeliveriedLocation } from './DeliveriedLocation';
-import { getCustomerAddress } from '../../utils/address/get.customer.address';
 
 export const NavbarNav = () => {
   const inputRef = useRef();

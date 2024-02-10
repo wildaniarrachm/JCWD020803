@@ -10,6 +10,6 @@ export const keepLoginAdmin = async (dispatch, tokenAdmin) => {
     });
     dispatch(setAdminData(response.data.admin));
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };

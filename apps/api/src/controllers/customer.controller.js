@@ -86,7 +86,6 @@ export const createCustomer = async (req, res) => {
         const referralMatches = await Customer.findOne({
           where: { referral_code: referralCode },
         });
-        console.log(referralMatches);
         if (!referralMatches) {
           return res.status(400).send('Referral doesnt match');
         } else {
@@ -140,6 +139,11 @@ export const createCustomer = async (req, res) => {
         username,
         email,
         referral_code: referral,
+      });
+      await User_voucher.create({
+        CustomerId: add?.id,
+        vouchers_amount: 1,
+        VoucherId: 1,
       });
       verifyCustomer(add);
       return res

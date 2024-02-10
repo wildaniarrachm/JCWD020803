@@ -11,10 +11,12 @@ import { useFormik } from 'formik';
 import { sendReverification } from '../../../utils/customer/re-verification.email';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Reverification = () => {
   const [limit, setLimit] = useState(false);
   const [load, setLoad] = useState(false);
+  const navigate = useNavigate();
   const handleSubmited = async (data) => {
     setLoad(true);
     const response = await sendReverification(data);
@@ -27,6 +29,7 @@ export const Reverification = () => {
       toast.error(response?.response?.data, {
         autoClose: 5000,
       });
+      navigate('/login-user');
     }
     setLoad(false);
   };
