@@ -28,47 +28,21 @@ export const getActive = async (req, res) => {
   try {
     const customerId = req.customer.id;
 
-    if (!customerId) {
-      return res.status(400).send({ message: 'Customer ID is required' });
-    }
-
-    const response = await Cart.findAll({
+    const cart = await Cart.findOne({
       where: { isActive: true, CustomerId: customerId },
+    });
+
+    const cartDetail = await CartDetail.findAll({
+      where: { CartId: cart.dataValues?.id },
       include: [
         {
-          model: CartDetail,
-          include: [
-            {
-              model: Product,
-              attributes: ['product_name', 'price', 'descriptions', 'weight'],
-              include: [
-                {
-                  model: Branch_product,
-                  include: [
-                    {
-                      model: Branch,
-                      attributes: [
-                        'branch_name',
-                        'store_contact',
-                        'address',
-                        'province_id',
-                        'city_id',
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          model: Product,
+          include: [{ model: Branch_product, include: [{ model: Branch }] }],
         },
       ],
     });
 
-    response?.map((item) => {
-      console.log(item);
-    });
-
-    res.status(200).send({ data: response, message: 'Success' });
+    res.status(200).send({ data: cartDetail, message: 'Success' });
   } catch (err) {
     console.log(err);
     res.status(400).send({ message: err.message });
@@ -77,7 +51,7 @@ export const getActive = async (req, res) => {
 
 export const addToCart = async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { productId, BranchId } = req.body;
 
     const customer = req.customer;
 
@@ -99,18 +73,12 @@ export const addToCart = async (req, res) => {
       cart = await Cart.create({ isActive: true, CustomerId: customerData.id });
     }
 
-    const product = await Product.findByPk(productId, {
-      include: [{ model: Branch_product }],
+    const branchAndProduct = await Branch_product.findAll({
+      where: { BranchId: BranchId, productId: productId },
+      include: [{ model: Product }, { model: Branch }],
     });
 
-    if (!product || product.isDisabled || product.isDeleted) {
-      return res.status(404).send('Product not found or product unavailable');
-    }
-
-    if (
-      product.Branch_products.length === 0 ||
-      product.Branch_products[0].quantity <= 0
-    ) {
+    if (branchAndProduct?.quantity <= 0) {
       return res.status(404).send('Product is out of stock');
     }
 
@@ -122,7 +90,7 @@ export const addToCart = async (req, res) => {
       cartDetail.quantity += 1;
       await cartDetail.save();
     } else {
-      cartDetail = await CartDetail.create({
+      await CartDetail.create({
         CartId: cart.id,
         ProductId: productId,
         quantity: 1,

@@ -2,6 +2,7 @@ import { BsTrash } from 'react-icons/bs';
 import cartImg from '../../assets/shopping-cart.png';
 import { useEffect, useState } from 'react';
 import { CartFunction } from '../../utils/cart/cart.function';
+import formatRupiah from '../../libs/formatCurrency';
 
 export const ProductListCheckout = () => {
   const { cartData, handleDeleteItem, handleQuantityChange } = CartFunction();
@@ -9,7 +10,7 @@ export const ProductListCheckout = () => {
   useEffect(() => {
     setCartItemsExist(cartData.length > 0);
   }, [cartData]);
-console.log(cartData)
+
   return (
     <div>
       <div className=" w-[100%]  xl:w-[73%] py-3 flex px-7 bg-main-red text-white mt-[4rem] rounded-md font-semibold text-sm">
@@ -29,34 +30,31 @@ console.log(cartData)
                 />
               </div>
               <p className="ml-1 md:ml-6 xl:ml-6 w-[24vw] md:w-[23.5vw] xl:w-[24vw] h-fit">
-                {cartItem.Cart_detail?.Product.product_name}
+                {cartItem?.Product.product_name}
               </p>
               <p className="w-[19vw] md:w-[16vw] xl:w-[10vw] mr-2">
-                {cartItem.Cart_detail?.Product.price.toLocaleString('id-ID', {
-                  style: 'currency',
-                  currency: 'IDR',
-                })}
+                {formatRupiah(cartItem?.Product.price)}
               </p>
               <div className="flex justify-center cursor-pointer space-x-4 px-2 w-[18vw] h-[3vh] md:w-[13vw] xl:w-[7vw] xl:h-[5vh] items-center rounded-full bg-gray-200 ml-2">
                 <div
                   className="pb-1 xl:pb-0 font-semibold"
                   onClick={() =>
                     handleQuantityChange(
-                      cartItem.Cart_detail.id,
-                      cartItem.Cart_detail?.quantity - 1,
+                      cartItem.id,
+                      cartItem?.quantity - 1,
                       'decrement',
                     )
                   }
                 >
                   -
                 </div>
-                <div>{cartItem.Cart_detail?.quantity}</div>
+                <div>{cartItem?.quantity}</div>
                 <div
                   className="pb-0 font-semibold"
                   onClick={() =>
                     handleQuantityChange(
-                      cartItem.Cart_detail.id,
-                      cartItem.Cart_detail?.quantity + 1,
+                      cartItem.id,
+                      cartItem?.quantity + 1,
                       'increment',
                     )
                   }
@@ -65,7 +63,7 @@ console.log(cartData)
                 </div>
               </div>
               <button
-                onClick={() => handleDeleteItem(cartItem.Cart_detail.id)}
+                onClick={() => handleDeleteItem(cartItem.id)}
                 className="mr-4 ml-4 md:ml-[7.5vw] xl:ml-[7vw] cursor-pointer hover:text-main-red transition-all"
               >
                 <BsTrash className="text-[1.5rem]" />

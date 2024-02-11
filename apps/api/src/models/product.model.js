@@ -30,7 +30,7 @@ export const init = (sequelize) => {
         allowNull: true,
       },
       price: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       isDisabled: {

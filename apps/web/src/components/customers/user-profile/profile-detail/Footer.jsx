@@ -30,6 +30,7 @@ export const ProfileFooter = () => {
       route: '/customer-dashboard/profile/order-history',
     },
   ];
+
   return (
     <section className="h-[100%] pb-5 bg-gray-200">
       <div className="h-[70%] bg-white mx-2 rounded-lg shadow-lg py-5 tablet:grid tablet:grid-cols-3 tablet:gap-2 tablet:px-4">

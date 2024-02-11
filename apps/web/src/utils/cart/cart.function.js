@@ -6,10 +6,10 @@ export const CartFunction = () => {
 
   const token = localStorage.getItem('token');
 
-  const fetchData = async () => {
+  const fetchData = async (cartId) => {
     try {
       const response = await axios.get(
-        'http://localhost:8000/api/cart/active',
+        `http://localhost:8000/api/cart/active?id=${cartId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -20,7 +20,7 @@ export const CartFunction = () => {
     }
   };
 
-  const addToCart = async (productId) => {
+  const addToCart = async (productId, BranchId) => {
     try {
       const userToken = localStorage.getItem('token');
 
@@ -28,6 +28,7 @@ export const CartFunction = () => {
         'http://localhost:8000/api/cart/add-to-cart',
         {
           productId: productId,
+          BranchId: BranchId,
         },
         {
           headers: { Authorization: `Bearer ${userToken}` },
