@@ -1,14 +1,12 @@
 import 'aos/dist/aos.css';
 import { CartFunction } from '../../utils/cart/cart.function';
-import { toast } from 'react-toastify';
 import formatRupiah from '../../libs/formatCurrency';
 import { CardPlacehoderSkeleton } from './skeleton';
 
 export const CardHome = ({ productList }) => {
-  console.log(productList);
   const { addToCart } = CartFunction();
   const token = localStorage.getItem('token');
-  
+
   const handleCart = (productId, BranchId) => {
     if (!token) {
       return toast.warn('Please login first or create a new account', {
@@ -90,12 +88,8 @@ export const CardHome = ({ productList }) => {
                 </button>
               )}
             </div>
-          ) : (
-            <div key={product?.id} className="grid grid-cols-6">
-              <CardPlacehoderSkeleton />
-            </div>
-          ),
-        )}
+          </div>
+        ))}
       </div>
     </section>
   );
