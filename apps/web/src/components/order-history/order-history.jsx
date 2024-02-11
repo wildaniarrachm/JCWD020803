@@ -10,6 +10,7 @@ import { PaymentProof } from '../../pages/payment-proof/payment-proof';
 import { CancelOrder } from '../cancel-order/cancel-order';
 import { RiUploadCloudLine } from 'react-icons/ri';
 import { BsTrash } from 'react-icons/bs';
+import formatRupiah from '../../libs/formatCurrency';
 
 export const OrderHistory = () => {
   const {
@@ -153,11 +154,9 @@ export const OrderHistory = () => {
                             </div>
                             <p>Courier: {order.shipment_method}</p>
                             <p>
-                              Cost:{' '}
-                              {order.shipment_fee?.toLocaleString('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR',
-                              })}
+                              {order.shipment_fee
+                                ? formatRupiah(order.shipment_fee)
+                                : null}
                             </p>
                             <p>{product.Product.descriptions}</p>
                             {order.status === 'Waiting Payment' && (

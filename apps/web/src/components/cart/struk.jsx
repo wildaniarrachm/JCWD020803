@@ -1,8 +1,11 @@
 import { toast } from 'react-toastify';
 import { CartFunction } from '../../utils/cart/cart.function';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import formatRupiah from '../../libs/formatCurrency';
 
 export const Struk = () => {
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
   const { cartData } = CartFunction();
 
@@ -15,15 +18,17 @@ export const Struk = () => {
     }
   };
 
-  const totalNumericPrice = cartData.reduce(
-    (sum, item) => sum + item.Cart_detail?.Product.price,
-    0,
-  );
+  const handleTotalPrice = () => {
+    let total = 0;
+    cartData.forEach((item) => {
+      total += item.Product?.price;
+      setTotalPrice(total);
+    });
+  };
 
-  const totalPriceIDR = totalNumericPrice.toLocaleString('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  });
+  useEffect(() => {
+    handleTotalPrice();
+  }, [cartData]);
 
   return (
     <>
@@ -33,7 +38,7 @@ export const Struk = () => {
           <section className="flex flex-col space-y-4 mt-10 pb-8 border-b border-gray.300">
             <div className="flex justify-between text-md">
               <p>Subtotal</p>
-              <p>{totalPriceIDR}</p>
+              <p>{formatRupiah(totalPrice)}</p>
             </div>
             <div className="flex justify-between text-md">
               <p>Discount</p>
@@ -42,7 +47,7 @@ export const Struk = () => {
           </section>
           <div className="flex justify-between text-lg font-semibold mt-8">
             <p>Total</p>
-            <p>{totalPriceIDR}</p>
+            <p>{formatRupiah(totalPrice)}</p>
           </div>
           <button
             onClick={addToShipment}

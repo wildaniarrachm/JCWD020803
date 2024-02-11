@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { CartFunction } from '../../utils/cart/cart.function';
+import formatRupiah from '../../libs/formatCurrency';
 
 export const CartItem = () => {
   const { cartData } = CartFunction();
 
   const totalQuantity = Array.isArray(cartData)
-    ? cartData.reduce((sum, item) => sum + item.Cart_detail?.quantity, 0)
+    ? cartData.reduce((sum, item) => sum + item?.quantity, 0)
     : 0;
 
   useEffect(() => {}, [cartData]);
@@ -51,17 +52,14 @@ export const CartItem = () => {
                 </span>
                 <div className="flex flex-col">
                   <span className="text-info w-[22vw]">
-                    {cartItem.Cart_detail?.Product.product_name}
+                    {cartItem?.Product.product_name}
                   </span>
                   <span className="text-xs font-thin">
-                    {cartItem.Cart_detail?.quantity} item
+                    {cartItem?.quantity} item
                   </span>
                 </div>
-                <span className="text-info w-[5vw] flex justify-end">
-                  {cartItem.Cart_detail?.Product.price.toLocaleString('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                  })}
+                <span className="text-info w-[10vw] flex justify-end">
+                  {formatRupiah(cartItem?.Product.price)}
                 </span>
               </div>
             ))}
