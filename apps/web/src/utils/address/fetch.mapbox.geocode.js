@@ -1,5 +1,4 @@
 export const fetchMapboxGeocode = async (data) => {
-  console.log(data);
   try {
     const response = await fetch(
       `https://api.mapbox.com/geocoding/v5/mapbox.places/${data}.json?access_token=${
@@ -8,7 +7,7 @@ export const fetchMapboxGeocode = async (data) => {
     );
     return response.json();
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

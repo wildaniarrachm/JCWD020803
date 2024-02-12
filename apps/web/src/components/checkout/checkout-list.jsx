@@ -153,50 +153,50 @@ export const CheckoutList = ({ cartData }) => {
               </div>
             </section>
           ))}
-          <div className="flex bg-white mt-4 py-5 px-2 rounded-xl shadow-2xl space-y-3 flex-col justify-between laptop:flex laptop:gap-2 ">
-            <Select
-              label="Choose courier"
-              onChange={(e) => handleShipmentValue(e)}
-            >
-              {couriers?.map((couriers) => (
-                <Option key={couriers?.value} value={couriers?.value}>
-                  {couriers?.name}
-                </Option>
-              ))}
-            </Select>
-            <Select
-              label="Choose services..."
-              disabled={services?.disable === true}
-              onChange={(e) => handleCost(e)}
-            >
-              {services?.data?.map((service) => (
-                <Option key={service?.service} value={service}>
-                  <div className="pr-10">
-                    <div className="flex justify-between items-center">
-                      <div>
-                        <p className="font-bold mb-2 text-sm">
-                          {`${shipmenValue?.courier.toUpperCase()} ${
-                            service?.service
-                          }`}
-                        </p>
-                        <p>{service?.description}</p>
-                      </div>
-                      {service?.cost?.map((costs) => (
-                        <div key={costs}>
-                          <p className="font-bold">
-                            {costs?.value.toLocaleString('id-ID', {
-                              style: 'currency',
-                              currency: 'IDR',
-                            })}
+          <div className="mt-4 py-5 px-2 rounded-xl shadow-2xl space-y-3 font-poppins bg-white">
+            <p>Choose Couriers</p>
+            <div className="flex flex-col justify-between laptop:flex laptop:gap-2 ">
+              <Select
+                label="Choose courier"
+                onChange={(e) => handleShipmentValue(e)}
+              >
+                {couriers?.map((couriers) => (
+                  <Option key={couriers?.value} value={couriers?.value}>
+                    {couriers?.name}
+                  </Option>
+                ))}
+              </Select>
+              <Select
+                label="Choose services..."
+                disabled={services?.disable === true}
+                onChange={(e) => handleCost(e)}
+              >
+                {services?.data?.map((service) => (
+                  <Option key={service?.service} value={service}>
+                    <div className="pr-10">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="font-bold mb-2 text-sm">
+                            {`${shipmenValue?.courier.toUpperCase()} ${
+                              service?.service
+                            }`}
                           </p>
-                          <p>Estimasi : {costs?.etd} hari</p>
+                          <p>{service?.description}</p>
                         </div>
-                      ))}
+                        {service?.cost?.map((costs) => (
+                          <div key={costs}>
+                            <p className="font-bold">
+                              {formatRupiah(costs?.value)}
+                            </p>
+                            <p>Estimasi : {costs?.etd} hari</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </Option>
-              ))}
-            </Select>
+                  </Option>
+                ))}
+              </Select>
+            </div>
           </div>
         </div>
         <Checkout

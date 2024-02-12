@@ -7,7 +7,6 @@ export const VerifyNewEmail = () => {
   const { token } = useParams();
   const handleClick = async () => {
     const response = await verifyAccount(token);
-    console.log(response);
     navigate('/');
     window.location.reload();
   };

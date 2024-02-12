@@ -69,7 +69,6 @@ export const CustomerAddressBody = ({ getAddress, token }) => {
   };
   const handleSearch = async () => {
     const response = await searchAddress(search, token);
-    // console.log(response);
   };
   return (
     <section className="bg-gray-200 p-2">

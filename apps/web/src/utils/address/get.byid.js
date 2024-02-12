@@ -7,7 +7,7 @@ export const getCityAndProvinceById = async (idCities, idProvince) => {
     );
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -16,6 +16,6 @@ export const getAddressById = async (id) => {
     const response = await api.get(`address/${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

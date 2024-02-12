@@ -7,6 +7,6 @@ export const getBranchById = async (id, token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

@@ -5,10 +5,9 @@ import Branch_Product from '../models/branch_product.model';
 
 export const getAllBranch = async (req, res) => {
   const { pages } = req?.query;
-  console.log(pages);
   try {
     const page = parseInt(pages);
-    const pageSize = 2;
+    const pageSize = 5;
     const offset = (page - 1) * pageSize;
 
     const totalCount = await Branch.count();
@@ -156,7 +155,6 @@ export const getDistanceBranch = async (req, res) => {
       return 7;
     }
     if (lat && lng) {
-      console.log(lng, lat);
       const branches = await Branch.findAll();
       const randomRadius = generateRandomRadius();
       branches.forEach((branch) => {
@@ -167,16 +165,12 @@ export const getDistanceBranch = async (req, res) => {
           branch.longitude,
         );
         branch.distance = distance;
-        console.log(branch.distance);
       });
       branches.sort((a, b) => a.distance - b.distance);
-      console.log(randomRadius);
       const closestBranch = branches.find(
         (branch) => branch.distance <= randomRadius,
       );
-      console.log(closestBranch);
       if (closestBranch) {
-        console.log(closestBranch);
         return res
           .status(200)
           .send({ branch: closestBranch, distance: closestBranch.distance });
@@ -186,7 +180,6 @@ export const getDistanceBranch = async (req, res) => {
           .send('Your location is so far from distance branch');
       }
     } else {
-      console.log('tes');
       const results = await Branch.findOne({
         where: { head_store: true },
       });

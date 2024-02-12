@@ -28,7 +28,6 @@ export const OpenMaps = ({ setGeo, geo, handleDrag }) => {
     const response = await fetchMapboxLngLat(geo);
     setDetails(response?.features[0]?.place_name);
   };
-  console.log(geo);
   useEffect(() => {
     getCurrentLocation();
     handleDetailAddress();

@@ -29,7 +29,6 @@ export const FormNewPassword = () => {
         position: 'top-right',
       });
     }
-    console.log(response);
   };
   const formik = useFormik({
     initialValues: {

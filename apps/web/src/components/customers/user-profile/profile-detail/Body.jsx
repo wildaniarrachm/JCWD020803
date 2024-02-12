@@ -43,7 +43,6 @@ export const ProfileBody = () => {
       });
     }
     setLoad(false);
-    console.log(response);
   };
 
   return (

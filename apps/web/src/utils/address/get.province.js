@@ -5,6 +5,6 @@ export const getAllProvince = async () => {
     const response = await api.get(`address/province`);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

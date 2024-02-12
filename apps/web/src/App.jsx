@@ -164,7 +164,7 @@ function App() {
         dispatch(positionData(deliveryAddress));
         dispatch(deliveryData(deliveryAddress));
       } else {
-        dispatch(positionData(response?.data?.result));
+        dispatch(positionData(response?.data?.result[0]));
         dispatch(deliveryData(response?.data?.result));
       }
       dispatch(addressData(response?.data?.result));

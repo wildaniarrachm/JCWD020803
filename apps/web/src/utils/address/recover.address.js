@@ -5,6 +5,6 @@ export const recoverAddress = async (id) => {
     const response = await api.patch(`address/recover-address/${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

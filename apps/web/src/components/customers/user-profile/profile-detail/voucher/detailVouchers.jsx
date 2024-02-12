@@ -11,14 +11,12 @@ export const DetailVouchers = () => {
   const [copied, setCopied] = useState(false);
   const { code } = useParams();
   const [details, setDetails] = useState();
-  console.log(code);
   const getVoucher = async () => {
     const response = await getVoucherByCode(code);
     if (response?.status === 200) {
       setDetails(response?.data);
     }
   };
-  console.log(details);
   useEffect(() => {
     getVoucher();
   }, []);
@@ -61,7 +59,6 @@ export const DetailVouchers = () => {
                   currency: 'IDR',
                 })}
               </p>
-              {console.log(item)}
             </div>
             <div className="flex flex-col gap-3">
               <div>

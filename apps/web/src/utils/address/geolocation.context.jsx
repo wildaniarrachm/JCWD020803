@@ -19,7 +19,6 @@ export const GeolocationProvider = ({ children }) => {
 
 export const useGeolocation = () => {
   const context = useContext(GeolocationContext);
-  console.log(context);
 
   return context;
 };

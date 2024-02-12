@@ -56,7 +56,7 @@ export const getProduct = async (req, res) => {
   try {
     const {
       page,
-      limit = 3,
+      limit = 5,
       sortBy = 'createdAt',
       sortOrder = 'asc',
     } = req.query;
