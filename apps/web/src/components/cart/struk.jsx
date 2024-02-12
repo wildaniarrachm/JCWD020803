@@ -9,6 +9,7 @@ export const Struk = () => {
   const navigate = useNavigate();
   const { cartData } = CartFunction();
 
+  console.log(cartData);
   const addToShipment = () => {
     if (cartData.length > 0) {
       localStorage.setItem('cartData', JSON.stringify(cartData));

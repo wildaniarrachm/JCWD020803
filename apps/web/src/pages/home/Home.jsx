@@ -9,9 +9,18 @@ import { toast } from 'react-toastify';
 
 function Home({ placeName }) {
   const position = useSelector((state) => state.position.value);
+  const [load, setLoad] = useState(false);
+  const [page, setPage] = useState(6);
+  const [count, setCount] = useState();
   const [branch, setBranch] = useState();
   const [productList, setProductList] = useState();
   const delivery = useSelector((state) => state.delivery.value);
+  const handleMore = () => {
+    if (page <= count) {
+      setPage(page * 2);
+    }
+    getProductBranch();
+  };
   const getDistance = async () => {
     if (position) {
       const response = await getDistanceBranch(
@@ -30,8 +39,11 @@ function Home({ placeName }) {
   };
   const getProductBranch = async () => {
     if (branch) {
-      const response = await getProductByBranch(branch?.branch?.id);
+      setLoad(true);
+      const response = await getProductByBranch(branch?.branch?.id, page);
+      setCount(response?.data?.count);
       setProductList(response?.data?.results);
+      setLoad(false);
     }
   };
 
@@ -41,11 +53,17 @@ function Home({ placeName }) {
 
   useEffect(() => {
     getProductBranch();
-  }, [branch]);
+  }, [branch, page]);
   return (
     <Layout placeName={placeName}>
       <MainCarousel branch={branch} deliveried={delivery} />
-      <CardHome productList={productList} />
+      <CardHome
+        productList={productList}
+        handleMore={handleMore}
+        page={page}
+        count={count}
+        load={load}
+      />
     </Layout>
   );
 }

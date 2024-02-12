@@ -3,10 +3,12 @@ import { CartFunction } from '../../utils/cart/cart.function';
 import formatRupiah from '../../libs/formatCurrency';
 import { CardPlacehoderSkeleton } from './skeleton';
 import { toast } from 'react-toastify';
+import { Spinner } from '@material-tailwind/react';
+import { IoChevronForwardSharp } from 'react-icons/io5';
 
-export const CardHome = ({ productList }) => {
+export const CardHome = ({ productList, handleMore, page, count, load }) => {
   const { addToCart } = CartFunction();
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
   const handleCart = (productId, BranchId) => {
     if (!token) {
       return toast.warn('Please login first or create a new account', {
@@ -19,7 +21,7 @@ export const CardHome = ({ productList }) => {
   };
   return (
     <section className="font-poppins">
-      <div className="text-center px-[15%] pt-5">
+      <div className="text-center px-[15%] pt-10 pb-5">
         <p
           className="font-poppins text-[25px] font-semibold"
           data-aos="fade-up"
@@ -32,7 +34,7 @@ export const CardHome = ({ productList }) => {
         {productList?.map((product) =>
           product ? (
             <div
-              className="snap-center rounded-xl px-2 w-[300px] flex justify-between flex-col shadow-lg laptop:h-[400px] laptop:w-[200px] laptop:cursor-pointer laptop:hover:scale-105 transition duration-300"
+              className="snap-center rounded-xl px-2 w-[300px] flex justify-between flex-col shadow-lg laptop:h-[400px] laptop:w-[200px] laptop:cursor-pointer laptop:hover:scale-105 laptop:mb-5 transition duration-300"
               key={product?.Product?.id}
             >
               <div className="w-[200px] mx-auto cursor-pointer laptop:w-[100%] laptop:h-[100%]">
@@ -87,6 +89,39 @@ export const CardHome = ({ productList }) => {
             </div>
           ),
         )}
+        <div
+          className={`${
+            page < count
+              ? 'snap-center rounded-xl px-2 w-[300px] flex justify-between flex-col border laptop:hidden'
+              : 'hidden'
+          }`}
+          onClick={handleMore}
+        >
+          <div className="w-[100px] h-[100%]">
+            <div className="h-[100%] flex flex-col gap-2 justify-center items-center">
+              <IoChevronForwardSharp size={30} />
+              <h2>Lead More</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={`${
+          page < count
+            ? 'hidden laptop:w-[100%] laptop:h-[150px] laptop:flex laptop:justify-center laptop:items-center'
+            : 'hidden'
+        }`}
+      >
+        <button
+          className="flex items-center w-[40%] justify-center mx-auto laptop:w-[20%] h-[25%] bg-main-red rounded-lg"
+          onClick={handleMore}
+        >
+          {load === false ? (
+            <h2 className="text-main-light font-bold">Lead more</h2>
+          ) : (
+            <Spinner />
+          )}
+        </button>
       </div>
     </section>
   );

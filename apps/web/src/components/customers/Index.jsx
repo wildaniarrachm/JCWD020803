@@ -20,7 +20,7 @@ export const Layout = ({ children, placeName }) => {
         </Alert>
       ) : null}
       <Navbar />
-      <div className="mb-[10%]">{children}</div>
+      <div className="mb-[5%]">{children}</div>
       <Footer />
     </div>
   );

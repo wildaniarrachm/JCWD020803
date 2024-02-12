@@ -3,8 +3,12 @@ import Product from '../models/product.model';
 import Product_image from '../models/product_image.model';
 
 export const getProductByBranch = async (req, res) => {
-  const { id } = req?.params;
+  const { id, page } = req?.query;
+  const limit = parseInt(page);
   try {
+    const totalPages = await Branch_product.findAndCountAll({
+      where: { BranchId: id },
+    });
     const results = await Branch_product.findAll({
       where: {
         BranchId: id,
@@ -19,8 +23,9 @@ export const getProductByBranch = async (req, res) => {
           ],
         },
       ],
+      limit,
     });
-    res.status(200).send({ results });
+    res.status(200).send({ results, count: totalPages?.count });
   } catch (error) {
     res.status(200).send(error.message);
   }

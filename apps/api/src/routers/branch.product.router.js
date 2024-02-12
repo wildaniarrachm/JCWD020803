@@ -6,6 +6,6 @@ import {
 
 const branch_productRouter = Router();
 
-branch_productRouter.get('/:id', getProductByBranch);
+branch_productRouter.get('/', getProductByBranch);
 branch_productRouter.delete('/:id', removeProductFromBranch);
 export { branch_productRouter };
