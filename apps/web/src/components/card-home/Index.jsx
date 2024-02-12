@@ -6,7 +6,6 @@ import { CardPlacehoderSkeleton } from './skeleton';
 export const CardHome = ({ productList }) => {
   const { addToCart } = CartFunction();
   const token = localStorage.getItem('token');
-
   const handleCart = (productId, BranchId) => {
     if (!token) {
       return toast.warn('Please login first or create a new account', {

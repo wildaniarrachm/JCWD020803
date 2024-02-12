@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../../libs/server.api';
 import { useEffect, useState } from 'react';
 
 export const AdminTransaction = () => {
@@ -6,9 +6,7 @@ export const AdminTransaction = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/transaction/admin',
-      );
+      const response = await api.get(`transaction/admin`, {});
       setData(response.data.response);
     } catch (err) {
       return err;
@@ -21,9 +19,7 @@ export const AdminTransaction = () => {
 
   const handleConfirmPayment = async (transactionId) => {
     try {
-      await axios.patch(
-        `http://localhost:8000/api/transaction/confirm/${transactionId}`,
-      );
+      await api.patch(`transaction/confirm/${transactionId}`, {});
     } catch (err) {
       return err;
     }
