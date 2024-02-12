@@ -5,7 +5,7 @@ export const addCities = async (data) => {
     const response = await api.post(`cities`, data);
     return response;
   } catch (error) {
-    console.log(error);
+    return(error);
   }
 };
 

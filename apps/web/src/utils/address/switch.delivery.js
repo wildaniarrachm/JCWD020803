@@ -10,6 +10,6 @@ export const switchDeliveriedAddress = async (data, token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

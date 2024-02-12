@@ -19,7 +19,7 @@ export const requestVerifyEmail = async (token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

@@ -9,7 +9,6 @@ export const keepLoginCustomer = async (token) => {
   } catch (error) {
     if (error) {
       localStorage.removeItem('token');
-      console.log(error);
     }
   }
 };

@@ -5,9 +5,8 @@ export const verifyPhoneNumber = async (token) => {
     const response = await api.patch(`customer/verify-phone-number`, null, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

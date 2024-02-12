@@ -5,7 +5,7 @@ export const deleteAddress = async (id) => {
     const response = await api.patch(`address/delete-address/${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
@@ -14,6 +14,6 @@ export const deletePermanentAddress = async (id) => {
     const response = await api.delete(`address/delete-permanent/${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

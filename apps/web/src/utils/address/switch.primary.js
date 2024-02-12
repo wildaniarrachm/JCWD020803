@@ -11,6 +11,6 @@ export const switchPrimaryAddress = async (checked, id, token) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

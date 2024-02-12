@@ -15,8 +15,8 @@ function Home({ placeName }) {
   const getDistance = async () => {
     if (position) {
       const response = await getDistanceBranch(
-        position?.latitude,
-        position?.longitude,
+        position[0]?.latitude,
+        position[0]?.longitude,
       );
       if (response?.status === 200) {
         setBranch(response?.data);
