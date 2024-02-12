@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../../libs/server.api';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,10 +19,9 @@ export const shipmentFunction = (
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/transaction',
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setShipmentData(response.data.response);
     } catch (err) {
       return err;
@@ -31,10 +30,9 @@ export const shipmentFunction = (
 
   const fetchByDate = async (date) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/transaction/date/${date}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction/date/${date}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setShipmentData(response.data.data);
     } catch (err) {
       return err;
@@ -43,10 +41,9 @@ export const shipmentFunction = (
 
   const waitingPaymentProof = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/transaction',
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const waitingPaymentOrders = response.data.response.filter(
         (order) => order.status === 'Waiting Payment',
       );
@@ -58,10 +55,9 @@ export const shipmentFunction = (
 
   const waitingPaymentConfirmed = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/transaction',
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const waitingPaymentConfirmedOrders = response.data.response.filter(
         (order) => order.status === 'Waiting Payment Confirmation',
       );
@@ -73,10 +69,9 @@ export const shipmentFunction = (
 
   const orderCancelled = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/transaction',
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const canceledOrders = response.data.response.filter(
         (order) => order.status === 'Order Cancelled',
       );
@@ -88,10 +83,9 @@ export const shipmentFunction = (
 
   const orderOnProcess = async () => {
     try {
-      const response = await axios.get(
-        'http://localhost:8000/api/transaction',
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const process = response.data.response.filter(
         (order) =>
           order.status === 'On Process' || order.status === 'Payment Confirmed',
@@ -104,10 +98,9 @@ export const shipmentFunction = (
 
   const fetchById = async (transactionId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/transaction/${transactionId}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      const response = await api.get(`transaction/${transactionId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setTransactionDetail({
         totalHarga: response.data.data.total,
       });
@@ -118,14 +111,16 @@ export const shipmentFunction = (
 
   const postData = async () => {
     try {
-      await axios.post(
-        'http://localhost:8000/api/transaction',
+      await api.post(
+        `transaction`,
         {
           PaymentMethodId: selectedPaymentMethod,
           shipment_fee: shipment_fee,
           shipment_method: shipment_method,
         },
-        { headers: { Authorization: `Bearer ${token}` } },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
       navigate('/customer-dashboard/profile/order-history');
       fetchData();

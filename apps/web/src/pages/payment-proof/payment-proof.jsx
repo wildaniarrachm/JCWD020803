@@ -1,5 +1,5 @@
+import { api } from '../../libs/server.api';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 
 export const PaymentProof = ({ orderId, onClose }) => {
@@ -36,16 +36,12 @@ export const PaymentProof = ({ orderId, onClose }) => {
 
       const token = localStorage.getItem('token');
 
-      await axios.patch(
-        `http://localhost:8000/api/transaction/upload-proof/${orderId}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
+      await api.patch(`transaction/upload-proof/${orderId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       toast.success('File uploaded successfully.', { autoClose: 3000 });
       onClose();
     } catch (err) {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../../libs/server.api';
 import { useEffect, useState } from 'react';
 
 export const CartFunction = () => {
@@ -8,12 +8,9 @@ export const CartFunction = () => {
 
   const fetchData = async (cartId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/cart/active?id=${cartId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const response = await api.get(`cart/active?id=${cartId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setCartData(response.data.data);
     } catch (err) {
       return err;
@@ -24,12 +21,9 @@ export const CartFunction = () => {
     try {
       const userToken = localStorage.getItem('token');
 
-      await axios.post(
-        'http://localhost:8000/api/cart/add-to-cart',
-        {
-          productId: productId,
-          BranchId: BranchId,
-        },
+      await api.post(
+        `cart/add-to-cart`,
+        { productId: productId, BranchId: BranchId },
         {
           headers: { Authorization: `Bearer ${userToken}` },
         },
@@ -42,14 +36,10 @@ export const CartFunction = () => {
 
   const handleDeleteItem = async (cartDetailId) => {
     try {
-      await axios.delete(
-        `http://localhost:8000/api/cart/delete-cart-detail/${cartDetailId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      await api.delete(`cart/delete-cart-detail/${cartDetailId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
       const updatedCartData = cartData.filter(
         (item) => item.Cart_detail.id !== cartDetailId,
       );
@@ -63,11 +53,10 @@ export const CartFunction = () => {
 
   const deleteAllItems = async () => {
     try {
-      await axios.delete('http://localhost:8000/api/cart/delete-all', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      await api.delete(`cart/delete-all/`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
+
       localStorage.removeItem('cartData');
       fetchData();
     } catch (err) {
@@ -77,18 +66,17 @@ export const CartFunction = () => {
 
   const handleQuantityChange = async (cartDetailId, newQuantity, action) => {
     try {
-      await axios.put(
-        `http://localhost:8000/api/cart/update-cart/${cartDetailId}`,
+      await api.put(
+        `cart/update-cart/${cartDetailId}`,
         {
           action,
           quantity: newQuantity,
         },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         },
       );
+
       fetchData();
     } catch (err) {
       return err;
